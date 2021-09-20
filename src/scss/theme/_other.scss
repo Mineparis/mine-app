@@ -1,0 +1,18 @@
+/*
+* ===================================================
+*    Other
+* ===================================================
+*/
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.dropdown-item.active {
+    font-weight: bold;
+}
+
+.pt-header-height {
+    padding-top: $headerHeight;
+}

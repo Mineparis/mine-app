@@ -1,0 +1,15 @@
+{
+    "title": "Shopping cart",
+    "subtitle": "Shopping cart",
+    "breadcrumbs": [{
+            "name": "Home",
+            "link": "/"
+        },
+        {
+            "name": "Shopping cart",
+            "active": true
+        }
+    ],
+    "content": "Id commodo velit ullamco dolore non eiusmod deserunt."
+    
+}

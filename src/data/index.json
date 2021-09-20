@@ -1,0 +1,88 @@
+{
+	"title": "Home",
+	"swiper": [
+		{
+			"subtitle": "Discover",
+			"name": "Mine box",
+			"button": "Shop your box",
+			"link": "/box",
+			"img": "/img/slider/slider1.jpg",
+			"subtitleClass": "text-uppercase text-white font-weight-light mb-4 letter-spacing-5",
+			"titleClass": "mb-5 display-4 font-weight-bold text-uppercase",
+			"rowClass": "justify-content-center text-center text-white",
+			"contentClass": "d-flex flex-column align-items-center",
+			"buttonClass": "rounded-button",
+			"darkOverlay": true
+		},
+		{
+			"name": "Title",
+			"text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"button": "Shop now",
+			"link": "/category",
+			"img": "/img/slider/slider2.jpg",
+			"subtitleClass": "text-dark mb-3",
+			"titleClass": "mb-5 display-4 font-weight-bold text-uppercase",
+			"rowClass": "justify-content-start text-white",
+			"buttonClass": "rounded-button",
+			"darkOverlay": true
+		},
+		{
+			"subtitle": "Subtitle",
+			"name": "Title",
+			"text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"button": "See more",
+			"link": "/category",
+			"img": "/img/slider/slider3.jpg",
+			"subtitleClass": "text-uppercase font-weight-light mb-4 letter-spacing-5",
+			"titleClass": "mb-5 display-4 font-weight-bold text-uppercase",
+			"rowClass": "justify-content-center text-center text-white",
+			"contentClass": "d-flex flex-column align-items-center",
+			"buttonClass": "rounded-button",
+			"darkOverlay": true
+		}
+	],
+	"featuredproducts": [
+		{
+			"name": "Black canvas bag",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/product/artboard-bag.jpg",
+			"price": "$39.90"
+		},
+		{
+			"name": "Sweaters for her",
+			"link": "/detail-1",
+			"button": "Shop now",
+			"img": "/img/photo/matthew-kane-365718-unsplash-gray-square.jpg",
+			"price": "$139.90"
+		},
+		{
+			"name": "Retro sunglasses",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/product/artboard-sunglasses.jpg",
+			"price": "$29.90"
+		},
+		{
+			"name": "Skeleton Tees",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/photo/ian-dooley-347968-unsplash.jpg",
+			"price": "$29.90"
+		},
+		{
+			"name": "Swiss All Black",
+			"link": "/detail-3",
+			"button": "Shop now",
+			"img": "/img/product/artboard-watch.jpg",
+			"price": "$149.90"
+		},
+		{
+			"name": "Ethnic design everywhere",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/photo/serrah-galos-494279-unsplash-square.jpg",
+			"price": "$39.90"
+		}
+	]
+}

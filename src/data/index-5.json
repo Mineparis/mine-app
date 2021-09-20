@@ -1,0 +1,93 @@
+{
+	"title": "Home",
+	"swiper": [
+		{
+			"name": "Ethnic blouses",
+			"subtitle": "Top choices",
+			"text": "Lorem ipsum dolor sit amet. Consectetur adipisicing elit.",
+			"button": "View Collection",
+			"link": "/category",
+			"subtitleclass": "text-uppercase text-danger mb-3 letter-spacing-5 font-weight-normal",
+			"itemclass": "item d-flex align-items-end bg-gray-100 light-overlay light-overlay-md-0",
+			"titleclass": "text-serif mb-3",
+			"rowclass": "py-5",
+			"contentclass": "py-md-5 py-lg-7",
+			"containerStyle": {
+				"background": "right bottom url(/img/slider/circle-slider-3.jpg) no-repeat "
+			}
+		},
+		{
+			"name": "Tigerrrs College Jackets",
+			"subtitle": "Just arrived",
+			"text": "Lorem ipsum dolor sit amet.Consectetur adipisicing elit.",
+			"button": "View collection",
+			"link": "/category",
+			"subtitleclass": "text-uppercase text-info mb-3 letter-spacing-5 font-weight-normal",
+			"itemclass": "item d-flex align-items-end bg-gray-100 light-overlay light-overlay-md-0",
+			"titleclass": " mb-3",
+			"rowclass": "py-5",
+			"contentclass": "py-md-5 py-lg-7 ml-lg-auto text-md-right",
+			"containerStyle": {
+				"background": "left bottom url(/img/slider/circle-slider-2.jpg) no-repeat "
+			}
+		},
+		{
+			"name": "Autumn-colour coats",
+			"text": "Lorem ipsum dolor sit amet. Consectetur adipisicing elit.",
+			"button": "Start shopping",
+			"link": "/category-2",
+			"subtitleclass": "text-uppercase text-danger mb-3 letter-spacing-5 font-weight-normal",
+			"itemclass": "item d-flex align-items-end bg-gray-100 light-overlay light-overlay-md-0",
+			"titleclass": "mb-3",
+			"rowclass": "py-5",
+			"contentclass": "py-md-5 py-lg-7",
+			"containerStyle": {
+				"background": "right bottom url(/img/slider/circle-slider-1.jpg) no-repeat"
+			}
+		}
+	],
+	"featuredproducts": [
+		{
+			"name": "Black canvas bag",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/product/artboard-bag.jpg",
+			"price": "$39.90"
+		},
+		{
+			"name": "Sweaters for her",
+			"link": "/detail-1",
+			"button": "Shop now",
+			"img": "/img/photo/matthew-kane-365718-unsplash-gray-square.jpg",
+			"price": "$139.90"
+		},
+		{
+			"name": "Retro sunglasses",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/product/artboard-sunglasses.jpg",
+			"price": "$29.90"
+		},
+		{
+			"name": "Skeleton Tees",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/photo/ian-dooley-347968-unsplash.jpg",
+			"price": "$29.90"
+		},
+		{
+			"name": "Swiss All Black",
+			"link": "/detail-3",
+			"button": "Shop now",
+			"img": "/img/product/artboard-watch.jpg",
+			"price": "$149.90"
+		},
+		{
+			"name": "Ethnic design everywhere",
+			"link": "/detail-2",
+			"button": "Shop now",
+			"img": "/img/photo/serrah-galos-494279-unsplash-square.jpg",
+			"price": "$39.90"
+		}
+	]
+}

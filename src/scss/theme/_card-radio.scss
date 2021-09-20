@@ -1,0 +1,35 @@
+/*
+* ===================================================
+*    Card Radio
+* ===================================================
+*/
+
+.card-radio {
+    position: relative;
+}
+
+.card-label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.card-radio-input {
+    position: absolute;
+    visibility: hidden;
+}
+
+.card-radio-input + .card {
+    transition: all .3s;
+}
+
+.card-radio-input:checked + .card {
+    transform: translateY(-2px);
+    border-color: $gray-700;
+    .card-header {
+        color: #fff;
+        background: $gray-700;
+    }
+}

@@ -1,0 +1,60 @@
+
+import Cookie from "js-cookie";
+
+export const getStrapiURL = (path = '') => {
+	const APIURL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+	return `${APIURL}${path}`;
+};
+
+export const fetchAPI = async (path, method = 'GET', body) => {
+	const requestURL = getStrapiURL(path);
+	const token = Cookie.get('token');
+	console.log({ token });
+	const response = await fetch(requestURL, {
+		method,
+		headers: {
+			'Content-Type': 'application/json',
+			...(token ? { Authorization: `Bearer ${token}` } : {}),
+		},
+		...(body ? { body: JSON.stringify(body) } : {})
+	});
+	const data = await response.json();
+	return data;
+};
+
+
+export const registerUser = async (email, password, snipcartId) => {
+	if (typeof window === 'undefined') return;
+	console.log({ email, password, snipcartId });
+	try {
+		const { jwt } = await fetchAPI('/auth/local/register', 'POST', { email, password });
+		console.log({ jwt });
+		if (!jwt) return;
+		Cookie.set('token', jwt);
+
+		const data = fetchAPI(`/customers?snipcartId=${snipcartId}`, 'POST');
+		return data;
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+export const login = (identifier, password) => {
+	if (typeof window === 'undefined') return;
+
+	return new Promise((resolve, reject) => {
+		fetchAPI(`/auth/local`, 'POST', { identifier, password })
+			.then((res) => {
+				Cookie.set('token', res.jwt);
+				resolve(res);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+	});
+};
+
+export const logout = () => {
+	Cookie.remove("token");
+	delete window.__user;
+};

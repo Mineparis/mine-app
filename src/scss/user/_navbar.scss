@@ -1,0 +1,13 @@
+.navbar {
+	padding: 1rem;
+
+	.megamenu {
+		width: 80%;
+}
+}
+
+@media (min-width: 992px) {
+	.navbar-expand-lg .navbar-collapse {
+		justify-content: space-between;
+	}
+}

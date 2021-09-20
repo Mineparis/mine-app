@@ -1,0 +1,174 @@
+/*
+* ===================================================
+*     Swiper additional components
+* ===================================================
+*/
+$themeColor: $swiperColor !default;
+$colors: ('white': #ffffff, 'black': theme-color('dark')) !default;
+
+@import "../../../node_modules/swiper/swiper.scss";  
+@import "../../../node_modules/swiper/components/navigation/navigation.scss";  
+@import "../../../node_modules/swiper/components/pagination/pagination.scss";  
+@import "../../../node_modules/swiper/components/effect-fade/effect-fade.scss";  
+
+
+.swiper-container-mx-negative {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    &.items-slider-full {
+        margin-right: -15px;
+    }
+}
+/*
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'#{$swiperColor}'%2F%3E%3C%2Fsvg%3E");
+    left: 10px;
+    right: auto;
+}
+
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23#{$swiperColor}'%2F%3E%3C%2Fsvg%3E");
+    right: 10px;
+    left: auto;
+}
+*/
+.swiper-pagination-white {
+    .swiper-pagination-bullet {
+        opacity: .6;
+        background: #fff;
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #fff;
+    }
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background: $swiperColor;
+}
+
+.swiper .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: $swiperColor;
+}
+
+.swiper-pagination-progressbar {
+
+    .swiper-pagination-progressbar-fill {
+        background: $swiperColor;
+    }
+}
+
+/*
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+}
+*/
+
+.swiper-thumbs {
+    display: flex;
+    margin: 0 -5px;
+    padding-top: 10px;
+
+}
+
+.swiper-thumb-item {
+    max-width: 100px;
+    margin: 0 5px;
+    padding: 0;
+    transition: all .5s;
+    opacity: .5;
+    border: $btn-border-width solid transparent;
+    background-color: transparent;
+
+    &:focus,
+    &.focus {
+        outline: 0;
+    }
+
+    &.active {
+        opacity: 1;
+    }
+}
+
+
+.swiper-container-mx-negative {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+
+
+.home-slider-design {
+    .swiper-nav {
+        display: none !important;
+    }
+
+}
+
+.home-slider-image {
+    max-height: 500px;
+
+    @include media-breakpoint-down(sm) {
+        max-height: 250px;
+    }
+}
+
+
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+    right: auto;
+    left: 30px;
+}
+
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+    right: 30px;
+    left: auto;
+
+}
+
+.swiper-pagination-white {
+    .swiper-pagination-bullet {
+        opacity: .8;
+        background: #fff;
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #fff;
+    }
+}
+
+.swiper-outside-nav {
+    display: none;
+    $showOutsideNav: map-get($grid-breakpoints, "xl") + 200px;
+
+    @media (min-width: $showOutsideNav) {
+        display: block;
+    }
+
+    .swiper-button-prev {
+        left: -100px;
+    }
+
+    .swiper-button-next {
+        right: -100px;
+    }
+
+    &.align-with-products {
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            top: 120px;
+        }
+    }
+}
