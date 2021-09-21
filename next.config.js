@@ -15,6 +15,7 @@ const nextConfig = {
 	},
 	i18n,
 	// trailingSlash: true // Uncomment this line for STATIC EXPORT
+	target: "serverless"
 };
 
 module.exports = withPlugins(
