@@ -1,5 +1,6 @@
 
 import Cookie from "js-cookie";
+import fetch from "node-fetch";
 
 export const getStrapiURL = (path = '') => {
 	const APIURL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
@@ -9,7 +10,7 @@ export const getStrapiURL = (path = '') => {
 export const fetchAPI = async (path, method = 'GET', body) => {
 	const requestURL = getStrapiURL(path);
 	const token = Cookie.get('token');
-	console.log({ token });
+
 	const response = await fetch(requestURL, {
 		method,
 		headers: {
@@ -25,10 +26,10 @@ export const fetchAPI = async (path, method = 'GET', body) => {
 
 export const registerUser = async (email, password, snipcartId) => {
 	if (typeof window === 'undefined') return;
-	console.log({ email, password, snipcartId });
+
 	try {
 		const { jwt } = await fetchAPI('/auth/local/register', 'POST', { email, password });
-		console.log({ jwt });
+
 		if (!jwt) return;
 		Cookie.set('token', jwt);
 

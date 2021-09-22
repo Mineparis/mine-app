@@ -15,8 +15,6 @@ const useSnipcartServices = ({ setHideHeader }) => {
 			});
 
 			Snipcart.events.on('customer.registered', ({ id, email, password }) => {
-				console.log({ email, password, id });
-
 				registerUser(email, password, id);
 			});
 		});
