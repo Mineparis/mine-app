@@ -1,6 +1,7 @@
 
 import Cookie from "js-cookie";
 import fetch from "node-fetch";
+import * as Sentry from "@sentry/nextjs";
 
 export const getStrapiURL = (path = '') => {
 	const APIURL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
@@ -36,7 +37,7 @@ export const registerUser = async (email, password, snipcartId) => {
 		const data = fetchAPI(`/customers?snipcartId=${snipcartId}`, 'POST');
 		return data;
 	} catch (err) {
-		console.error(err);
+		Sentry.captureException(err);
 	}
 };
 
@@ -50,6 +51,7 @@ export const login = (identifier, password) => {
 				resolve(res);
 			})
 			.catch((error) => {
+				Sentry.captureException(err);
 				reject(error);
 			});
 	});
