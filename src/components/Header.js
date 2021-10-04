@@ -321,19 +321,6 @@ const Header = ({ menu, ...props }) => {
 							</Link>
 
 							<div className="d-flex align-items-center justify-content-between justify-content-lg-end mt-1 mb-2 my-lg-0 col-4">
-								{/* Search Button*/}
-								<div
-									className="nav-item navbar-icon-link"
-									data-toggle="search"
-									onClick={() => setSearchToggle(!searchToggle)}
-								>
-									<i className="bi bi-search" />
-								</div>
-
-								<div className="navbar-icon-link snipcart-customer-signin">
-									<i className="bi bi-person-circle" />
-								</div>
-
 								{/* Cart Overview */}
 								<div className="navbar-icon-link snipcart-checkout">
 									<i className="bi bi-cart" />
