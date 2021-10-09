@@ -50,7 +50,6 @@ export const getStaticProps = async ({ params, locale }) => {
 			similarProducts,
 			averageRating,
 		},
-		revalidate: 60 * 10,
 	};
 };
 

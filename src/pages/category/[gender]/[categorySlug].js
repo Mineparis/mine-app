@@ -35,7 +35,6 @@ export const getStaticProps = async ({ params, locale }) => {
 			nbProducts,
 			locale: lang,
 		},
-		revalidate: 60 * 10,
 	};
 };
 
