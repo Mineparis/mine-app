@@ -49,5 +49,8 @@
 	"new_account": "Nouveau compte",
 	"new_account_message": "Pas encore inscrit ?",
 	"new_account_contact_message": "Si vous avez des questions,",
-	"language": "Langue"
+	"language": "Langue",
+	"email_duplicate": "Votre email a déjà été envoyé",
+	"email_sent_successfully": "Votre email a bien été envoyé",
+	"error_default_message": "Désolé, une erreur s'est produite. Veuillez réessayer plus tard."
 }
