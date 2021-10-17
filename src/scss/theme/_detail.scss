@@ -73,7 +73,7 @@
 
 .detail-full-item {
     width: 100%;
-    min-height: 600px;
+    min-height: 400px;
 
     @include media-breakpoint-up(lg) {
         height: calc(100vh - #{$headerHeight} - 2rem);
@@ -82,7 +82,7 @@
 
 .detail-full-item-modal {
     width: 100%;
-    min-height: 600px;
+    min-height: 400px;
     height: calc(100vh - #{$headerHeight} - 5rem);
 }
 

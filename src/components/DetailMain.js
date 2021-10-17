@@ -56,8 +56,8 @@ const DetailMain = ({ product, averageRating }) => {
 			<p className="mb-4 text-muted">{descriptions.short}</p>
 
 			<Form>
-				<Row className="list-inline mb-5 align-items-center">
-					<Col lg="3" className="detail-option">
+				<Row className="d-flex list-inline mb-5 align-items-center col-12">
+					<Col className="detail-option col-3">
 						<Input
 							className="form-control detail-quantity data-item-quantity"
 							name="items"

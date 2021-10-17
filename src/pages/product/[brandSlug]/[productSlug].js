@@ -85,22 +85,21 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				<Container fluid>
 					<Row className="justify-content-around">
 						<Col
-							xs={{ size: 12, order: 2 }}
+							xs={{ size: 12, order: 1 }}
 							lg={{ size: 6, order: 1 }}
 							className="py-3"
 						>
 							<ReactIdSwiper
-								className="detail-full"
 								autoplay
 								delay={10000}
 								loop
 								slidesPerView={1}
 								navigation={{
-									nextEl: ".swiper-button-next.swiper-button-white.swiper-nav.d-none.d-lg-block",
-									prevEl: ".swiper-button-prev.swiper-button-white.swiper-nav.d-none.d-lg-block",
+									nextEl: ".swiper-button-next.swiper-button-black.swiper-nav.d-none.d-lg-block",
+									prevEl: ".swiper-button-prev.swiper-button-black.swiper-nav.d-none.d-lg-block",
 								}}
 								pagination={{
-									el: ".swiper-pagination.swiper-pagination-white",
+									el: ".swiper-pagination.swiper-pagination-black",
 									clickable: true,
 									dynamicBullets: true,
 								}}

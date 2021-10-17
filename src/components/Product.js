@@ -8,6 +8,7 @@ import { getStrapiMedia } from '../lib/media';
 import { getCurrentPrice } from '../utils/price';
 
 const GOLDEN_RATIO = 1.618;
+const IMAGE_SIZE = 300;
 
 const Product = ({ data, loading, onlyViewButton }) => {
 	const { t } = useTranslation('common');
@@ -16,7 +17,6 @@ const Product = ({ data, loading, onlyViewButton }) => {
 
 	const [quickView, setQuickView] = useState(false);
 	const link = `/product/${brandSlug}/${productSlug}`;
-	const width = 300;
 	const soldOut = stock < 1;
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
@@ -32,8 +32,8 @@ const Product = ({ data, loading, onlyViewButton }) => {
 						className="img-fluid"
 						src={imageURL}
 						alt={thumbnail?.alternativeText}
-						width={width}
-						height={width * GOLDEN_RATIO}
+						width={IMAGE_SIZE}
+						height={IMAGE_SIZE * GOLDEN_RATIO}
 						loading={loading}
 						sizes="(max-width: 576px) 100vw, 530px"
 					/>
@@ -71,14 +71,6 @@ const Product = ({ data, loading, onlyViewButton }) => {
 					</>
 				</div>
 			</div>
-
-			{/* {!onlyViewButton && (
-				<ModalQuickView
-					isOpen={quickView}
-					toggle={() => setQuickView()}
-					product={product}
-				/>
-			)} */}
 		</>
 	);
 };
