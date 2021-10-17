@@ -43,7 +43,7 @@ const Layout = ({ children }) => {
 			dark: !isWhitePage,
 			fixed: false,
 			light: false,
-			sticky: false,
+			sticky: true,
 		},
 		menu,
 		loggedUser,

@@ -29,15 +29,10 @@ import Logo from "../../public/svg/logo.svg";
 
 import ActiveLink from "./ActiveLink";
 
-import userMenu from "../data/user-menu.json";
-
-import "bootstrap-icons/font/bootstrap-icons.css";
-
 const Header = ({ menu, ...props }) => {
 	const { t } = useTranslation('common');
 	const [collapsed, setCollapsed] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState({});
-	const [searchToggle, setSearchToggle] = useState(false);
 	const [parentName, setParentName] = useState(false);
 	const [additionalNavClasses, setAdditionalNavClasses] = useState("");
 
@@ -49,6 +44,7 @@ const Header = ({ menu, ...props }) => {
 	const [topbarWidth, topbarHeight] = useSize(topbarRef);
 	const [navbarWidth, navbarHeight] = useSize(navbarRef);
 
+	const isSmallScreen = size.width < 991;
 	const hasDropdown = Object.values(dropdownOpen).some((dropdown) => dropdown);
 
 	const toggleDropdown = (name) => {
@@ -56,17 +52,17 @@ const Header = ({ menu, ...props }) => {
 	};
 
 	const onLinkClick = (parent) => {
-		size.width < 991 && setCollapsed(!collapsed);
+		if (isSmallScreen) setCollapsed(!collapsed);
 		setParentName(parent);
 	};
 
 	const makeNavbarSticky = () => {
-		if (props.nav.sticky !== false) {
+		if (props.nav.sticky) {
 			if (scrollY > topbarHeight) {
 				setAdditionalNavClasses("fixed-top");
-				navbarHeight > 0 &&
-					props.headerAbsolute !== true &&
+				if (navbarHeight > 0 && !props.headerAbsolute) {
 					props.setPaddingTop(navbarHeight);
+				}
 			} else {
 				setAdditionalNavClasses("");
 				props.setPaddingTop(0);
@@ -105,38 +101,45 @@ const Header = ({ menu, ...props }) => {
 
 	useEffect(highlightDropdownParent, []);
 
+	const CartOverviewWithLogo = ({ shouldDisplay }) => {
+		if (!shouldDisplay) return null;
+
+		return (
+			<>
+				<Link className="mx-auto" href="/" passHref>
+					<a className="py-1 navbar-brand col-2">
+						<Logo />
+					</a>
+				</Link>
+				<div className="d-flex justify-content-end col-1">
+					<div className="navbar-icon-link snipcart-checkout">
+						<i className="bi bi-cart" />
+						<div className="navbar-icon-link-badge snipcart-items-count">0</div>
+					</div>
+				</div>
+			</>
+		);
+	};
+
 	return (
 		<header
 			className={`header ${props.headerClasses ? props.headerClasses : ""} ${props.headerAbsolute ? "header-absolute" : ""
 				}`}
 		>
-			{/* Navbar*/}
-			<div ref={navbarRef}>
+			<div ref={navbarRef} className="d-flex flex-column justify-content-space-between">
 				<Navbar
 					color={
 						props.nav.color
-							? hasDropdown ||
-								collapsed
+							? hasDropdown || collapsed
 								? "white"
 								: props.nav.color
 							: "white"
 					}
-					light={
-						props.nav.light ||
-						hasDropdown ||
-						collapsed
-					}
-					dark={
-						props.nav.dark &&
-						!hasDropdown &&
-						!collapsed
-					}
+					light={props.nav.light || hasDropdown || collapsed}
+					dark={props.nav.dark && !hasDropdown && !collapsed}
 					fixed={props.nav.fixed ? props.nav.fixed : ""}
 					expand="lg"
-					className={` ${props.nav.classes
-						? props.nav.classes
-						: "navbar-sticky bg-fixed-white"
-						} ${additionalNavClasses ? additionalNavClasses : ""}`}
+					className={`${props.nav.classes ? props.nav.classes : "navbar-sticky bg-fixed-white"} ${additionalNavClasses || ""}`}
 				>
 					<Container fluid>
 						<NavbarToggler
@@ -312,55 +315,12 @@ const Header = ({ menu, ...props }) => {
 									)
 								)}
 							</Nav>
-
-							{/* Navbar Header  */}
-							<Link className="mx-auto" href="/" passHref>
-								<a className="py-1 navbar-brand">
-									<Logo />
-								</a>
-							</Link>
-
-							<div className="d-flex align-items-center justify-content-between justify-content-lg-end mt-1 mb-2 my-lg-0 col-4">
-								{/* Cart Overview */}
-								<div className="navbar-icon-link snipcart-checkout">
-									<i className="bi bi-cart" />
-									<div className="navbar-icon-link-badge snipcart-items-count">0</div>
-								</div>
-							</div>
+							<CartOverviewWithLogo shouldDisplay={!isSmallScreen} />
 						</Collapse>
+						<CartOverviewWithLogo shouldDisplay={isSmallScreen && !collapsed} />
 					</Container>
 				</Navbar>
 			</div>
-			{/* /Navbar */}
-			{/* Fullscreen search area*/}
-			{searchToggle && (
-				<div className="search-area-wrapper" style={{ display: "block" }}>
-					<div className="search-area d-flex align-items-center justify-content-center">
-						<div
-							className="close-btn"
-							onClick={() => setSearchToggle(!searchToggle)}
-						>
-							<i className="bi bi-search" />
-						</div>
-						<form className="search-area-form" action="#">
-							<div className="form-group position-relative">
-								<input
-									className="search-area-input"
-									type="search"
-									name="search"
-									id="search"
-									autoFocus
-									placeholder="What are you looking for?"
-								/>
-								<button className="search-area-button" type="submit">
-									<i className="bi bi-search" />
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			)}
-			{/* /Fullscreen search area*/}
 		</header>
 	);
 };
