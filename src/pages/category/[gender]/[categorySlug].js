@@ -3,7 +3,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Spinner } from 'reactstrap';
 
 import ShopHeader from '../../../components/ShopHeader';
 import ShopPagination from '../../../components/ShopPagination';
@@ -68,11 +68,8 @@ const Category = ({ category, nbProducts, locale }) => {
 		},
 		{
 			name: parentLabel,
-		},
-		{
-			name: categoryName,
 			active: true,
-		}
+		},
 	];
 
 	return (
@@ -99,20 +96,28 @@ const Category = ({ category, nbProducts, locale }) => {
 							setSortOptionSelected={setSortOptionSelected}
 						/>
 
-						<Row>
-							{products.map((productData) => (
-								<Col key={productData._id} xs="6" sm="4" md="4" lg="3" xl="3">
-									<Product data={productData} loading="lazy" />
-								</Col>
-							))}
-						</Row>
+						{!products.length ? (
+							<div className="d-flex justify-content-center align-items-center py-7 my-6">
+								<Spinner color="dark" size="lg" />
+							</div>
+						) : (
+							<>
+								<Row>
+									{products.map((productData) => (
+										<Col key={productData._id} xs="6" sm="4" md="4" lg="3" xl="3">
+											<Product data={productData} />
+										</Col>
+									))}
+								</Row>
 
-						<ShopPagination
-							page={page + 1}
-							totalItems={nbProducts}
-							totalPages={totalPages}
-							handleChangePage={setPage}
-						/>
+								<ShopPagination
+									page={page + 1}
+									totalItems={nbProducts}
+									totalPages={totalPages}
+									handleChangePage={setPage}
+								/>
+							</>
+						)}
 					</Col>
 				</Row>
 			</Container>
