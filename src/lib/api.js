@@ -16,11 +16,13 @@ export const fetchAPI = async (path, method = 'GET', body) => {
 		method,
 		headers: {
 			'Content-Type': 'application/json',
-			...(token ? { Authorization: `Bearer ${token}` } : {}),
+			...(token && token !== 'undefined' ? { Authorization: `Bearer ${token}` } : {}),
 		},
 		...(body ? { body: JSON.stringify(body) } : {})
 	});
 	const data = await response.json();
+
+	if (!response.ok) throw data;
 	return data;
 };
 

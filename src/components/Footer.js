@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
+
+import { fetchAPI } from "../lib/api";
 
 const Footer = () => {
 	const { t } = useTranslation('common');
+	const [email, setEmail] = useState(null);
+
 	const router = useRouter();
 
 	const handleChangeLanguage = (event) => {
@@ -12,31 +17,29 @@ const Footer = () => {
 		router.push(router.asPath, null, { locale });
 	};
 
+	const handleChangeEmail = (event) => setEmail(event.target.value);
+
+	const handleSubmitNewsletterEmail = async (event) => {
+		event.preventDefault();
+		try {
+			await fetchAPI('/mailings', 'POST', { email });
+			const msg = t('email_sent_successfully');
+			toast.success(msg);
+
+		} catch (err) {
+			const errMsg = err.statusCode === 409 ? t(err.message) : t();
+			toast.error(errMsg);
+		}
+	};
+
 	const categories = [
 		{
-			sectionName: 'Shop',
+			sectionName: 'Informations',
 			links: [
-				{
-					href: '/box',
-					label: t('box'),
-				},
 				{
 					href: '/about-us',
 					label: t('about_us'),
 				},
-				{
-					href: '/blog',
-					label: 'Blog',
-				},
-				{
-					href: '/customer-login',
-					label: t('login'),
-				},
-			]
-		},
-		{
-			sectionName: 'Informations',
-			links: [
 				{
 					href: '/',
 					label: t('shipping_returns'),
@@ -44,10 +47,6 @@ const Footer = () => {
 				{
 					href: '/faq',
 					label: 'FAQ',
-				},
-				{
-					href: '/contact',
-					label: 'Contact',
 				},
 				{
 					href: '/',
@@ -75,23 +74,24 @@ const Footer = () => {
 	return (
 		<footer className="main-footer bg-primary text-gray-300">
 			{/* Main block - menus, subscribe form*/}
-			<div className="py-6">
+			<div className="py-4">
 				<div className="container">
 					<div className="row justify-content-between">
-						<div className="col-lg-4">
+						<div className="col-lg-4 mb-2">
 							<h6 className="text-uppercase mb-3">
 								{t('newsletter_label')}
 							</h6>
 							<p className="mb-3">
 								{t('newsletter_description')}
 							</p>
-							<form action="#" id="newsletter-form">
+							<form id="newsletter-form" onSubmit={handleSubmitNewsletterEmail}>
 								<div className="input-group mb-3">
 									<input
-										className="form-control bg-transparent border-secondary border-right-0"
+										className="form-control bg-transparent border-secondary border-right-0 text-white"
 										type="email"
 										placeholder={t('newsletter_placeholder')}
 										aria-label={t('newsletter_placeholder')}
+										onChange={handleChangeEmail}
 									/>
 									<div className="input-group-append">
 										<button
@@ -105,7 +105,7 @@ const Footer = () => {
 							</form>
 						</div>
 						{categories.map(({ sectionName, links }) => (
-							<div key={sectionName} className="col-lg-2 col-md-2 mb-5 mb-lg-0">
+							<div key={sectionName} className="col-lg-2 col-md-2 mb-2 mb-lg-0">
 								<h6 className="text-uppercase">{sectionName}</h6>
 								<ul className="list-unstyled footer-list">
 									{links.map(({ href, label }) => (
@@ -142,22 +142,22 @@ const Footer = () => {
 			<div className="py-4 font-weight-light">
 				<div className="container">
 					<div className="row align-items-center">
-						<div className="col-md-6 text-center text-md-left">
+						<div className="text-center text-md-left col-md-6">
 							<p className="mb-md-0">
 								© {new Date().getFullYear()} Mine. {t('all_rights_reserved')}.
 							</p>
 						</div>
 
-						<div className="col-md-6 d-flex flex-end justify-content-end">
+						<div className="d-flex flex-end justify-content-end col-md-6 align-items-center">
 							{/* Language dropdown */}
-							<div className="col-md-4 mx-4 d-flex justify-content-between align-items-center">
-								<label htmlFor="language">{t('language')}</label>
+							<div className="d-flex justify-content-between align-items-center col-md-4">
+								<label htmlFor="language" className="mx-1">{t('language')}</label>
 								<select id="language" defaultValue={langSelected.value} onChange={handleChangeLanguage}>
 									{languageOptions.map(({ label, value }) => <option key={value} value={value}>{label}</option>)}
 								</select>
 							</div>
-							<div >
-								<ul className="list-inline mb-0 mt-2 mt-md-0 text-center text-md-right">
+							<div className="col-md-6">
+								<ul className="d-flex text-center m-0">
 									<li className="list-inline-item">
 										<img className="w-2rem" src="/svg/visa.svg" alt="visa" />
 									</li>
