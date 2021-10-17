@@ -67,31 +67,35 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 				</Container>
 			</section>
 
-			<section className="position-relative">
-				<BackgroundImage src={surveySection.staticImg} alt="survey" />
-				<Card className="product-survey-card md-3">
-					<CardBody className="md-6">
-						<h3><i>{surveySection.title}</i></h3>
-					</CardBody>
-				</Card>
-			</section>
+			{surveySection && (
+				<section className="position-relative">
+					<BackgroundImage src={surveySection.staticImg} alt="survey" />
+					<Card className="product-survey-card md-3">
+						<CardBody className="md-6">
+							<h3><i>{surveySection.title}</i></h3>
+						</CardBody>
+					</Card>
+				</section>
+			)}
 
 			<section className="py-6 bg-gray-100">
 				<SwiperProducts title={t('new_arrivals')} products={newProducts} />
 			</section>
 
-			<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
-				<Col className="mb-6">
-					<h2 className="text-white">{boxSection.title}</h2>
-				</Col>
-				<Col className="d-flex justify-content-center">
-					<Link href={boxSection.button.link}>
-						<Button className="rounded-button bg-white text-primary">{boxSection.button.label}</Button>
-					</Link>
-				</Col>
-			</BackgroundImage>
+			{boxSection && (
+				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
+					<Col className="mb-6">
+						<h2 className="text-white">{boxSection.title}</h2>
+					</Col>
+					<Col className="d-flex justify-content-center">
+						<Link href={boxSection.button.link}>
+							<Button className="rounded-button bg-white text-primary">{boxSection.button.label}</Button>
+						</Link>
+					</Col>
+				</BackgroundImage>
+			)}
 
-			<ServicesBlock valuesSection={valuesSection} />
+			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
 		</>
 	);
 };
