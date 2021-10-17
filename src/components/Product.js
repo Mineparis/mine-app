@@ -3,19 +3,17 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import Image from "./CustomImage";
-// import ModalQuickView from "./ModalQuickView";
 import { getStrapiMedia } from '../lib/media';
 import { getCurrentPrice } from '../utils/price';
 
 const GOLDEN_RATIO = 1.618;
 const IMAGE_SIZE = 300;
 
-const Product = ({ data, loading, onlyViewButton }) => {
+const Product = ({ data, loading }) => {
 	const { t } = useTranslation('common');
 
 	const { name, brand, originalPrice, salePricePercent, productSlug, brandSlug, thumbnail, stock, isNewProduct } = data;
 
-	const [quickView, setQuickView] = useState(false);
 	const link = `/product/${brandSlug}/${productSlug}`;
 	const soldOut = stock < 1;
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
@@ -48,14 +46,6 @@ const Product = ({ data, loading, onlyViewButton }) => {
 									<i className="fa-search fa" />
 								</a>
 							</Link>
-							{!onlyViewButton && (
-								<a
-									className="btn btn-outline-dark btn-product-right"
-									onClick={() => setQuickView(!quickView)}
-								>
-									<i className="fa fa-expand-arrows-alt" />
-								</a>
-							)}
 						</div>
 					</div>
 				</div>

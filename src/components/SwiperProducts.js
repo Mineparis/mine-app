@@ -60,7 +60,6 @@ const SwiperProducts = ({ products, title, ...props }) => {
 							<Product
 								key={index}
 								data={product}
-								onlyViewButton={true}
 							/>
 						</div>
 					))}
