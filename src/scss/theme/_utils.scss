@@ -342,8 +342,8 @@ img.bg-image {
 
 .bg-cover {
     background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
 
     &.bg-cover-left {
         background-position: left center;
