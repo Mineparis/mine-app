@@ -116,6 +116,8 @@ const Swiper = (props) => {
 						style={{
 							...props.style,
 							backgroundImage: !props.columns ? `url(${image})` : `none`,
+							backgroundSize: 'cover',
+							backgroundPosition: 'center'
 						}}
 					>
 						<Container

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { fetchAPI } from "../lib/api";
 
@@ -159,13 +160,10 @@ const Footer = () => {
 							<div className="col-md-6">
 								<ul className="d-flex text-center m-0">
 									<li className="list-inline-item">
-										<img className="w-2rem" src="/svg/visa.svg" alt="visa" />
+										<Image width={35} height={35} className="w-2rem" src="/svg/visa.svg" alt="visa" />
 									</li>
 									<li className="list-inline-item">
-										<img className="w-2rem" src="/svg/mastercard.svg" alt="mastercard" />
-									</li>
-									<li className="list-inline-item">
-										<img className="w-2rem" src="/svg/paypal.svg" alt="paypal" />
+										<Image width={35} height={35} className="w-2rem" src="/svg/mastercard.svg" alt="mastercard" />
 									</li>
 								</ul>
 							</div>

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-
+import Image from "next/image";
+import ReactIdSwiper from "react-id-swiper";
 import {
 	Button,
 	ModalBody,
@@ -11,8 +12,6 @@ import {
 	InputGroupAddon,
 	InputGroup,
 } from "reactstrap";
-
-import ReactIdSwiper from "react-id-swiper";
 
 import SelectBox from "./SelectBox";
 import Stars from "./Stars";
@@ -80,7 +79,8 @@ const ModalQuickView = ({ isOpen, toggle, product }) => {
 						<div className="detail-carousel">
 							<ReactIdSwiper {...params} loop ref={swiperRef}>
 								{product.img.detail.map((image, index) => (
-									<img
+									<Image
+										layout="fill"
 										className="img-fluid"
 										src={image.img}
 										alt={image.alt}
@@ -96,7 +96,8 @@ const ModalQuickView = ({ isOpen, toggle, product }) => {
 										className={`swiper-thumb-item detail-thumb-item ${currentIndex === index ? "active" : ""
 											}`}
 									>
-										<img
+										<Image
+											layout="fill"
 											className="img-fluid"
 											src={image.img}
 											alt={image.alt}

@@ -1,5 +1,6 @@
 import { Container, Row, Col, Card } from "reactstrap";
 import Link from "next/link";
+import image from "next/image";
 
 const HomeOurPicks = () => {
 	return (
@@ -11,7 +12,7 @@ const HomeOurPicks = () => {
 						<p className="lead text-muted">
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
 							eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+						</p>
 					</Col>
 				</Row>
 				<Row className="align-items-md-stretch">
@@ -31,13 +32,14 @@ const HomeOurPicks = () => {
 								<h1 className="text-uppercase">Men</h1>
 								<p className="lead">
 									Consectetur adipisicing elit sed do eiusmod tempor.
-                </p>
+								</p>
 							</div>
 						</div>
 					</Col>
 					<Col lg="8">
 						<div className="card light-overlay text-dark border-0 mb-30px">
-							<img
+							<Image
+								layout="fill"
 								className="card-img"
 								src="https://source.unsplash.com/featured/?black,models,fashion"
 								alt="Card image"
@@ -50,14 +52,15 @@ const HomeOurPicks = () => {
 									<h1 className="text-uppercase">Ladies</h1>
 									<p className="lead">
 										Consectetur adipisicing elit sed do eiusmod tempor.
-                  </p>
+									</p>
 								</div>
 							</div>
 						</div>
 						<Row>
 							<Col lg="4">
 								<Card className="text-white border-0 mb-lg-0 mb-30px">
-									<img
+									<Image
+										layout="fill"
 										className="card-img"
 										src="img/photo/haley-phelps-62815-unsplash.jpg"
 										alt="Card image"
@@ -74,7 +77,8 @@ const HomeOurPicks = () => {
 							</Col>
 							<Col lg="4">
 								<Card className="dark-overlay text-white border-0 mb-lg-0 mb-30px">
-									<img
+									<Image
+										layout="fill"
 										className="card-img"
 										src="img/photo/matese-fields-233175-unsplash.jpg"
 										alt="Card image"
@@ -91,7 +95,8 @@ const HomeOurPicks = () => {
 							</Col>
 							<Col lg="4">
 								<Card className="text-white border-0">
-									<img
+									<Image
+										layout="fill"
 										className="card-img"
 										src="img/photo/brooke-cagle-195856-unsplash.jpg"
 										alt="Card image"

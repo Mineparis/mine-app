@@ -9,7 +9,7 @@ import { getCurrentPrice } from '../utils/price';
 const GOLDEN_RATIO = 1.618;
 const IMAGE_SIZE = 300;
 
-const Product = ({ data, loading }) => {
+const Product = ({ data, loading, withNewFlag = false }) => {
 	const { t } = useTranslation('common');
 
 	const { name, brand, originalPrice, salePricePercent, productSlug, brandSlug, thumbnail, stock, isNewProduct } = data;
@@ -23,7 +23,7 @@ const Product = ({ data, loading }) => {
 		<>
 			<div className="product">
 				<div className="product-image">
-					{isNewProduct && <div className="ribbon ribbon-info">{t('new')}</div>}
+					{isNewProduct && withNewFlag && <div className="ribbon ribbon-info">{t('new')}</div>}
 					{soldOut && <div className="ribbon ribbon-danger">{t('sold_out')}</div>}
 
 					<Image

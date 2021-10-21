@@ -6,7 +6,7 @@ import "swiper/css/swiper.css";
 
 import Product from "./Product";
 
-const SwiperProducts = ({ products, title, ...props }) => {
+const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 	const swiperRef = useRef(null);
 
 	const goPrev = () => {
@@ -57,10 +57,7 @@ const SwiperProducts = ({ products, title, ...props }) => {
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
 					{products.map((product, index) => (
 						<div key={index} className="product-slider-item">
-							<Product
-								key={index}
-								data={product}
-							/>
+							<Product key={index} data={product} withNewFlag={withNewFlag} />
 						</div>
 					))}
 				</ReactIdSwiper>

@@ -6,7 +6,7 @@ import { getCurrentPrice } from '../utils/price';
 import { getStrapiMedia } from '../lib/media';
 import { useRouter } from 'next/router';
 
-const DetailMain = ({ product, averageRating }) => {
+const DetailMain = ({ product }) => {
 	const { t } = useTranslation('common');
 	const { asPath } = useRouter();
 
@@ -15,7 +15,6 @@ const DetailMain = ({ product, averageRating }) => {
 		name,
 		originalPrice,
 		salePricePercent,
-		comments,
 		descriptions,
 		thumbnail,
 		stock,
@@ -40,18 +39,6 @@ const DetailMain = ({ product, averageRating }) => {
 						</li>
 					)}
 				</ul>
-				<div className="d-flex align-items-center">
-					<Stars
-						stars={averageRating}
-						secondColor="gray-300"
-						starClass="mr-1"
-						className="mr-2"
-					/>
-
-					<span className="text-muted text-uppercase text-sm mt-1">
-						{comments.length} {t('reviews')}
-					</span>
-				</div>
 			</div>
 			<p className="mb-4 text-muted">{descriptions.short}</p>
 

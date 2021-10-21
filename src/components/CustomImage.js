@@ -4,7 +4,7 @@ import Image from "next/image";
 const CustomImage = (props) => {
 	if (process.env.production_type === "static") {
 		return (
-			<img
+			<Image
 				src={props.src}
 				alt={props.alt}
 				width={props.width}

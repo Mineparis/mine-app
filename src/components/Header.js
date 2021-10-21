@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
 import Router from "next/router";
+import Image from "next/image";
 import { useTranslation } from "next-i18next";
 
 import {
@@ -271,7 +272,7 @@ const Header = ({ menu, ...props }) => {
 														</Col>
 														{item.image && (
 															<Col lg="3" className="d-none d-lg-block">
-																<img src={item.image} alt="" className="bg-image" />
+																<Image layout="fill" src={item.image} alt="" className="bg-image" />
 															</Col>
 														)}
 													</Row>
