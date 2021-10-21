@@ -63,7 +63,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 							<p className="lead">{ourDescription}</p>
 						</Col>
 					</Row>
-					<SwiperProducts title={t('best_sellers')} products={bestSellersProducts} />
+					<SwiperProducts title={t('best_sellers')} products={bestSellersProducts} withNewFlag />
 				</Container>
 			</section>
 
