@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
 
 	useSnipcartServices({ setHideHeader });
 
-	const whitePages = ['/category', '/product', '/login', '/customer'];
+	const whitePages = ['/category', '/product', '/login', '/customer', '/legal-notice', '/faq'];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
 	const title = 'Mine';

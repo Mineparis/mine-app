@@ -1,7 +1,6 @@
 import { Row, Col, Form, Button, Input } from 'reactstrap';
 import { useTranslation } from 'next-i18next';
 
-import Stars from './Stars';
 import { getCurrentPrice } from '../utils/price';
 import { getStrapiMedia } from '../lib/media';
 import { useRouter } from 'next/router';

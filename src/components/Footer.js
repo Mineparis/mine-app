@@ -54,7 +54,7 @@ const Footer = () => {
 					label: t('terms_of_sales'),
 				},
 				{
-					href: '/',
+					href: '/legal-notice',
 					label: t('legal_notice'),
 				},
 			]
