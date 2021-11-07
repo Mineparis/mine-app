@@ -16,7 +16,8 @@ const nextConfig = {
 	},
 	i18n,
 	// trailingSlash: true // Uncomment this line for STATIC EXPORT
-	target: "experimental-serverless-trace"
+	target: "experimental-serverless-trace",
+	generateBuildId: () => process.env.BUILD_ID
 };
 
 const SentryWebpackPluginOptions = {
