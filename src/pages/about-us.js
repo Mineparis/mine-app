@@ -43,6 +43,9 @@ const AboutUs = ({ data }) => {
 					src={jumbotronImage}
 					alt={jumbotron.subtitle}
 					layout="fill"
+					objectFit="cover"
+					objectPosition="center"
+					priority
 				/>
 				<div className="overlay-content w-100">
 					<Container>
@@ -82,6 +85,8 @@ const AboutUs = ({ data }) => {
 								src={firstSectionImage}
 								alt={firstSection.subtitle}
 								layout="fill"
+								objectFit="cover"
+								objectPosition="center"
 							/>
 						</Col>
 					</Row>
@@ -103,6 +108,8 @@ const AboutUs = ({ data }) => {
 								src={secondSectionImage}
 								alt={secondSection.subtitle}
 								layout="fill"
+								objectFit="cover"
+								objectPosition="center"
 							/>
 						</Col>
 					</Row>
@@ -125,6 +132,8 @@ const AboutUs = ({ data }) => {
 								src={thirdSectionImage}
 								alt="Mine"
 								layout="fill"
+								objectFit="cover"
+								objectPosition="center"
 							/>
 						</Col>
 					</Row>
