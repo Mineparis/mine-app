@@ -57,7 +57,7 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
 					{products.map((product, index) => (
 						<div key={index} className="product-slider-item">
-							<Product key={index} data={product} withNewFlag={withNewFlag} />
+							<Product key={index} data={product} />
 						</div>
 					))}
 				</ReactIdSwiper>
