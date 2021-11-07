@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import ReactIdSwiper from 'react-id-swiper';
@@ -57,6 +58,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 	const titleLabel = `Mine: ${product.brand} · ${product.name}`;
+	const hasMultipleImage = product?.images.length > 1;
 
 	if (router.isFallback) {
 		return (
@@ -92,24 +94,27 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 							<ReactIdSwiper
 								autoplay
 								delay={10000}
-								loop
+								loop={hasMultipleImage}
 								slidesPerView={1}
-								navigation={{
+								navigation={hasMultipleImage ? {
 									nextEl: ".swiper-button-next.swiper-button-black.swiper-nav.d-none.d-lg-block",
 									prevEl: ".swiper-button-prev.swiper-button-black.swiper-nav.d-none.d-lg-block",
-								}}
-								pagination={{
+								} : null}
+								pagination={hasMultipleImage ? {
 									el: ".swiper-pagination.swiper-pagination-black",
 									clickable: true,
 									dynamicBullets: true,
-								}}
+								} : null}
 							>
 								{product.images.map(({ formats }, index) => (
-									<div
-										key={index}
-										className="detail-full-item bg-cover"
-										style={{ backgroundImage: `url(${getStrapiMedia(formats.large)})` }}
-									/>
+									<div key={index} className="detail-full-item bg-cover">
+										<Image
+											layout="fill"
+											objectFit="contain"
+											objectPosition="center"
+											src={getStrapiMedia(formats.large)}
+										/>
+									</div>
 								))}
 							</ReactIdSwiper>
 						</Col>
