@@ -46,10 +46,6 @@ const Footer = () => {
 					label: t('shipping_returns'),
 				},
 				{
-					href: '/faq',
-					label: 'FAQ',
-				},
-				{
 					href: '/',
 					label: t('terms_of_sales'),
 				},
