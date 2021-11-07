@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { registerUser } from '../lib/api';
 
 const useSnipcartServices = ({ setHideHeader }) => {
 	useEffect(() => {
@@ -12,10 +11,6 @@ const useSnipcartServices = ({ setHideHeader }) => {
 				if (from !== "/" && to === "/") {
 					setHideHeader(false);
 				}
-			});
-
-			Snipcart.events.on('customer.registered', ({ id, email, password }) => {
-				registerUser(email, password, id);
 			});
 		});
 	}, []);
