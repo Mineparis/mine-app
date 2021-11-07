@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import ReactIdSwiper from "react-id-swiper";
 import { Container, Row, Col, Button } from "reactstrap";
 
@@ -110,16 +111,14 @@ const Swiper = (props) => {
 				const image = img ? getStrapiMedia(img) : staticImg;
 
 				return (
-					<div
-						key={index}
-						className={`${bgCover} ${darkOverlay}`}
-						style={{
-							...props.style,
-							backgroundImage: !props.columns ? `url(${image})` : `none`,
-							backgroundSize: 'cover',
-							backgroundPosition: 'center'
-						}}
-					>
+					<div key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
+						<Image
+							layout="fill"
+							objectFit="cover"
+							objectPosition="center"
+							src={image}
+							priority
+						/>
 						<Container
 							fluid={props.containerFluid}
 							className={`h-100 ${!props.columns ? "px-lg-6" : ""} ${containerClass}`}
