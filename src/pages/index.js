@@ -8,6 +8,7 @@ import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
 import Swiper from "../components/Swiper";
 import SwiperProducts from "../components/SwiperProducts";
 import ServicesBlock from "../components/ServicesBlock";
+import BestCategories from "../components/BestCategories";
 
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
@@ -78,7 +79,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 				</section>
 			)}
 
-			<section className="py-6 bg-gray-100">
+			<section className="py-3">
+				<BestCategories t={t} />
+			</section>
+
+			<section className="py-6">
 				<SwiperProducts title={t('new_arrivals')} products={newProducts} />
 			</section>
 
