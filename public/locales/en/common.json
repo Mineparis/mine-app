@@ -8,7 +8,7 @@
 	"about_us": "About us",
 	"log_in": "Log in",
 	"shipping_returns": "Shipping & returns",
-	"terms_of_sales": "Terms of sales",
+	"terms_of_use": "Terms of use",
 	"legal_notice": "Legal notice",
 	"hair": "Hair",
 	"skin": "Skin",
@@ -48,12 +48,13 @@
 	"register": "Register",
 	"firstName": "First name",
 	"lastName": "Last name",
-	"contact_us": "contact us",
+	"contact_us": "Contact us",
 	"new_account": "New account",
 	"new_account_message": "Not our registered yet?",
 	"new_account_contact_message": "If you have any questions, please feel free to",
 	"language": "Language",
 	"email_duplicate": "Your email has already been sent",
 	"email_sent_successfully": "Your email has sent successfully",
-	"error_default_message": "Sorry, something went wrong. Please try again later."
+	"error_default_message": "Sorry, something went wrong. Please try again later.",
+	"send": "Send"
 }

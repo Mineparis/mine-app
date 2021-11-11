@@ -8,7 +8,7 @@
 	"about_us": "A propos",
 	"log_in": "Se connecter",
 	"shipping_returns": "Politique de livraison",
-	"terms_of_sales": "CGU",
+	"terms_of_use": "CGU",
 	"legal_notice": "Mention légales",
 	"hair": "Cheveux",
 	"skin": "Peau",
@@ -48,12 +48,13 @@
 	"register": "S'inscrire",
 	"firstName": "Prénom",
 	"lastName": "Nom",
-	"contact_us": "contactez nous",
+	"contact_us": "Contactez nous",
 	"new_account": "Nouveau compte",
 	"new_account_message": "Pas encore inscrit ?",
 	"new_account_contact_message": "Si vous avez des questions,",
 	"language": "Langue",
 	"email_duplicate": "Votre email a déjà été envoyé",
 	"email_sent_successfully": "Votre email a bien été envoyé",
-	"error_default_message": "Désolé, une erreur s'est produite. Veuillez réessayer plus tard."
+	"error_default_message": "Désolé, une erreur s'est produite. Veuillez réessayer plus tard.",
+	"send": "Envoyer"
 }

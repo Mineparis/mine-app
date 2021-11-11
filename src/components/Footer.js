@@ -42,12 +42,16 @@ const Footer = () => {
 					label: t('about_us'),
 				},
 				{
+					href: '/contact',
+					label: t('contact_us'),
+				},
+				{
 					href: '/',
 					label: t('shipping_returns'),
 				},
 				{
-					href: '/',
-					label: t('terms_of_sales'),
+					href: '/terms-of-use',
+					label: t('terms_of_use'),
 				},
 				{
 					href: '/legal-notice',

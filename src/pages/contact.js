@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { Container, Row, Col } from "reactstrap";
 
@@ -8,24 +9,22 @@ import ContactForm from "../components/ContactForm";
 
 import UseWindowSize from "../hooks/UseWindowSize";
 
-export async function getStaticProps() {
+export const getStaticProps = async ({ locale }) => {
+	const lang = locale || DEFAULT_LANG;
+
 	return {
 		props: {
-			nav: {
-				light: true,
-				classes: "navbar-sticky bg-fixed-white",
-				color: "white",
-			},
-			title: "Contact",
+			...(await serverSideTranslations(lang, 'common')),
 		},
 	};
-}
+};
 
 let Map;
+const markerPosition = [48.86613886844974, 2.329385919103998];
 
-const Contact = (props) => {
+
+const Contact = () => {
 	const [mapLoaded, setMapLoaded] = useState(false);
-	const [dragging, setDragging] = useState(false);
 	const [tap, setTap] = useState(false);
 
 	const size = UseWindowSize();
@@ -33,19 +32,17 @@ const Contact = (props) => {
 	useEffect(() => {
 		Map = dynamic(() => import("../components/Map"), { ssr: false });
 		setMapLoaded(true);
-
-		setTap(size.width > 700 ? true : false);
-		setDragging(size.width > 700 ? true : false);
+		setTap(size.width > 700);
 	}, []);
 
 	return (
 		<>
-			<Hero title={props.title} />
+			<Hero title="Contact" />
 
 			<section>
 				<Container>
 					<Row>
-						<Col className="mb-3">
+						<Col className="mb-3 mx-5">
 							<ContactForm />
 						</Col>
 					</Row>
@@ -55,10 +52,10 @@ const Contact = (props) => {
 				{mapLoaded && (
 					<Map
 						className="h-100"
-						center={[48.85674116011365, 2.3484260449616103]}
-						markerPosition={[48.85674116011365, 2.3484260449616103]}
+						center={markerPosition}
+						markerPosition={markerPosition}
 						zoom={12}
-						dragging={dragging}
+						dragging={tap}
 						tap={tap}
 					/>
 				)}
