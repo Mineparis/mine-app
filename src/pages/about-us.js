@@ -30,7 +30,6 @@ const AboutUs = ({ data }) => {
 	const thirdSection = data?.section?.[3];
 	const thirdSectionImage = thirdSection.image ? getStrapiMedia(thirdSection.image) : thirdSection.imageURL;
 	const lastSection = data?.lastSection;
-	const lastSectionImage = lastSection.image ? getStrapiMedia(lastSection.image) : lastSection.imageURL;
 
 	return (
 		<>
