@@ -69,7 +69,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 			</section>
 
 			{surveySection && (
-				<section className="position-relative">
+				<section className="position-relative py-3">
 					<BackgroundImage src={surveySection.staticImg} alt="survey" />
 					<Card className="product-survey-card md-3">
 						<CardBody className="md-6">
@@ -79,7 +79,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 				</section>
 			)}
 
-			<section className="py-3">
+			<section className="pt-6">
 				<BestCategories t={t} />
 			</section>
 
