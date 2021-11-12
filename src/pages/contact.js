@@ -15,6 +15,7 @@ export const getStaticProps = async ({ locale }) => {
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
+			lang,
 		},
 	};
 };
@@ -23,7 +24,7 @@ let Map;
 const markerPosition = [48.86613886844974, 2.329385919103998];
 
 
-const Contact = () => {
+const Contact = ({ lang }) => {
 	const [mapLoaded, setMapLoaded] = useState(false);
 	const [tap, setTap] = useState(false);
 
@@ -43,7 +44,7 @@ const Contact = () => {
 				<Container>
 					<Row>
 						<Col className="mb-3 mx-5">
-							<ContactForm />
+							<ContactForm lang={lang} />
 						</Col>
 					</Row>
 				</Container>

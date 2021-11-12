@@ -27,6 +27,6 @@ export const fetchAPI = async (path, method = 'GET', body) => {
 		return data;
 	} catch (err) {
 		Sentry.captureException(err);
-		return err;
+		throw err;
 	}
 };

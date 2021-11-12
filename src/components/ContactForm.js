@@ -6,15 +6,17 @@ import * as Sentry from "@sentry/nextjs";
 
 import { fetchAPI } from "../lib/api";
 
-const ContactForm = (props) => {
+const ContactForm = ({ lang, ...props }) => {
 	const { t } = useTranslation('common');
 
-	const [formData, setFormData] = useState({
+	const initFormData = {
 		firstName: null,
 		lastName: null,
 		email: null,
 		message: null,
-	});
+	};
+
+	const [formData, setFormData] = useState(initFormData);
 
 	const handleChangeData = ({ target: { name, value } }) => {
 		setFormData(prevState => ({ ...prevState, [name]: value }));
@@ -22,16 +24,17 @@ const ContactForm = (props) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		fetchAPI('/contact', 'POST', formData).then(res => {
-			if (res.ok) {
+		fetchAPI('/contact', 'POST', { ...formData, lang })
+			.then(() => {
 				const msg = t('email_sent_successfully');
 				toast.success(msg);
-			} else {
-				Sentry.captureException(res);
+				setFormData(initFormData);
+			})
+			.catch(err => {
+				Sentry.captureException(err);
 				const errMsg = t('error_default_message');
 				toast.error(errMsg);
-			}
-		});
+			});
 	};
 
 	return (
