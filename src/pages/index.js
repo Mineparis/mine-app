@@ -57,7 +57,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 				style={{ height: "80vh", minHeight: "600px" }}
 			/>
 
-			<section className="py-6">
+			<section className="pt-6">
 				<Container>
 					<Row>
 						<Col md="6" xl="6" className="mb-5">
