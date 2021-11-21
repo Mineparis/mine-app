@@ -85,7 +85,7 @@ const AboutUs = ({ data }) => {
 								alt={firstSection.subtitle}
 								layout="fill"
 								objectFit="cover"
-								objectPosition="center"
+								objectPosition="top"
 							/>
 						</Col>
 					</Row>
@@ -108,7 +108,7 @@ const AboutUs = ({ data }) => {
 								alt={secondSection.subtitle}
 								layout="fill"
 								objectFit="cover"
-								objectPosition="center"
+								objectPosition="top"
 							/>
 						</Col>
 					</Row>
@@ -132,7 +132,7 @@ const AboutUs = ({ data }) => {
 								alt="Mine"
 								layout="fill"
 								objectFit="cover"
-								objectPosition="center"
+								objectPosition="top"
 							/>
 						</Col>
 					</Row>
