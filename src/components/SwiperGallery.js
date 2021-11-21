@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import Lightbox from "react-image-lightbox";
-import Magnifier from "react-magnifier";
-import { Row, Col, Button } from "reactstrap";
-
+import { Row, Col } from "reactstrap";
 import ReactIdSwiper from "react-id-swiper";
 
-const SwiperGallery = ({ data, vertical }) => {
-	const [lightBoxOpen, setLightBoxOpen] = useState(false);
-	const [activeImage, setActiveImage] = useState(0);
+import { getStrapiMedia } from '../lib/media';
+import useWindowSize from "../hooks/UseWindowSize";
+
+const SwiperGallery = ({ images, vertical, isRecoVisible }) => {
 	const [activeSlide, setActiveSlide] = useState(0);
+	const { width: winWidth } = useWindowSize();
 
 	const gallerySwiperRef = useRef(null);
+	const galleryStyle = { top: '10rem', ...(isRecoVisible && { display: 'none' }) };
 
 	const slideTo = (index) => {
 		setActiveSlide(index);
@@ -23,10 +23,7 @@ const SwiperGallery = ({ data, vertical }) => {
 		}
 	};
 
-	const onClick = (index) => {
-		setActiveImage(index);
-		setLightBoxOpen(!lightBoxOpen);
-	};
+	const hasMultipleImage = images?.length > 1;
 
 	let sliderColumns = { xs: 12 },
 		sliderClass = "detail-carousel",
@@ -40,86 +37,58 @@ const SwiperGallery = ({ data, vertical }) => {
 	}
 
 	const sliderParams = {
+		autoplay: true,
+		delay: 10000,
+		loop: hasMultipleImage,
+		navigation: hasMultipleImage ? {
+			nextEl: ".swiper-button-next.swiper-button-black.swiper-nav.d-none.d-lg-block",
+			prevEl: ".swiper-button-prev.swiper-button-black.swiper-nav.d-none.d-lg-block",
+		} : {},
+		pagination: hasMultipleImage ? {
+			el: ".swiper-pagination.swiper-pagination-black",
+			clickable: true,
+			dynamicBullets: true,
+		} : {},
 		slidesPerView: 1,
 		spaceBetween: 0,
-		loop: true,
 		on: {
 			slideChange: () =>
 				setActiveSlide(gallerySwiperRef.current.swiper.realIndex),
 		},
 	};
 
-	const customStyles = {
-		overlay: {
-			zIndex: "1000",
-		},
-		bodyOpen: {
-			position: "fixed",
-		},
-	};
+	const className = winWidth > 992 ? 'position-fixed w-50' : '';
 
 	return (
-		<>
-			<Row>
-				<Col className={sliderClass} {...sliderColumns}>
-					<div className="ribbon ribbon-info">Fresh</div>
-					<div className="ribbon ribbon-primary">Sale</div>
-					<ReactIdSwiper {...sliderParams} ref={gallerySwiperRef}>
-						{data.map((item, index) => (
-							<div key={index}>
-								<Magnifier
-									mgShowOverflow={false}
-									mgWidth={2000}
-									mgHeight={2000}
-									className="img-fluid"
-									src={item.img}
-									alt={item.alt}
-									zoomFactor={0.11}
-									style={{ cursor: "default" }}
-								/>
-
-								<Button color="expand" onClick={() => onClick(index)}>
-									<svg className="svg-icon">
-										<use xlinkHref="/icons/orion-svg-sprite.svg#expand-1"></use>
-									</svg>
-								</Button>
-							</div>
-						))}
-					</ReactIdSwiper>
-				</Col>
-
-				<Col className={thumbsClass} {...thumbsColumns}>
-					{data.map((item, index) => (
-						<button
-							key={index}
-							onClick={() => slideTo(index)}
-							className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
-								}`}
-						>
-							<Image layout="fill" className="img-fluid" src={item.img} alt={item.alt} />
-						</button>
+		<Row className={className} style={galleryStyle}>
+			<Col className={sliderClass} {...sliderColumns}>
+				<ReactIdSwiper {...sliderParams} ref={gallerySwiperRef}>
+					{images.map((img, index) => (
+						<div key={index} className="detail-full-item bg-cover">
+							<Image
+								layout="fill"
+								objectFit="contain"
+								objectPosition="center"
+								src={getStrapiMedia(img)}
+							/>
+						</div>
 					))}
-				</Col>
+				</ReactIdSwiper>
+			</Col>
 
-				{lightBoxOpen && (
-					<Lightbox
-						mainSrc={data[activeImage].img}
-						nextSrc={data[(activeImage + 1) % data.length].img}
-						prevSrc={data[(activeImage + data.length - 1) % data.length].img}
-						onCloseRequest={() => setLightBoxOpen(false)}
-						imageCaption={data[activeImage].caption}
-						onMovePrevRequest={() =>
-							setActiveImage((activeImage + data.length - 1) % data.length)
-						}
-						onMoveNextRequest={() =>
-							setActiveImage((activeImage + 1) % data.length)
-						}
-						enableZoom={false}
-						reactModalStyle={customStyles}
-					/>
-				)}
-			</Row>
-		</>
+			<Col className={thumbsClass} {...thumbsColumns}>
+				{images.map(({ formats }, index) => (
+					<button
+						key={index}
+						onClick={() => slideTo(index)}
+						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
+							}`}
+					>
+						<img className="img-fluid" src={getStrapiMedia(formats.thumbnail)} />
+					</button>
+				))}
+			</Col>
+		</Row>
 	);
 };
 

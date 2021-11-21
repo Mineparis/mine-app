@@ -22,13 +22,17 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 	};
 
 	const sliderParams = {
+		centeredSlides: false,
+		freeMode: true,
 		slidesPerView: 2,
+		spaceBetween: 20,
 		loop: true,
+		loopFillGroupWithBlank: true,
 		breakpoints: {
-			1200: { slidesPerView: 5 },
-			992: { slidesPerView: 4 },
-			768: { slidesPerView: 3 },
-			320: { slidesPerView: 2 },
+			1200: { slidesPerView: 5, spaceBetween: 50 },
+			1024: { slidesPerView: 4, spaceBetween: 40 },
+			768: { slidesPerView: 3, spaceBetween: 30 },
+			320: { slidesPerView: 2, spaceBetween: 20 },
 		},
 		pagination:
 			props.pagination !== false
@@ -56,8 +60,8 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 			<Row>
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
 					{products.map((product, index) => (
-						<div key={index} className="product-slider-item">
-							<Product key={index} data={product} />
+						<div key={index}>
+							<Product data={product} />
 						</div>
 					))}
 				</ReactIdSwiper>

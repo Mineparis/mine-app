@@ -17,15 +17,9 @@ const SwiperBrands = (props) => {
 			dynamicBullets: true,
 		},
 		breakpoints: {
-			1200: {
-				slidesPerView: 6,
-			},
-			991: {
-				slidesPerView: 4,
-			},
-			768: {
-				slidesPerView: 3,
-			},
+			1200: { slidesPerView: 6, spaceBetween: 60 },
+			991: { slidesPerView: 4, spaceBetween: 40 },
+			768: { slidesPerView: 3, spaceBetween: 30 },
 		},
 	};
 
