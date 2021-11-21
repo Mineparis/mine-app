@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
+import { Button } from 'reactstrap';
 
 import Image from "./CustomImage";
 import { getStrapiMedia } from '../lib/media';
@@ -12,7 +13,21 @@ const IMAGE_SIZE = 300;
 const Product = ({ data, loading, withNewFlag = false }) => {
 	const { t } = useTranslation('common');
 
-	const { name, brand, originalPrice, salePricePercent, productSlug, brandSlug, thumbnail, stock, isNewProduct } = data;
+	const {
+		id,
+		name,
+		brand,
+		originalPrice,
+		productSlug,
+		brandSlug,
+		salePricePercent,
+		descriptions,
+		thumbnail,
+		stock,
+		isNewProduct,
+		shippingInfo
+	} = data;
+	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
 
 	const link = `/product/${brandSlug}/${productSlug}`;
 	const soldOut = stock < 1;
@@ -46,6 +61,22 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 									<i className="fa-search fa" />
 								</a>
 							</Link>
+							<Button
+								className="btn btn-dark btn-buy snipcart-add-item"
+								data-item-id={id}
+								data-item-price={currentPrice}
+								data-item-url={link}
+								data-item-description={descriptions.short}
+								data-item-image={imageURL}
+								data-item-name={name}
+								data-item-categories=""
+								data-item-weight={weight} // poid en gramme (pas de decimale)
+								data-item-length={len} // longueur en cm (pas de decimale)
+								data-item-width={width} // largeur en cm (pas de decimale)
+								data-item-height={height}
+							>
+								<i className="bi bi-cart" />
+							</Button>
 						</div>
 					</div>
 				</div>
