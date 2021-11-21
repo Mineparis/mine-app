@@ -39,6 +39,7 @@ const Header = ({ menu, ...props }) => {
 
 	const size = UseWindowSize();
 	const scrollY = useScrollPosition();
+	const [itemsCount, setItemsCount] = useState(0);
 
 	const navbarRef = useRef(null);
 	const topbarRef = useRef(null);
@@ -102,6 +103,19 @@ const Header = ({ menu, ...props }) => {
 
 	useEffect(highlightDropdownParent, []);
 
+	useEffect(() => {
+		const Snip = window.Snipcart;
+		const initialState = Snip.store.getState();
+		setItemsCount(initialState.cart.items.count);
+
+		const unsubscribe = Snip.store.subscribe(() => {
+			const newState = Snip.store.getState();
+			setItemsCount(newState.cart.items.count);
+		});
+
+		return () => unsubscribe();
+	}, [setItemsCount]);
+
 	const CartOverviewWithLogo = ({ shouldDisplay }) => {
 		if (!shouldDisplay) return null;
 
@@ -115,7 +129,7 @@ const Header = ({ menu, ...props }) => {
 				<div className="d-flex justify-content-end col-1">
 					<div className="navbar-icon-link snipcart-checkout">
 						<i className="bi bi-cart" />
-						<div className="navbar-icon-link-badge snipcart-items-count">0</div>
+						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
 					</div>
 				</div>
 			</>
