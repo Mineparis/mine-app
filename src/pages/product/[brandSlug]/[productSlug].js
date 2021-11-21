@@ -1,9 +1,8 @@
+import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Image from 'next/image';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
-import ReactIdSwiper from 'react-id-swiper';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
@@ -11,10 +10,10 @@ import DetailSimilar from '../../../components/DetailSimilar';
 import DetailMain from '../../../components/DetailMain';
 import Accordeon from '../../../components/Accordeon';
 import Reviews from '../../../components/Reviews';
+import SwiperGallery from '../../../components/SwiperGallery';
 import { fetchAPI } from '../../../lib/api';
-import { getStrapiMedia } from '../../../lib/media';
 import { DEFAULT_LANG } from '../../../utils/constants';
-
+import { useIsInViewport } from '../../../utils/useIsInViewport';
 
 export const getStaticPaths = async () => {
 	const products = await fetchAPI('/products?_locale=fr&_locale=en');
@@ -35,10 +34,11 @@ export const getStaticProps = async ({ params, locale }) => {
 	const query = qs.stringify({
 		_where: {
 			'categories.slug': product.categories.map(({ slug }) => slug),
+			stock_gt: 0,
 			id_ne: product.id,
 		},
 		_sort: 'sold:DESC',
-		_limit: 5,
+		_limit: 4,
 		_locale: lang,
 	});
 
@@ -57,8 +57,11 @@ export const getStaticProps = async ({ params, locale }) => {
 const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
+
+	const recoRef = useRef(null);
+	const isRecoVisible = useIsInViewport(recoRef);
+
 	const titleLabel = `Mine: ${product.brand} · ${product.name}`;
-	const hasMultipleImage = product?.images.length > 1;
 
 	if (router.isFallback) {
 		return (
@@ -91,32 +94,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 							lg={{ size: 6, order: 1 }}
 							className="py-3"
 						>
-							<ReactIdSwiper
-								autoplay
-								delay={10000}
-								loop={hasMultipleImage}
-								slidesPerView={1}
-								navigation={hasMultipleImage ? {
-									nextEl: ".swiper-button-next.swiper-button-black.swiper-nav.d-none.d-lg-block",
-									prevEl: ".swiper-button-prev.swiper-button-black.swiper-nav.d-none.d-lg-block",
-								} : {}}
-								pagination={hasMultipleImage ? {
-									el: ".swiper-pagination.swiper-pagination-black",
-									clickable: true,
-									dynamicBullets: true,
-								} : {}}
-							>
-								{product.images.map(({ formats }, index) => (
-									<div key={index} className="detail-full-item bg-cover">
-										<Image
-											layout="fill"
-											objectFit="contain"
-											objectPosition="center"
-											src={getStrapiMedia(formats.large)}
-										/>
-									</div>
-								))}
-							</ReactIdSwiper>
+							<SwiperGallery images={product.images} vertical={true} isRecoVisible={isRecoVisible} />
 						</Col>
 						<Col
 							xs={{ size: 12, order: 1 }}
@@ -131,7 +109,10 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				</Container>
 			</section>
 
-			<DetailSimilar products={similarProducts} />
+			<section ref={recoRef}>
+				<DetailSimilar products={similarProducts} />
+			</section>
+
 			<Reviews comments={product.comments} averageRating={averageRating} />
 		</>
 	);

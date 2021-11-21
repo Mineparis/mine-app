@@ -57,7 +57,7 @@ const SwiperGallery = ({ images, vertical, isRecoVisible }) => {
 		},
 	};
 
-	const className = winWidth > 992 ? 'position-fixed w-50' : '';
+	const className = winWidth < 993 ? '' : 'position-fixed w-50';
 
 	return (
 		<Row className={className} style={galleryStyle}>

@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { useTranslation } from 'next-i18next';
 
@@ -9,8 +10,8 @@ const DetailSimilar = ({ products = [] }) => {
 	if (!products.length) return null;
 
 	return (
-		<Container className="container my-5">
-			<Row >
+		<Container id="detail-similar" className="container my-5">
+			<Row>
 				<h6 className="hero-heading">{t('might_like')}</h6>
 			</Row>
 
