@@ -7,35 +7,45 @@ import { useTranslation } from "react-i18next";
 const BestCategories = ({ categoriesSection }) => {
 	const { t } = useTranslation('common');
 
-	const categories = [
-		{ id: 'hair_category', mappingURL: 'hairURL' },
-		{ id: 'skin_category', mappingURL: 'skinURL' },
-		{ id: 'beard_category', mappingURL: 'beardURL' }
-	];
+	const categories = ['hair_category', 'skin_category', 'beard_category'];
 
 	return (
 		<div className="best-categories">
-			{categories.map(({ id: categoryId, mappingURL }) => {
-				const catName = t(categoryId);
-				const catURL = categoriesSection?.[mappingURL] || '';
+			{categories.map(category => {
+				const catName = t(category);
+				const currentCat = category.split('_')[0];
+				const catData = categoriesSection?.[currentCat] || { womenURL: '', menURL: '' };
+				const isBeardCat = currentCat === 'beard';
 
 				return (
-					<Col key={categoryId} className="best-category dark-overlay">
-						<Link href={catURL}>
-							<>
-								<div className="overlay-content text-center text-white">
+					<Col key={category} className="best-category dark-overlay">
+						<div className="overlay-content text-center text-white">
+							{isBeardCat ? (
+								<Link href={catData.menURL}>
+									<h3 className="cursor-pointer">{catName}</h3>
+								</Link>
+							) : (
+								<>
 									<h3>{catName}</h3>
-								</div>
-								<Image
-									src={`/img/categories/${categoryId}.jpg`}
-									layout="fill"
-									objectFit="cover"
-									objectPosition="top"
-									alt={catName}
-									priority
-								/>
-							</>
-						</Link>
+									<div className="d-flex mt-4">
+										<Link href={catData.womenURL}>
+											<h4 className="pr-4 cursor-pointer">{t('women')}</h4>
+										</Link>
+										<Link href={catData.menURL}>
+											<h4 className="pl-4 cursor-pointer">{t('men')}</h4>
+										</Link>
+									</div>
+								</>
+							)}
+						</div>
+						<Image
+							src={`/img/categories/${category}.jpg`}
+							layout="fill"
+							objectFit="cover"
+							objectPosition="top"
+							alt={catName}
+							priority
+						/>
 					</Col>
 				);
 			})}

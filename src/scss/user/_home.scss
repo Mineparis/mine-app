@@ -31,7 +31,6 @@
 	justify-content: center;
 	width: 6rem;
 	height: 35rem;
-	cursor: pointer;
 
 	@include hover() {
     opacity: 0.8;
@@ -41,4 +40,8 @@
 		width: 100%;
 		padding: 5rem 0;
 	}
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
