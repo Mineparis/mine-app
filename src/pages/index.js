@@ -34,7 +34,7 @@ export const getStaticProps = async ({ locale }) => {
 const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 	const { t } = useTranslation('common');
 
-	const { carousel, ourDescription, surveySection, boxSection, valuesSection } = homeData;
+	const { carousel, ourDescription, surveySection, boxSection, valuesSection, categoriesSection } = homeData;
 
 	return (
 		<>
@@ -80,7 +80,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 			)}
 
 			<section className="pt-6">
-				<BestCategories t={t} />
+				<BestCategories categoriesSection={categoriesSection} />
 			</section>
 
 			<section className="py-6">

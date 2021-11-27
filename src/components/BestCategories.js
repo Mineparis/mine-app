@@ -1,33 +1,43 @@
 import React from "react";
 import Image from 'next/image';
-import { Col, Row, Container } from "reactstrap";
+import Link from "next/link";
+import { Col } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
-const BestCategories = ({ t }) => {
-	const categories = ['haircare', 'skincare', 'beardcare'];
+const BestCategories = ({ categoriesSection }) => {
+	const { t } = useTranslation('common');
+
+	const categories = [
+		{ id: 'hair_category', mappingURL: 'hairURL' },
+		{ id: 'skin_category', mappingURL: 'skinURL' },
+		{ id: 'beard_category', mappingURL: 'beardURL' }
+	];
 
 	return (
-		<Container>
-			<Row>
-				{categories.map(category => {
-					const catName = t(category);
+		<div className="best-categories">
+			{categories.map(({ id: categoryId, mappingURL }) => {
+				const catName = t(categoryId);
+				const catURL = categoriesSection?.[mappingURL] || '';
 
-					return (
-						<Col className="dark-overlay p-6 m-2">
+				return (
+					<Link href={catURL}>
+						<Col key={categoryId} className="best-category dark-overlay">
 							<div className="overlay-content text-center text-white">
 								<h3>{catName}</h3>
 							</div>
 							<Image
-								src={`/img/categories/${category}.jpg`}
+								src={`/img/categories/${categoryId}.jpg`}
 								layout="fill"
 								objectFit="cover"
-								objectPosition="center"
+								objectPosition="top"
 								alt={catName}
+								priority
 							/>
 						</Col>
-					);
-				})}
-			</Row>
-		</Container>
+					</Link>
+				);
+			})}
+		</div>
 	);
 };
 

@@ -115,7 +115,7 @@ const Swiper = (props) => {
 						<Image
 							layout="fill"
 							objectFit="cover"
-							objectPosition="center"
+							objectPosition="top"
 							src={image}
 							priority
 						/>

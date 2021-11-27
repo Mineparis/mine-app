@@ -15,9 +15,9 @@
 	"beard": "Beard",
 	"makeup": "Makeup",
 	"accessories": "Accessories",
-	"haircare": "Hair care",
-	"skincare": "Skin care",
-	"beardcare": "Beard care",
+	"hair_category": "Hair",
+	"skin_category": "Skin",
+	"beard_category": "Beard",
 	"moisturizer": "Mosturizer",
 	"growth": "Growth",
 	"curls": "Curls",
@@ -56,5 +56,6 @@
 	"email_duplicate": "Your email has already been sent",
 	"email_sent_successfully": "Your email has sent successfully",
 	"error_default_message": "Sorry, something went wrong. Please try again later.",
-	"send": "Send"
+	"send": "Send",
+	"cosmetics_for_all": "Natural cosmetics for all"
 }

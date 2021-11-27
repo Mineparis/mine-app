@@ -14,9 +14,9 @@
 	"skin": "Peau",
 	"beard": "Barbe",
 	"makeup": "Maquillage",
-	"haircare": "Soins des cheveux",
-	"skincare": "Soins de la peau",
-	"beardcare": "Soins de la barbe",
+	"hair_category": "Cheveux",
+	"skin_category": "Peau",
+	"beard_category": "Barbe",
 	"accessories": "Accessoire",
 	"moisturizer": "Hydratant",
 	"growth": "Pousse",
@@ -56,5 +56,6 @@
 	"email_duplicate": "Votre email a déjà été envoyé",
 	"email_sent_successfully": "Votre email a bien été envoyé",
 	"error_default_message": "Désolé, une erreur s'est produite. Veuillez réessayer plus tard.",
-	"send": "Envoyer"
+	"send": "Envoyer",
+	"cosmetics_for_all": "Cosmétiques naturels pour tous"
 }
