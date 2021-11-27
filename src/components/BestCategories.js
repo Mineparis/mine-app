@@ -20,21 +20,23 @@ const BestCategories = ({ categoriesSection }) => {
 				const catURL = categoriesSection?.[mappingURL] || '';
 
 				return (
-					<Link href={catURL}>
-						<Col key={categoryId} className="best-category dark-overlay">
-							<div className="overlay-content text-center text-white">
-								<h3>{catName}</h3>
-							</div>
-							<Image
-								src={`/img/categories/${categoryId}.jpg`}
-								layout="fill"
-								objectFit="cover"
-								objectPosition="top"
-								alt={catName}
-								priority
-							/>
-						</Col>
-					</Link>
+					<Col key={categoryId} className="best-category dark-overlay">
+						<Link href={catURL}>
+							<>
+								<div className="overlay-content text-center text-white">
+									<h3>{catName}</h3>
+								</div>
+								<Image
+									src={`/img/categories/${categoryId}.jpg`}
+									layout="fill"
+									objectFit="cover"
+									objectPosition="top"
+									alt={catName}
+									priority
+								/>
+							</>
+						</Link>
+					</Col>
 				);
 			})}
 		</div>

@@ -104,7 +104,7 @@ const Category = ({ category, nbProducts, locale }) => {
 							<>
 								<Row>
 									{products.map((productData) => (
-										<Col key={productData._id} xs="6" sm="4" md="4" lg="3" xl="3">
+										<Col key={productData.id} xs="6" sm="4" md="4" lg="3" xl="3">
 											<Product data={productData} />
 										</Col>
 									))}
