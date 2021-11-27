@@ -55,7 +55,7 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 						<Link href={link}>
 							<a className="product-hover-overlay-link" />
 						</Link>
-						<div className="product-hover-overlay-buttons">
+						<div className="product-hover-overlay-buttons d-flex">
 							<Link href={link}>
 								<a className="btn btn-dark btn-buy">
 									<i className="fa-search fa" />
