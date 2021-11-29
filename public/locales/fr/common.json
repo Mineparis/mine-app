@@ -57,5 +57,8 @@
 	"email_sent_successfully": "Votre email a bien été envoyé",
 	"error_default_message": "Désolé, une erreur s'est produite. Veuillez réessayer plus tard.",
 	"send": "Envoyer",
-	"cosmetics_for_all": "Cosmétiques naturels pour tous"
+	"cosmetics_for_all": "Cosmétiques naturels pour tous",
+	"cookie_consent_text": "Nous utilisons des cookies internes (nécessaires) et des cookies tiers, c'est-à-dire des cookies Analytiques pour analyser le traffic et améliorer l'expérience des utilisateurs.",
+	"cookie_consent_agree": "Accepter et fermer",
+	"cookie_consent_decline": "Continuer sans accepter"
 }

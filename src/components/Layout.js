@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
+import ReactGA from "react-ga4";
+import { useTranslation } from 'react-i18next';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -15,10 +18,12 @@ import useSnipcartServices from '../hooks/UseSnipcartServices';
 
 const Layout = ({ children }) => {
 	const { locale, asPath } = useRouter();
+	const [hasSetConsent, setHasSetConsent] = useState(false);
+	const { t } = useTranslation('common');
 
 	const lang = locale || DEFAULT_LANG;
-	const URL = getStrapiURL(`/categories/menu?_locale=${lang}`);
-	const { data: menuByGender = [] } = useSWR(URL);
+	const { data: menuByGender } = useSWR(getStrapiURL(`/categories/menu?_locale=${lang}`));
+	const isConsent = getCookieConsentValue();
 
 	const menu = formatMenu(menuByGender);
 
@@ -29,6 +34,27 @@ const Layout = ({ children }) => {
 
 	const [paddingTop, setPaddingTop] = useState(0);
 	const [hideHeader, setHideHeader] = useState(false);
+
+	const handleAgreeCookieConsent = () => {
+		const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
+
+		if (process.env.NODE_ENV === "production" && gaId) {
+			ReactGA.initialize(gaId);
+		}
+		setHasSetConsent(true);
+	};
+
+	const handleDeclineCookieConsent = () => {
+		Cookies.remove("_ga");
+		Cookies.remove("_gat");
+		Cookies.remove("_gid");
+	};
+
+	useEffect(() => {
+		if (!hasSetConsent && isConsent === "true") {
+			handleAgreeCookieConsent();
+		}
+	}, [isConsent]);
 
 	useSnipcartServices({ setHideHeader });
 
@@ -84,6 +110,21 @@ const Layout = ({ children }) => {
 			</FormProvider>
 
 			{!hideFooter && <Footer />}
+			<CookieConsent
+				style={{ background: '#343a40', height: '10rem', display: 'flex', alignItems: 'center' }}
+				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem' }}
+				declineButtonStyle={{ background: 'transparent' }}
+				declineButtonText={t('cookie_consent_decline')}
+				buttonText={t('cookie_consent_agree')}
+				location="bottom"
+				expires={365}
+				enableDeclineButton
+				onAccept={handleAgreeCookieConsent}
+				onDecline={handleDeclineCookieConsent}
+			>
+				{t('cookie_consent_text')}
+			</CookieConsent>
+
 			<Script src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js" strategy="beforeInteractive" />
 			<Script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" />
 			<div
