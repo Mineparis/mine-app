@@ -90,7 +90,7 @@ const Layout = ({ children }) => {
 				/>
 				<link rel="preconnect" href="https://app.snipcart.com" />
 				<link rel="preconnect" href="https://cdn.snipcart.com" />
-				<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
+				<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.css" />
 
 				<link rel="icon" href="/img/favicon.png" />
 				<link
@@ -125,7 +125,7 @@ const Layout = ({ children }) => {
 				{t('cookie_consent_text')}
 			</CookieConsent>
 
-			<Script src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js" strategy="beforeInteractive" />
+			<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="beforeInteractive" />
 			<Script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" />
 			<div
 				hidden
