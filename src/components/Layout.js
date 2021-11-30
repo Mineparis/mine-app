@@ -130,7 +130,7 @@ const Layout = ({ children }) => {
 			<div
 				hidden
 				id="snipcart"
-				data-api-key="YzA5YWZjZGItYzgyMS00NWU0LTg2YmEtOTU1ZDQzYzMzYjljNjM3NjM3MTE2NzY2MTAwNzQw"
+				data-api-key={process.env.NEXT_PUBLIC_SNIPCART}
 				data-config-modal-style="side"
 				data-currency="eur"
 			/>
