@@ -1,0 +1,26 @@
+.snipcart-checkout-step__icon svg,
+.snipcart-summary-fees__title svg,
+.snipcart__box--badge svg,
+.snipcart-cart-header__option svg {
+	color: $primary;
+}
+
+.snipcart__box--badge-highlight {
+	background-color: $primary-100;
+	color: $primary;
+}
+
+.snipcart-button-link, .snipcart__font--black {
+	color: $primary;
+	&:hover {
+		color: lighten($primary, 25%);
+	}
+}
+
+.snipcart-button-primary {
+	color: $white;
+	background-color: $primary;
+	&:hover {
+		background-color: lighten($primary, 25%);
+	}
+}

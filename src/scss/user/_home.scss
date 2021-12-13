@@ -1,0 +1,47 @@
+.product-survey-card {
+	position: absolute;
+	right: 10rem;
+	bottom: -2rem;
+	width: 40rem;
+	text-align: center;
+}
+
+.rounded-button {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%;
+}
+
+.best-categories {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	@include media-breakpoint-down(md) {
+		flex-direction: column;
+	}
+}
+
+.best-category {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 6rem;
+	height: 35rem;
+
+	@include hover() {
+    opacity: 0.8;
+  }
+	
+	@include media-breakpoint-down(md) {
+		width: 100%;
+		padding: 5rem 0;
+	}
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}

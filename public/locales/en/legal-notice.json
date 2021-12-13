@@ -1,0 +1,16 @@
+{
+	"legal_notice": "Legal Notice",
+	"hosting_publishing_title": "1. Hosting and publishing",
+	"hosting_publishing_content_1": "The site www.mineparis.com is created by MINE, a french simplified joint-stock company with a capital of 200€, registered in the Paris trade and companies register, the number of which is {{siren}} and the SIRET number is {{siret}}. The head office is located at 229 rue Saint-Honoré 75001.",
+	"hosting_publishing_content_2": "The host of the site www.mineparis.com is {{hostName}}",
+	"hosting_publishing_content_3": "You can contact MINE customer service Monday through Friday, 8:00 am to 7:00 pm at {{phone}}. We respond within 24 hours.",
+	"external_sources_title": "2. External sources and hyperlinks",
+	"external_sources_content_1": "The site may include links that redirect to other external websites. These external sites are subject to their terms of use. MINE cannot control these external sources as well, therefore MINE declines all responsibility for the advertising, content, services on these external sites.",
+	"external_sources_content_2": "It is therefore up to the user to decide whether or not to activate these links from external sites or sources.",
+	"intellectual_property_title": "3. Intellectual property",
+	"intellectual_property_content_1": "The user is granted a private and non-exclusive right of use of this site. All the elements of the site, such as: the images, the logo, the graphic charter, the presentation and the content of the site, without the list being exhaustive, are the exclusive property of MINE SAS.",
+	"intellectual_property_content_2": "Consequently, any representation or reproduction, total or partial, which could be made without the consent of their authors or beneficiaries, is prohibited and exposes the users concerned to legal proceedings.",
+	"modification_title": "4. Update",
+	"modification_content": "Mine reserves the right to modify the legal notices at any time. Users must therefore regularly consult the legal notices of MINE.",
+	"last_update": "Last updated on November 24, 2021."
+}

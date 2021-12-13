@@ -1,0 +1,16 @@
+{
+	"legal_notice": "Mention légales",
+	"hosting_publishing_title": "1. Hébergement et édition",
+	"hosting_publishing_content_1": "Le site www.mineparis.com est créé par MINE, société par action simplifiée au capital de 200€, immatriculée au registre du commerce et des sociétés de Paris dont le numéro est {{siren}} et le numéro de SIRET est {{siret}}. Le siège social est situé au 229 rue Saint-Honoré 75001.",
+	"hosting_publishing_content_2": "L’hébergeur du site www.mineparis.com est {{hostName}}",
+	"hosting_publishing_content_3": "Vous pouvez contacter le service client de MINE du lundi au vendredi, de 08h00 à 19h00 au {{phone}}. Nous répondons en moins de 24h.",
+	"external_sources_title": "2. Sources externes et liens hypertexte",
+	"external_sources_content_1": "Le site peut inclure des liens qui redirigent vers d’autres sites internet externes. Ces sites externes sont soumis à leurs conditions d’utilisation. MINE ne peut contrôler ces sources externes ainsi, par conséquent MINE décline toute responsabilité quant aux publicités, contenus, services sur ces sites externes.",
+	"external_sources_content_2": "Ainsi il appartient à l’utilisateur la décision d’activer ou non ces liens sites ou sources externes.",
+	"intellectual_property_title": "3. Propriété intellectuelle",
+	"intellectual_property_content_1": "L'utilisateur se voit conférer un droit d’usage privé et non exclusif de ce site. Tous les éléments du site, comme : les images, le logo, la charte graphique, la présentation et le contenu du site, sans que la liste soit exhaustive, sont la propriété exclusive de MINE SAS.",
+	"intellectual_property_content_2": "Par conséquent, toute représentation ou reproduction, totale ou partielle, qui pourrait être faite sans le consentement de leurs auteurs ou ayants-droit, est interdite et expose les utilisateurs concernés à des poursuites judiciaires.",
+	"modification_title": "4. Modification",
+	"modification_content": "Mine se réserve le droit de modifier les mentions légales à tout moment. Les utilisateurs doivent ainsi consulter régulièrement les mentions légales de MINE.",
+	"last_update": "Dernière mise à jour le 24 novembre 2021."
+}

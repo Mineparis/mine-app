@@ -1,0 +1,15 @@
+{
+    "title": "Customer - Addresses",
+    "subtitle": "Your addresses",
+    "breadcrumbs": [{
+            "name": "Home",
+            "link": "/"
+        },
+        {
+            "name": "Your addresses",
+            "active": true
+        }
+    ],
+    "content": "Maecenas sollicitudin. In rutrum. In convallis. Nunc tincidunt ante vitae massa. Cras pede libero, dapibus nec, retium sit amet, tempor quis. Fusce dui leo, imperdiet in."
+    
+}

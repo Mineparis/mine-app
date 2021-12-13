@@ -1,0 +1,25 @@
+/**
+ * Sell – Bootstrap 4 e-commerce template [React] v1.0.0
+ * Homepage: https://themes.getbootstrap.com/product/sell-bootstrap-4-e-commerce-template/
+ * Copyright 2021, Bootstrapious - https://bootstrapious.com
+ */
+
+// functions.scss - Bootstrap functions
+@import "bootstrap/functions"; 
+
+// your variables + overrides of Bootstrap variables 
+@import "user/user-variables"; 
+
+// custom variables + overrides of Bootstrap variables for this theme
+@import "theme/variables"; 
+@import "theme/variables-3rd-party"; 
+
+// bootstrap main
+@import "bootstrap/bootstrap";
+
+// theme components
+@import "theme/theme";
+
+// your components
+@import "user/user"; 
+
