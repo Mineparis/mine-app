@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useIsInViewport = (elem) => {
+export const useIsInViewport = (elem, offset = 0) => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	const onScroll = () => {
@@ -9,8 +9,9 @@ export const useIsInViewport = (elem) => {
 			return;
 		}
 		const { top, bottom } = elem.current.getBoundingClientRect();
-		const isInViewport = top >= 0 && top <= window.innerHeight ||
+		const isInViewport = top < offset && top <= window.innerHeight ||
 			bottom >= 0 && bottom <= window.innerHeight;
+
 		setIsVisible(isInViewport);
 	};
 

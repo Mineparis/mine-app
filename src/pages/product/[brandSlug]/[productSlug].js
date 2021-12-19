@@ -59,7 +59,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	const router = useRouter();
 
 	const recoRef = useRef(null);
-	const isRecoVisible = useIsInViewport(recoRef);
+	const isRecoVisible = useIsInViewport(recoRef, 600);
 
 	const titleLabel = `Mine: ${product.brand} · ${product.name}`;
 
