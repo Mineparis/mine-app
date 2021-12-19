@@ -105,6 +105,7 @@ const Header = ({ menu, ...props }) => {
 
 	useEffect(() => {
 		const Snip = window.Snipcart;
+
 		const initialState = Snip.store.getState();
 		setItemsCount(initialState.cart.items.count);
 
@@ -122,11 +123,14 @@ const Header = ({ menu, ...props }) => {
 		return (
 			<>
 				<Link className="mx-auto" href="/" passHref>
-					<a className="py-1 navbar-brand col-2">
+					<a className="py-1 navbar-brand">
 						<Logo />
 					</a>
 				</Link>
-				<div className="d-flex justify-content-end col-1">
+				<div className="d-flex justify-content-end col-1 snipcart-summary">
+					<div className="navbar-icon-link snipcart-customer-signin">
+						<i className="bi bi-person-circle" />
+					</div>
 					<div className="navbar-icon-link snipcart-checkout">
 						<i className="bi bi-cart" />
 						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
