@@ -27,7 +27,7 @@ const BestCategories = ({ categoriesSection }) => {
 							) : (
 								<>
 									<h3>{catName}</h3>
-									<div className="d-flex mt-4">
+									<div className="d-flex flex-row visible-on-hover mt-4">
 										<Link href={catData.womenURL}>
 											<h4 className="pr-4 cursor-pointer">{t('women')}</h4>
 										</Link>

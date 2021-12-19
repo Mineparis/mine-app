@@ -10,14 +10,12 @@ export const getStrapiURL = (path = '') => {
 
 export const fetchAPI = async (path, method = 'GET', body) => {
 	const requestURL = getStrapiURL(path);
-	const token = Cookie.get('token');
 
 	try {
 		const response = await fetch(requestURL, {
 			method,
 			headers: {
 				'Content-Type': 'application/json',
-				...(token && token !== 'undefined' ? { Authorization: `Bearer ${token}` } : {}),
 			},
 			...(body ? { body: JSON.stringify(body) } : {})
 		});
