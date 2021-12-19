@@ -83,9 +83,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 				<BestCategories categoriesSection={categoriesSection} />
 			</section>
 
-			<section className="py-6">
-				<SwiperProducts title={t('new_arrivals')} products={newProducts} />
-			</section>
+			{newProducts.length ? (
+				<section className="py-6">
+					<SwiperProducts title={t('new_arrivals')} products={newProducts} />
+				</section>
+			) : null}
 
 			{boxSection && (
 				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>

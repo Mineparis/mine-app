@@ -15,7 +15,7 @@ const DetailSimilar = ({ products = [] }) => {
 				<h6 className="hero-heading">{t('might_like')}</h6>
 			</Row>
 
-			<Row className="justify-content-between">
+			<Row className="justify-content-start">
 				{products.map((data, index) => (
 					<Col xl="3" lg="3" md="4" xs="6" key={index}>
 						<Product data={data} loading="lazy" />

@@ -61,22 +61,24 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 									<i className="fa-search fa" />
 								</a>
 							</Link>
-							<Button
-								className="btn btn-dark btn-buy snipcart-add-item"
-								data-item-id={id}
-								data-item-price={currentPrice}
-								data-item-url={link}
-								data-item-description={descriptions.short}
-								data-item-image={imageURL}
-								data-item-name={name}
-								data-item-categories=""
-								data-item-weight={weight} // poid en gramme (pas de decimale)
-								data-item-length={len} // longueur en cm (pas de decimale)
-								data-item-width={width} // largeur en cm (pas de decimale)
-								data-item-height={height}
-							>
-								<i className="bi bi-cart" />
-							</Button>
+							{!soldOut && (
+								<Button
+									className="btn btn-dark btn-buy snipcart-add-item"
+									data-item-id={id}
+									data-item-price={currentPrice}
+									data-item-url={link}
+									data-item-description={descriptions.short}
+									data-item-image={imageURL}
+									data-item-name={name}
+									data-item-categories=""
+									data-item-weight={weight} // poid en gramme (pas de decimale)
+									data-item-length={len} // longueur en cm (pas de decimale)
+									data-item-width={width} // largeur en cm (pas de decimale)
+									data-item-height={height}
+								>
+									<i className="bi bi-cart" />
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>
