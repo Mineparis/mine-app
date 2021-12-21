@@ -112,7 +112,7 @@ const Layout = ({ children }) => {
 			{!hideFooter && <Footer />}
 			<CookieConsent
 				style={{ background: '#343a40', height: '10rem', display: 'flex', alignItems: 'center' }}
-				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem', display: 'flex' }}
+				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem' }}
 				declineButtonStyle={{ background: 'transparent' }}
 				declineButtonText={t('cookie_consent_decline')}
 				buttonText={t('cookie_consent_agree')}
