@@ -56,7 +56,7 @@ const Layout = ({ children }) => {
 		}
 	}, [isConsent]);
 
-	useSnipcartServices({ setHideHeader });
+	useSnipcartServices({ setHideHeader, lang });
 
 	const whitePages = ['/category', '/product', '/login', '/customer', '/legal-notice', '/faq', '/contact', '/terms-of-use'];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
@@ -112,7 +112,7 @@ const Layout = ({ children }) => {
 			{!hideFooter && <Footer />}
 			<CookieConsent
 				style={{ background: '#343a40', height: '10rem', display: 'flex', alignItems: 'center' }}
-				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem' }}
+				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem', display: 'flex' }}
 				declineButtonStyle={{ background: 'transparent' }}
 				declineButtonText={t('cookie_consent_decline')}
 				buttonText={t('cookie_consent_agree')}
