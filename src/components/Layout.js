@@ -56,7 +56,7 @@ const Layout = ({ children }) => {
 		}
 	}, [isConsent]);
 
-	useSnipcartServices({ setHideHeader });
+	useSnipcartServices({ setHideHeader, lang });
 
 	const whitePages = ['/category', '/product', '/login', '/customer', '/legal-notice', '/faq', '/contact', '/terms-of-use'];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
