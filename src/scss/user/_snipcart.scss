@@ -1,3 +1,17 @@
+.snipcart-layout {
+	/* Colors */
+	--color-buttonPrimary: $white;
+	--color-buttonSecondary: $white;
+	--color-buttonSecondary-hover: $white;
+	--color-icon: $primary-100;
+
+	/* Background colors */
+	--bgColor-buttonPrimary: $primary-100;
+	--bgColor-buttonPrimary-hover: $primary-100;
+	--bgColor-buttonSecondary: $primary-100;
+	--bgColor-buttonSecondary-hover: $primary-100;
+}
+
 .snipcart-checkout-step__icon svg,
 .snipcart-summary-fees__title svg,
 .snipcart__box--badge svg,
@@ -24,3 +38,4 @@
 		background-color: lighten($primary, 25%);
 	}
 }
+
