@@ -26,7 +26,7 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 		freeMode: true,
 		slidesPerView: 2,
 		spaceBetween: 20,
-		loop: true,
+		loop: false,
 		loopFillGroupWithBlank: true,
 		breakpoints: {
 			1200: { slidesPerView: 5, spaceBetween: 50 },
