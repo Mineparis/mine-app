@@ -1,8 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row } from "reactstrap";
 import { DEFAULT_LANG } from '../utils/constants';
+import Link from 'next/link';
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
@@ -13,6 +14,14 @@ export const getStaticProps = async ({ locale }) => {
 		},
 	};
 };
+
+function LinkText({ href, children }) {
+	return (
+		<Link href={href || ''}>
+			<a><b>{children}</b></a>
+		</Link>
+	);
+}
 
 const LegalNotice = () => {
 	const { t } = useTranslation('legal-notice');
@@ -25,9 +34,13 @@ const LegalNotice = () => {
 				</Row>
 				<Row>
 					<h5>{t('hosting_publishing_title')}</h5>
-					<p>{t('hosting_publishing_content_1', { siren: 'XXX', siret: 'XXX' })}</p>
-					<p>{t('hosting_publishing_content_2', { hostName: "XXX" })}</p>
-					<p>{t('hosting_publishing_content_3', { phone: "06.12.84.04.67" })}</p>
+					<p>{t('hosting_publishing_content_1', { siren: '905025136', siret: '90502513600011' })}</p>
+					<p>{t('hosting_publishing_content_2', { hostName: "godaddy.com" })}</p>
+					<p>
+						<Trans t={t} i18nKey="hosting_publishing_content_3">
+							<LinkText href='/contact'>Contact</LinkText>
+						</Trans>
+					</p>
 				</Row>
 				<Row>
 					<h5>{t('external_sources_title')}</h5>
