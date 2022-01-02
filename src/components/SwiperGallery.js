@@ -4,14 +4,12 @@ import { Row, Col } from "reactstrap";
 import ReactIdSwiper from "react-id-swiper";
 
 import { getStrapiMedia } from '../lib/media';
-import useWindowSize from "../hooks/UseWindowSize";
 
-const SwiperGallery = ({ images, vertical, isRecoVisible }) => {
+const SwiperGallery = ({ images, vertical }) => {
 	const [activeSlide, setActiveSlide] = useState(0);
-	const { width: winWidth } = useWindowSize();
 
 	const gallerySwiperRef = useRef(null);
-	const galleryStyle = { top: '10rem', ...(isRecoVisible && { display: 'none' }) };
+	const galleryStyle = { top: '10rem' };
 
 	const slideTo = (index) => {
 		setActiveSlide(index);
@@ -57,10 +55,9 @@ const SwiperGallery = ({ images, vertical, isRecoVisible }) => {
 		},
 	};
 
-	const className = winWidth < 993 ? '' : 'position-fixed w-50';
 
 	return (
-		<Row className={className} style={galleryStyle}>
+		<Row style={galleryStyle}>
 			<Col className={sliderClass} {...sliderColumns}>
 				<ReactIdSwiper {...sliderParams} ref={gallerySwiperRef}>
 					{images.map((img, index) => (
