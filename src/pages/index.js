@@ -91,8 +91,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 
 			{boxSection && (
 				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
-					<Col className="mb-6">
+					<Col>
 						<h2 className="text-white">{boxSection.title}</h2>
+					</Col>
+					<Col className="my-5 px-6">
+						<p className="text-lg text-white">{boxSection.subtitle}</p>
 					</Col>
 					<Col className="d-flex justify-content-center">
 						<Link href={boxSection.button.link}>
