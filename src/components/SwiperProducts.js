@@ -52,10 +52,12 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 				<Col xs="12" md="10">
 					<h3>{title}</h3>
 				</Col>
-				<Col className="d-flex justify-content-end p-0">
-					<Button className="mr-1 rounded-circle bg-primary" onClick={goPrev}><i className="fas fa-arrow-left" /></Button>
-					<Button className="ml-1 rounded-circle bg-primary" onClick={goNext}><i className="fas fa-arrow-right" /></Button>
-				</Col>
+				{products.length > 5 && (
+					<Col className="d-flex justify-content-end p-0">
+						<Button className="mr-1 rounded-circle bg-primary" onClick={goPrev}><i className="fas fa-arrow-left" /></Button>
+						<Button className="ml-1 rounded-circle bg-primary" onClick={goNext}><i className="fas fa-arrow-right" /></Button>
+					</Col>
+				)}
 			</Row>
 			<Row>
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
