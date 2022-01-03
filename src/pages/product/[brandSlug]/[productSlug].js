@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -13,7 +13,6 @@ import Reviews from '../../../components/Reviews';
 import SwiperGallery from '../../../components/SwiperGallery';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
-import { useIsInViewport } from '../../../utils/useIsInViewport';
 
 export const getStaticPaths = async () => {
 	const products = await fetchAPI('/products?_locale=fr&_locale=en');
@@ -58,9 +57,6 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 
-	const recoRef = useRef(null);
-	const isRecoVisible = useIsInViewport(recoRef, 600);
-
 	const titleLabel = `Mine: ${product.brand} · ${product.name}`;
 
 	if (router.isFallback) {
@@ -94,7 +90,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 							lg={{ size: 6, order: 1 }}
 							className="py-3"
 						>
-							<SwiperGallery images={product.images} vertical={true} isRecoVisible={isRecoVisible} />
+							<SwiperGallery images={product.images} vertical={true} />
 						</Col>
 						<Col
 							xs={{ size: 12, order: 1 }}
@@ -109,7 +105,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				</Container>
 			</section>
 
-			<section ref={recoRef}>
+			<section>
 				<DetailSimilar products={similarProducts} />
 			</section>
 

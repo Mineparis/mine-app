@@ -111,8 +111,9 @@ const Layout = ({ children }) => {
 
 			{!hideFooter && <Footer />}
 			<CookieConsent
-				style={{ background: '#343a40', height: '10rem', display: 'flex', alignItems: 'center' }}
-				buttonStyle={{ color: "#343a40", background: '#fff', padding: '1rem' }}
+				style={{ background: '#343a40', display: 'flex', alignItems: 'center' }}
+				buttonStyle={{ background: '#fff', color: '#343a40' }}
+				buttonWrapperClasses="d-flex flex-row"
 				declineButtonStyle={{ background: 'transparent' }}
 				declineButtonText={t('cookie_consent_decline')}
 				buttonText={t('cookie_consent_agree')}
@@ -134,7 +135,7 @@ const Layout = ({ children }) => {
 				data-config-modal-style="side"
 				data-currency="eur"
 			/>
-		</div>
+		</div >
 	);
 };
 
