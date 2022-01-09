@@ -7,7 +7,7 @@ import { getStrapiMedia } from "../lib/media";
 
 const positionMapping = {
 	subtitle: {
-		left: 'text-dark mb-3',
+		left: 'text-white mb-3',
 		center: 'text-uppercase text-white font-weight-light mb-4 letter-spacing-5',
 	},
 	row: {

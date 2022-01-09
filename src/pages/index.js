@@ -99,7 +99,9 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 					</Col>
 					<Col className="d-flex justify-content-center">
 						<Link href={boxSection.button.link}>
-							<Button className="rounded-button bg-white text-primary">{boxSection.button.label}</Button>
+							<Button className="rounded-button bg-white text-primary">
+								{boxSection.button.label}
+							</Button>
 						</Link>
 					</Col>
 				</BackgroundImage>

@@ -133,6 +133,16 @@ const Footer = () => {
 										Instagram
 									</a>
 								</li>
+								<li>
+									<a
+										className="text-hover-gray-600"
+										href="https://www.pinterest.fr/mine_paris"
+										target="_blank"
+										title="pinterest"
+									>
+										Pinterest
+									</a>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -164,6 +174,9 @@ const Footer = () => {
 									</li>
 									<li className="list-inline-item">
 										<Image width={35} height={35} className="w-2rem" src="/svg/mastercard.svg" alt="mastercard" />
+									</li>
+									<li className="list-inline-item">
+										<Image width={35} height={35} className="w-2rem" src="/svg/paypal.svg" alt="paypal" />
 									</li>
 								</ul>
 							</div>

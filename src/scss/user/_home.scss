@@ -13,6 +13,10 @@
 	width: 5rem;
 	height: 5rem;
 	border-radius: 50%;
+
+  @include hover() {
+    opacity: 0.9;
+  }
 }
 
 .best-categories {
