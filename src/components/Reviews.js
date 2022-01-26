@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'reactstrap';
-import Moment from 'moment';
 import { useTranslation } from 'next-i18next';
 
 import Stars from "./Stars";
 import Pagination from '../components/Pagination';
+import { dateFormat } from '../utils/date';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -59,7 +59,7 @@ const Reviews = ({ comments, averageRating }) => {
 					<Col>
 						<div className="mr-4 mr-xl-5">
 							<span className="text-muted">
-								{Moment(review.date).format('LL')}
+								{dateFormat(review.date)}
 							</span>
 						</div>
 						<p>{review.text}</p>

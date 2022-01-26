@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import ReactGA from "react-ga4";
 import { useTranslation } from 'react-i18next';
+import useSWRImmutable from 'swr/immutable';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -13,19 +13,21 @@ import { FormProvider } from './FormContext';
 import NextNProgress from '../components/NextNProgress';
 import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
-import { getStrapiURL } from '../lib/api';
+import { fetchAPI } from '../lib/api';
 import useSnipcartServices from '../hooks/UseSnipcartServices';
 
+
 const Layout = ({ children }) => {
+	const { t } = useTranslation('common');
 	const { locale, asPath } = useRouter();
 	const [hasSetConsent, setHasSetConsent] = useState(false);
-	const { t } = useTranslation('common');
 
 	const lang = locale || DEFAULT_LANG;
-	const { data: menuByGender } = useSWR(getStrapiURL(`/categories/menu?_locale=${lang}`));
+	const { data: menuByGender } = useSWRImmutable(`/categories/menu?_locale=${lang}`, fetchAPI);
+
 	const isConsent = getCookieConsentValue();
 
-	const menu = formatMenu(menuByGender);
+	const menu = useMemo(() => formatMenu(menuByGender), [menuByGender]);
 
 	const loggedUser = false;
 	const hideTopbar = false;
@@ -56,9 +58,13 @@ const Layout = ({ children }) => {
 		}
 	}, [isConsent]);
 
+	useEffect(() => {
+		window.__localeId__ = lang;
+	}, []);
+
 	useSnipcartServices({ setHideHeader, lang });
 
-	const whitePages = ['/category', '/product', '/login', '/customer', '/legal-notice', '/faq', '/contact', '/terms-of-use'];
+	const whitePages = ['/category', '/product', '/login', '/customer', '/legal-notice', '/faq', '/contact', '/terms-of-use', '/magazine'];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
 	const title = 'Mine';
@@ -128,6 +134,8 @@ const Layout = ({ children }) => {
 
 			<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="beforeInteractive" />
 			<Script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" />
+			<Script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" />
+
 			<div
 				hidden
 				id="snipcart"

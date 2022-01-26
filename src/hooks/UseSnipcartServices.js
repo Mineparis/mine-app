@@ -1,4 +1,3 @@
-import { lang } from 'moment';
 import { useEffect } from 'react';
 
 const useSnipcartServices = ({ setHideHeader, lang }) => {

@@ -14,9 +14,9 @@
 		"@sentry/nextjs": "^6.13.2",
 		"bootstrap-icons": "^1.5.0",
 		"classnames": "^2.2.6",
+		"date-fns": "^2.28.0",
 		"js-cookie": "^3.0.1",
 		"leaflet": "^1.7.1",
-		"moment": "^2.29.1",
 		"next": "^11.0.1",
 		"next-compose-plugins": "^2.2.1",
 		"next-i18next": "^8.5.5",
@@ -42,7 +42,7 @@
 		"reactstrap": "^8.9.0",
 		"sass": "^1.32.8",
 		"swiper": "^5.4.5",
-		"swr": "^0.5.6"
+		"swr": "^1.1.2"
 	},
 	"prettier": {
 		"trailingComma": "es5"
