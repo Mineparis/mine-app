@@ -13,6 +13,7 @@ import BestCategories from "../components/BestCategories";
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG } from "../utils/constants";
+import SwiperMagazine from "../components/SwiperMagazine";
 
 const SWIPE_ITEMS_LIMIT = 10;
 
@@ -21,17 +22,20 @@ export const getStaticProps = async ({ locale }) => {
 	const homeData = await fetchAPI(`/homepage?_locale=${lang}`);
 	const bestSellersProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=sold:DESC&_locale=${lang}`);
 	const newProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&isNewProduct=true&_locale=${lang}`);
+	const magazinePosts = await fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`);
+
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			homeData,
 			bestSellersProducts,
 			newProducts,
+			magazinePosts,
 		},
 	};
 };
 
-const Home = ({ homeData, bestSellersProducts, newProducts }) => {
+const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }) => {
 	const { t } = useTranslation('common');
 
 	const { carousel, ourDescription, surveySection, boxSection, valuesSection, categoriesSection } = homeData;
@@ -108,6 +112,12 @@ const Home = ({ homeData, bestSellersProducts, newProducts }) => {
 			)}
 
 			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
+
+			{magazinePosts.length ? (
+				<section className="py-5" style={{ background: '#979694' }}>
+					<SwiperMagazine title="Magazine" posts={magazinePosts} />
+				</section>
+			) : null}
 		</>
 	);
 };

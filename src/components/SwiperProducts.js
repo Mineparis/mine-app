@@ -61,11 +61,7 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 			</Row>
 			<Row>
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
-					{products.map((product, index) => (
-						<div key={index}>
-							<Product data={product} />
-						</div>
-					))}
+					{products.map((product, index) => <Product key={index} data={product} />)}
 				</ReactIdSwiper>
 			</Row>
 		</Container>

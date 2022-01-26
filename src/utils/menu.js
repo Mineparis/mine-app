@@ -12,6 +12,10 @@ export const formatMenu = (menusRaw) => {
 				position: 'static',
 			},
 			{
+				title: 'Magazine',
+				link: '/magazine'
+			},
+			{
 				title: 'about_us',
 				link: '/about-us'
 			},
@@ -33,10 +37,10 @@ export const formatMenu = (menusRaw) => {
 			title: 'about_us',
 			link: '/about-us'
 		},
-		// {
-		// 	title: 'Blog',
-		// 	link: '/blog'
-		// }
+		{
+			title: 'Magazine',
+			link: '/magazine'
+		},
 	];
 
 	return [...menuByGender, ...defaultMenu];
