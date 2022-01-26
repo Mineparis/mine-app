@@ -120,6 +120,7 @@ const Header = ({ menu, ...props }) => {
 	const CartOverviewWithLogo = ({ shouldDisplay }) => {
 		if (!shouldDisplay) return null;
 
+		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
 		return (
 			<>
 				<Link className="mx-auto" href="/" passHref>
@@ -127,7 +128,7 @@ const Header = ({ menu, ...props }) => {
 						<Logo />
 					</a>
 				</Link>
-				<div className="d-flex justify-content-end col-1 snipcart-summary">
+				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
 					<div className="navbar-icon-link snipcart-customer-signin">
 						<i className="bi bi-person-circle" />
 					</div>
