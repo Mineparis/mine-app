@@ -1,37 +1,53 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const Post = ({ data }) => {
+import { dateFormat } from '../utils/date';
+import { getStrapiMedia } from '../lib/media';
+
+const Post = ({
+	slug,
+	thumbnail,
+	title,
+	summary,
+	createdAt,
+	withoutSummary = false,
+	withoutDate = false,
+}) => {
 	return (
-		<>
-			<div className="mb-30px">
-				<Link href="/blog/[slug]" as={`/blog/${data.slug}`}>
-					<a>
-						<Image layout="fill" className="img-fluid" src={data.img} alt={data.title} />
+		<div className="card mb-30px">
+			<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
+				<a>
+					<Image
+						className="card-img-top"
+						layout="responsive"
+						objectFit="cover"
+						src={getStrapiMedia(thumbnail)}
+						alt={slug}
+						width={100}
+						height={100}
+					/>
+				</a>
+			</Link>
+			<div className="card-body mt-3">
+				<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
+					<a className="card-title text-dark text-decoration-none">
+						<h5 className="my-2">{title}</h5>
 					</a>
 				</Link>
-				<div className="mt-3">
-					<small className="text-uppercase text-muted">{data.category}</small>
-					<h5 className="my-2">
-						<Link href="/blog/[slug]" as={`/blog/${data.slug}`}>
-							<a className="text-dark">{data.title}</a>
-						</Link>
-					</h5>
-
+				{!withoutDate && (
 					<p className="text-gray-500 text-sm my-3">
-						<i className="far fa-clock mr-2" />
-						{data.date}
+						{dateFormat(createdAt)}
 					</p>
-					<p className="my-2 text-muted">{data.content}</p>
-
-					<Link href="/blog/[slug]" as={`/blog/${data.slug}`}>
-						<a className="btn btn-link text-gray-700 pl-0">
-							Read more <i className="fa fa-long-arrow-alt-right ml-2" />
+				)}
+				{!withoutSummary && (
+					<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
+						<a className="card-text text-dark text-decoration-none">
+							<p className="my-2 text-muted">{summary}</p>
 						</a>
 					</Link>
-				</div>
+				)}
 			</div>
-		</>
+		</div>
 	);
 };
 

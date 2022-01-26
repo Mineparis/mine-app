@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 
-const Breadcrumbs = ({ className = 'justify-content-center no-border mb-0', ...props }) => {
+const Breadcrumbs = ({ className, center = true, ...props }) => {
 	const links = props.links;
+	const listClassName = `${className} no-border mb-0 ${center ? 'justify-content-center' : ''}`;
 
 	return (
-		<Breadcrumb listClassName={className}>
+		<Breadcrumb listClassName={listClassName}>
 			{links.map((item, index) => (
 				<BreadcrumbItem key={index} active={item.active ? true : null}>
 					{item.link ? (

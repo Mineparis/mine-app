@@ -1,15 +1,15 @@
 {
-	"best_sellers": "Meilleurs ventes",
+	"best_sellers": "Meilleures ventes",
 	"new_arrivals": "Nouveaux produits",
 	"new": "Nouveau",
 	"women": "Femme",
 	"men": "Homme",
 	"box": "Box",
-	"about_us": "A propos",
+	"about_us": "À propos",
 	"log_in": "Se connecter",
 	"shipping_returns": "Politique de livraison",
 	"terms_of_use": "CGU",
-	"legal_notice": "Mention légales",
+	"legal_notice": "Mentions légales",
 	"hair": "Cheveux",
 	"skin": "Peau",
 	"beard": "Barbe",
@@ -48,7 +48,7 @@
 	"register": "S'inscrire",
 	"firstName": "Prénom",
 	"lastName": "Nom",
-	"contact_us": "Contactez nous",
+	"contact_us": "Contactez-nous",
 	"new_account": "Nouveau compte",
 	"new_account_message": "Pas encore inscrit ?",
 	"new_account_contact_message": "Si vous avez des questions,",
@@ -60,5 +60,8 @@
 	"cosmetics_for_all": "Cosmétiques naturels pour tous",
 	"cookie_consent_text": "Nous utilisons des cookies internes (nécessaires) et des cookies tiers, c'est-à-dire des cookies Analytiques pour analyser le traffic et améliorer l'expérience des utilisateurs.",
 	"cookie_consent_agree": "Accepter et fermer",
-	"cookie_consent_decline": "Continuer sans accepter"
+	"cookie_consent_decline": "Continuer sans accepter",
+	"see_more": "En voir plus",
+	"older": "Précédent",
+	"newer": "Suivant"
 }

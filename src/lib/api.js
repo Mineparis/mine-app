@@ -1,5 +1,4 @@
 
-import Cookie from "js-cookie";
 import fetch from "node-fetch";
 import * as Sentry from "@sentry/nextjs";
 
@@ -19,6 +18,7 @@ export const fetchAPI = async (path, method = 'GET', body) => {
 			},
 			...(body ? { body: JSON.stringify(body) } : {})
 		});
+
 		const data = await response.json();
 
 		if (!response.ok) throw data;
