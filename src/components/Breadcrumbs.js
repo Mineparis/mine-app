@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 
-const Breadcrumbs = ({ className, center = true, ...props }) => {
+const Breadcrumbs = ({ className, center = false, ...props }) => {
 	const links = props.links;
 	const listClassName = `${className} no-border mb-0 ${center ? 'justify-content-center' : ''}`;
 

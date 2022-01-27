@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
 import ShopHeader from '../../../components/ShopHeader';
@@ -28,6 +28,7 @@ export const getStaticProps = async ({ params, locale }) => {
 	const lang = locale || DEFAULT_LANG;
 	const categories = await fetchAPI(`/categories?slug=${slug}&_locale=${lang}`);
 	const nbProducts = await fetchAPI(`/products/count?categories.slug=${slug}&_locale=${lang}`) || 0;
+
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
@@ -55,9 +56,11 @@ const Category = ({ category, nbProducts, locale }) => {
 	const start = page * PAGE_LIMIT;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const sortQuery = sortQueryMapping[sortOptionSelected];
-	const URL = getStrapiURL(`/products?categories.slug=${slug}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`);
+	const { data: products = [] } = useSWRImmutable(
+		`/products?categories.slug=${slug}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
+		fetchAPI
+	);
 
-	const { data: products = [] } = useSWR(URL);
 
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
