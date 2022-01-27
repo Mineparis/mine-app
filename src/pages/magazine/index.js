@@ -69,6 +69,7 @@ const Magazine = ({ allPosts = [] }) => {
 									title={title}
 									summary={summary}
 									createdAt={created_at}
+									withoutSummary={!summary}
 								/>
 							</Col>
 						))}

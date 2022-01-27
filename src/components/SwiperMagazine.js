@@ -36,7 +36,7 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 			1024: { slidesPerView: 4 },
 		},
 		pagination:
-			props.pagination !== false
+			props.pagination !== false && posts.length > 5
 				? {
 					el: `.swiper-pagination.swiper-pagination-white.swiper-button-white`,
 					clickable: true,
@@ -53,7 +53,7 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 				<Col xs="12" md="10">
 					<h3 className="text-white">{title}</h3>
 				</Col>
-				{posts.length > 3 && (
+				{posts.length > 4 && (
 					<Col className="d-flex justify-content-end p-0">
 						<Button className="mr-1 rounded-circle bg-primary" onClick={goPrev}><i className="fas fa-arrow-left" /></Button>
 						<Button className="ml-1 rounded-circle bg-primary" onClick={goNext}><i className="fas fa-arrow-right" /></Button>
@@ -63,7 +63,7 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 			<Row>
 				<ReactIdSwiper {...sliderParams} ref={swiperRef}>
 					{posts.map(({ slug, thumbnail, title }) => (
-						<div className="m-2" key={slug} style={{ width: "250px" }}>
+						<div key={slug} style={{ width: "250px" }}>
 							<Post slug={slug} thumbnail={thumbnail} title={title} withoutSummary withoutDate />
 						</div>
 					))}

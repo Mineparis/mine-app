@@ -13,8 +13,14 @@ const Post = ({
 	withoutSummary = false,
 	withoutDate = false,
 }) => {
+	const height = withoutSummary && withoutDate
+		? '23rem'
+		: withoutSummary && !withoutDate
+			? '28rem'
+			: '40rem';
+
 	return (
-		<div className="card mb-30px">
+		<div className="card mb-30px" style={{ height }}>
 			<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
 				<a>
 					<Image
