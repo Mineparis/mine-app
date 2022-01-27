@@ -35,7 +35,7 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 			320: { slidesPerView: 2, spaceBetween: 20 },
 		},
 		pagination:
-			props.pagination !== false
+			props.pagination !== false && products.length > 5
 				? {
 					el: `.swiper-pagination.swiper-pagination-black.swiper-button-black`,
 					clickable: true,
@@ -61,7 +61,11 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 			</Row>
 			<Row>
 				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
-					{products.map((product, index) => <Product key={index} data={product} />)}
+					{products.map((product, index) => (
+						<div key={index}>
+							<Product data={product} />
+						</div>
+					))}
 				</ReactIdSwiper>
 			</Row>
 		</Container>
