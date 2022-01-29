@@ -105,6 +105,7 @@ const Layout = ({ children }) => {
 				/>
 				<title>{title}</title>
 				<meta property="og:type" content="website" />
+				<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
 			</Head>
 
 			<NextNProgress color="#191919" options={{ showSpinner: false }} />
