@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
-import ReactGA from "react-ga4";
 import { useTranslation } from 'react-i18next';
 import useSWRImmutable from 'swr/immutable';
 
@@ -17,10 +16,9 @@ import { fetchAPI } from '../lib/api';
 import useSnipcartServices from '../hooks/UseSnipcartServices';
 
 
-const Layout = ({ children }) => {
+const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
 	const { locale, asPath } = useRouter();
-	const [hasSetConsent, setHasSetConsent] = useState(false);
 
 	const lang = locale || DEFAULT_LANG;
 	const { data: menuByGender } = useSWRImmutable(`/categories/menu?_locale=${lang}`, fetchAPI);
@@ -38,11 +36,6 @@ const Layout = ({ children }) => {
 	const [hideHeader, setHideHeader] = useState(false);
 
 	const handleAgreeCookieConsent = () => {
-		const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
-
-		if (process.env.NODE_ENV === "production" && gaId) {
-			ReactGA.initialize(gaId);
-		}
 		setHasSetConsent(true);
 	};
 
