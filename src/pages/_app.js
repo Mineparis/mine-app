@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 import { appWithTranslation } from 'next-i18next';
 import { ToastContainer } from 'react-toastify';
 import ReactGA from "react-ga4";
+import { useRouter } from 'next/router';
 
 import Layout from '../components/Layout';
 
@@ -13,20 +13,28 @@ import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const MyApp = ({ Component, pageProps }) => {
-	const router = useRouter();
+	const { events } = useRouter();
+	const [hasSetConsent, setHasSetConsent] = useState(false);
 
 	useEffect(() => {
-		const handleRouteChange = url => ReactGA.pageview(url);
+		const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
+		if (process.env.NODE_ENV === "production" && gaId) {
+			ReactGA.initialize(gaId);
+		}
+	}, []);
 
-		router.events.on('routeChangeComplete', handleRouteChange);
+	useEffect(() => {
+		const handleRouteChange = url => hasSetConsent && ReactGA.pageview(url);
+		events.on('routeChangeComplete', handleRouteChange);
 
 		return () => {
-			router.events.off('routeChangeComplete', handleRouteChange);
+			events.off('routeChangeComplete', handleRouteChange);
 		};
-	}, [router.events]);
+	}, [events]);
+
 
 	return (
-		<Layout>
+		<Layout setHasSetConsent={setHasSetConsent} hasSetConsent={hasSetConsent}>
 			<Component {...pageProps} />
 			<ToastContainer
 				position="top-right"
