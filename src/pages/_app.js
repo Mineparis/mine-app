@@ -14,7 +14,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 const MyApp = ({ Component, pageProps }) => {
 	const { events } = useRouter();
-	const [hasSetConsent, setHasSetConsent] = useState(false);
+	const [hasSetConsent, setHasSetConsent] = useState(null);
 
 	useEffect(() => {
 		const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
@@ -24,7 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
 	}, []);
 
 	useEffect(() => {
-		const handleRouteChange = url => hasSetConsent && ReactGA.pageview(url);
+		const handleRouteChange = url => hasSetConsent !== false && ReactGA.pageview(url);
 		events.on('routeChangeComplete', handleRouteChange);
 
 		return () => {
