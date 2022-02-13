@@ -78,10 +78,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	};
 
 	return (
-		<div
-			style={{ paddingTop }}
-			className={className}
-		>
+		<div style={{ paddingTop }} className={className}>
 			<Head>
 				<link
 					rel="stylesheet"
@@ -92,10 +89,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 				<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.css" />
 
 				<link rel="icon" href="/img/favicon.png" />
-				<link
-					href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-					rel="stylesheet"
-				/>
+				<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
 				<title>{title}</title>
 				<meta property="og:type" content="website" />
 				<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
@@ -129,6 +123,25 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 			<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="beforeInteractive" />
 			<Script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" />
 			<Script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" />
+
+			{/* Hotjar Tracking */}
+			{process.env.NODE_ENV === 'production' && (
+				<Script
+					strategy="afterInteractive"
+					dangerouslySetInnerHTML={{
+						__html: `
+						(function(h,o,t,j,a,r){
+							h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+							h._hjSettings={hjid:2829073,hjsv:6};
+							a=o.getElementsByTagName('head')[0];
+							r=o.createElement('script');r.async=1;
+							r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+							a.appendChild(r);
+					})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+					`,
+					}}
+				/>
+			)}
 
 			<div
 				hidden
