@@ -1,7 +1,7 @@
 import React from "react";
-import Breadcrumbs from "./Breadcrumbs";
-
 import { Container, Row, Col } from "reactstrap";
+
+import Breadcrumbs from "./Breadcrumbs";
 
 const Hero = ({
 	children,
@@ -19,7 +19,9 @@ const Hero = ({
 					<h1 className="mb-3 text-capitalize font-italic">{title}</h1>
 					{content && (
 						<Row>
-							<Col xl="4" dangerouslySetInnerHTML={{ __html: content }} />
+							<Col md="6" xl="6" className="mb-1">
+								<h3 className="lead">{content}</h3>
+							</Col>
 						</Row>
 					)}
 					{children}
