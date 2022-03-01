@@ -1,18 +1,21 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import dynamic from "next/dynamic";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
-import DetailSimilar from '../../../components/DetailSimilar';
-import DetailMain from '../../../components/DetailMain';
-import Accordeon from '../../../components/Accordeon';
-import Reviews from '../../../components/Reviews';
-import SwiperGallery from '../../../components/SwiperGallery';
+import Loading from '../../../components/Loading';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
+
+const DetailMain = dynamic(() => import('../../../components/DetailMain'), { loading: Loading });
+const DetailSimilar = dynamic(() => import('../../../components/DetailSimilar'), { loading: Loading });
+const Accordeon = dynamic(() => import('../../../components/Accordeon'), { loading: Loading });
+const Reviews = dynamic(() => import('../../../components/Reviews'), { loading: Loading });
+const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'), { loading: Loading });
 
 export const getStaticPaths = async () => {
 	const products = await fetchAPI('/products?_locale=fr&_locale=en');

@@ -8,7 +8,7 @@
          url('hkgrotesk-bold-webfont.woff') format('woff');
     font-weight: bold;
     font-style: normal;
-
+		font-display: swap;
 }
 
 @font-face {
@@ -17,7 +17,7 @@
          url('hkgrotesk-light-webfont.woff') format('woff');
     font-weight: 300;
     font-style: normal;
-
+		font-display: swap;
 }
 
 @font-face {
@@ -26,5 +26,5 @@
          url('hkgrotesk-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
+		font-display: swap;
 }

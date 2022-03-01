@@ -1,21 +1,21 @@
-import Link from "next/link";
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { Container, Row, Col, Button, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
-
-import Swiper from "../components/Swiper";
-import SwiperProducts from "../components/SwiperProducts";
+import Swiper from '../components/Swiper';
+import Loading from '../components/Loading';
 import ServicesBlock from "../components/ServicesBlock";
-import BestCategories from "../components/BestCategories";
-
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG } from "../utils/constants";
-import SwiperMagazine from "../components/SwiperMagazine";
 
 const SWIPE_ITEMS_LIMIT = 10;
+
+const SwiperProducts = dynamic(() => import('../components/SwiperProducts'), { loading: Loading });
+const BestCategories = dynamic(() => import('../components/BestCategories'), { loading: Loading });
+const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'), { loading: Loading });
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
@@ -38,7 +38,7 @@ export const getStaticProps = async ({ locale }) => {
 const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }) => {
 	const { t } = useTranslation('common');
 
-	const { carousel, ourDescription, surveySection, boxSection, valuesSection, categoriesSection } = homeData;
+	const { carousel, ourDescription, surveySection, valuesSection, categoriesSection } = homeData;
 
 	return (
 		<>
@@ -92,7 +92,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 					<SwiperProducts title={t('new_arrivals')} products={newProducts} />
 				</section>
 			) : null}
-
+			{/* 
 			{boxSection && (
 				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
 					<Col>
@@ -109,15 +109,15 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 						</Link>
 					</Col>
 				</BackgroundImage>
-			)}
-
-			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
+			)} */}
 
 			{magazinePosts.length ? (
 				<section className="py-5" style={{ background: '#979694' }}>
 					<SwiperMagazine title="Magazine" posts={magazinePosts} />
 				</section>
 			) : null}
+
+			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
 		</>
 	);
 };
