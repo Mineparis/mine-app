@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { Row, Col } from "reactstrap";
 import ReactIdSwiper from "react-id-swiper";
+import { Row, Col } from "reactstrap";
 
 import { getStrapiMedia } from '../lib/media';
 
@@ -66,7 +66,9 @@ const SwiperGallery = ({ images, vertical }) => {
 								layout="fill"
 								objectFit="contain"
 								objectPosition="center"
+								loading="eager"
 								src={getStrapiMedia(img)}
+								priority
 							/>
 						</div>
 					))}
@@ -81,7 +83,7 @@ const SwiperGallery = ({ images, vertical }) => {
 						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
 							}`}
 					>
-						<img className="img-fluid" src={getStrapiMedia(formats.thumbnail)} />
+						<Image className="img-fluid" src={getStrapiMedia(formats.thumbnail)} />
 					</button>
 				))}
 			</Col>

@@ -118,6 +118,7 @@ const Swiper = (props) => {
 							objectPosition="top"
 							src={image}
 							priority
+							loading="eager"
 						/>
 						<Container
 							fluid={props.containerFluid}
