@@ -6,7 +6,6 @@ import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
 import Swiper from '../components/Swiper';
 import Loading from '../components/Loading';
-import ServicesBlock from "../components/ServicesBlock";
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG } from "../utils/constants";
@@ -16,6 +15,8 @@ const SWIPE_ITEMS_LIMIT = 10;
 const SwiperProducts = dynamic(() => import('../components/SwiperProducts'), { loading: Loading });
 const BestCategories = dynamic(() => import('../components/BestCategories'), { loading: Loading });
 const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'), { loading: Loading });
+const ServicesBlock = dynamic(() => import('../components/ServicesBlock'), { loading: Loading });
+const InstaGallery = dynamic(() => import('../components/InstaGallery'), { loading: Loading });
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
@@ -118,6 +119,10 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 			) : null}
 
 			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
+
+			<section className="pt-3">
+				<InstaGallery />
+			</section>
 		</>
 	);
 };
