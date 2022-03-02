@@ -83,7 +83,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 			<Head>
 				<title>{title}</title>
 			</Head>
-			<NextNProgress color="#191919" options={{ showSpinner: false }} />
+			<NextNProgress options={{ showSpinner: false }} />
 
 			{!hideHeader && <Header {...headerProps} />}
 

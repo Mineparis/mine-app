@@ -8,36 +8,35 @@ import React from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
 import PropTypes from "prop-types";
-// import styled from 'styled-components';
 
 /* eslint-disable react/prefer-stateless-function */
 class NextNProgress extends React.Component {
-  static defaultProps = {
-    color: "#3494E6",
-    startPosition: 0.3,
-    stopDelayMs: 200,
-    height: 3,
-  };
+	static defaultProps = {
+		color: '#191919',
+		startPosition: 0.3,
+		stopDelayMs: 200,
+		height: 3,
+	};
 
-  timer = null;
+	timer = null;
 
-  routeChangeStart = () => {
-    NProgress.set(this.props.startPosition);
-    NProgress.start();
-  };
+	routeChangeStart = () => {
+		NProgress.set(this.props.startPosition);
+		NProgress.start();
+	};
 
-  routeChangeEnd = () => {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-      NProgress.done(true);
-    }, this.props.stopDelayMs);
-  };
+	routeChangeEnd = () => {
+		clearTimeout(this.timer);
+		this.timer = setTimeout(() => {
+			NProgress.done(true);
+		}, this.props.stopDelayMs);
+	};
 
-  render() {
-    const { color, height } = this.props;
+	render() {
+		const { color, height } = this.props;
 
-    return (
-      <style jsx global>{`
+		return (
+			<style jsx global>{`
         #nprogress {
           pointer-events: none;
         }
@@ -105,27 +104,27 @@ class NextNProgress extends React.Component {
           }
         }
       `}</style>
-    );
-  }
+		);
+	}
 
-  componentDidMount() {
-    const { options } = this.props;
+	componentDidMount() {
+		const { options } = this.props;
 
-    if (options) {
-      NProgress.configure(options);
-    }
+		if (options) {
+			NProgress.configure(options);
+		}
 
-    Router.events.on("routeChangeStart", this.routeChangeStart);
-    Router.events.on("routeChangeComplete", this.routeChangeEnd);
-    Router.events.on("routeChangeError", this.routeChangeEnd);
-  }
+		Router.events.on("routeChangeStart", this.routeChangeStart);
+		Router.events.on("routeChangeComplete", this.routeChangeEnd);
+		Router.events.on("routeChangeError", this.routeChangeEnd);
+	}
 }
 
 NextNProgress.propTypes = {
-  color: PropTypes.string,
-  startPosition: PropTypes.number,
-  stopDelayMs: PropTypes.number,
-  options: PropTypes.object,
+	color: PropTypes.string,
+	startPosition: PropTypes.number,
+	stopDelayMs: PropTypes.number,
+	options: PropTypes.object,
 };
 
 export default NextNProgress;
