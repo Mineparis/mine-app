@@ -44,7 +44,6 @@ const BestCategories = ({ categoriesSection }) => {
 							objectFit="cover"
 							objectPosition="top"
 							alt={catName}
-							priority
 						/>
 					</Col>
 				);

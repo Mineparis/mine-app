@@ -4,7 +4,6 @@ import Link from "next/link";
 import Router from "next/router";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
-
 import {
 	Collapse,
 	Navbar,
@@ -22,12 +21,12 @@ import {
 	Badge,
 } from "reactstrap";
 
-import UseWindowSize from "../hooks/UseWindowSize";
 import useScrollPosition from "@react-hook/window-scroll";
 import useSize from "@react-hook/size";
 
 import Logo from "../../public/svg/logo.svg";
 
+import UseWindowSize from "../hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
 const Header = ({ menu, ...props }) => {
@@ -46,6 +45,7 @@ const Header = ({ menu, ...props }) => {
 	const [topbarWidth, topbarHeight] = useSize(topbarRef);
 	const [navbarWidth, navbarHeight] = useSize(navbarRef);
 
+	const Snip = typeof window !== 'undefined' && window?.Snipcart;
 	const isSmallScreen = size.width < 991;
 	const hasDropdown = Object.values(dropdownOpen).some((dropdown) => dropdown);
 
@@ -104,8 +104,7 @@ const Header = ({ menu, ...props }) => {
 	useEffect(highlightDropdownParent, []);
 
 	useEffect(() => {
-		const Snip = window.Snipcart;
-
+		if (!Snip) return;
 		const initialState = Snip.store.getState();
 		setItemsCount(initialState.cart.items.count);
 
@@ -115,7 +114,7 @@ const Header = ({ menu, ...props }) => {
 		});
 
 		return () => unsubscribe();
-	}, [setItemsCount]);
+	}, [Snip]);
 
 	const CartOverviewWithLogo = ({ shouldDisplay }) => {
 		if (!shouldDisplay) return null;

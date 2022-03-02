@@ -1,13 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import { useTranslation } from 'react-i18next';
 import useSWRImmutable from 'swr/immutable';
 
-import Header from './Header';
-import Footer from './Footer';
+import Loading from './Loading';
 import { FormProvider } from './FormContext';
 import NextNProgress from '../components/NextNProgress';
 import { formatMenu } from '../utils/menu';
@@ -15,6 +14,8 @@ import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
 import useSnipcartServices from '../hooks/UseSnipcartServices';
 
+const Header = dynamic(() => import('./Header'), { loading: Loading });
+const Footer = dynamic(() => import('./Footer'), { loading: Loading });
 
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
@@ -80,22 +81,9 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	return (
 		<div style={{ paddingTop }} className={className}>
 			<Head>
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap"
-				/>
-				<link rel="preconnect" href="https://app.snipcart.com" />
-				<link rel="preconnect" href="https://cdn.snipcart.com" />
-				<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.css" />
-
-				<link rel="icon" href="/img/favicon.png" />
-				<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
 				<title>{title}</title>
-				<meta property="og:type" content="website" />
-				<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
 			</Head>
-
-			<NextNProgress color="#191919" options={{ showSpinner: false }} />
+			<NextNProgress options={{ showSpinner: false }} />
 
 			{!hideHeader && <Header {...headerProps} />}
 
@@ -119,37 +107,6 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 			>
 				{t('cookie_consent_text')}
 			</CookieConsent>
-
-			<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="beforeInteractive" />
-			<Script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous" />
-			<Script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" />
-
-			{/* Hotjar Tracking */}
-			{process.env.NODE_ENV === 'production' && (
-				<Script
-					strategy="afterInteractive"
-					dangerouslySetInnerHTML={{
-						__html: `
-						(function(h,o,t,j,a,r){
-							h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-							h._hjSettings={hjid:2829073,hjsv:6};
-							a=o.getElementsByTagName('head')[0];
-							r=o.createElement('script');r.async=1;
-							r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-							a.appendChild(r);
-					})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-					`,
-					}}
-				/>
-			)}
-
-			<div
-				hidden
-				id="snipcart"
-				data-api-key={process.env.NEXT_PUBLIC_SNIPCART}
-				data-config-modal-style="side"
-				data-currency="eur"
-			/>
 		</div >
 	);
 };

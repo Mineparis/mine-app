@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
 const useSnipcartServices = ({ setHideHeader, lang }) => {
+	const Snip = typeof window !== 'undefined' && window?.Snipcart;
 	useEffect(() => {
-		const unsubscribe = Snipcart.events.on('theme.routechanged', ({ from, to }) => {
+		if (!Snip) return;
+		const unsubscribe = Snip.events.on('theme.routechanged', ({ from, to }) => {
 			const language = lang === 'fr' ? 'fr-FR' : lang;
-			Snipcart.api.session.setLanguage(language);
+			Snip.api.session.setLanguage(language);
 
 			if (from === "/" && to !== "/") {
 				setHideHeader(true);
@@ -16,7 +18,7 @@ const useSnipcartServices = ({ setHideHeader, lang }) => {
 		});
 
 		return () => unsubscribe();
-	}, []);
+	}, [Snip]);
 };
 
 export default useSnipcartServices;
