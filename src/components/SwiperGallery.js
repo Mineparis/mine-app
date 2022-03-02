@@ -66,7 +66,6 @@ const SwiperGallery = ({ images, vertical }) => {
 								layout="fill"
 								objectFit="contain"
 								objectPosition="center"
-								loading="eager"
 								src={getStrapiMedia(img)}
 								priority
 							/>
