@@ -7,15 +7,14 @@ import { Container, Row, Col, Spinner } from 'reactstrap';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
-import Loading from '../../../components/Loading';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
 
-const DetailMain = dynamic(() => import('../../../components/DetailMain'), { loading: Loading });
-const DetailSimilar = dynamic(() => import('../../../components/DetailSimilar'), { loading: Loading });
-const Accordeon = dynamic(() => import('../../../components/Accordeon'), { loading: Loading });
-const Reviews = dynamic(() => import('../../../components/Reviews'), { loading: Loading });
-const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'), { loading: Loading });
+const DetailMain = dynamic(() => import('../../../components/DetailMain'));
+const DetailSimilar = dynamic(() => import('../../../components/DetailSimilar'));
+const Accordeon = dynamic(() => import('../../../components/Accordeon'));
+const Reviews = dynamic(() => import('../../../components/Reviews'));
+const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
 
 export const getStaticPaths = async () => {
 	const products = await fetchAPI('/products?_locale=fr&_locale=en');

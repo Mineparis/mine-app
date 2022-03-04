@@ -82,7 +82,14 @@ const SwiperGallery = ({ images, vertical }) => {
 						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
 							}`}
 					>
-						<Image className="img-fluid" src={getStrapiMedia(formats.thumbnail)} />
+						<Image
+							layout="responsive"
+							width={400}
+							height={400}
+							objectFit="contain"
+							objectPosition="center"
+							src={getStrapiMedia(formats.thumbnail)}
+						/>
 					</button>
 				))}
 			</Col>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Collapse } from 'reactstrap';
-import ReactMarkdown from 'react-markdown';
 
 const Accordeon = ({ options }) => {
 	const [collapse, setCollapse] = React.useState({ 0: true });
@@ -29,7 +28,7 @@ const Accordeon = ({ options }) => {
 						</a>
 						<Collapse isOpen={isCurrentCollapseOpen}>
 							<div className="p-3">
-								<ReactMarkdown className="mb-0" children={text} />
+								<div className="mb-0 ck-content" dangerouslySetInnerHTML={{ __html: text }} />
 							</div>
 						</Collapse>
 					</div>

@@ -5,18 +5,17 @@ import { useTranslation } from 'next-i18next';
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
 import Swiper from '../components/Swiper';
-import Loading from '../components/Loading';
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG } from "../utils/constants";
 
 const SWIPE_ITEMS_LIMIT = 10;
 
-const SwiperProducts = dynamic(() => import('../components/SwiperProducts'), { loading: Loading });
-const BestCategories = dynamic(() => import('../components/BestCategories'), { loading: Loading });
-const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'), { loading: Loading });
-const ServicesBlock = dynamic(() => import('../components/ServicesBlock'), { loading: Loading });
-const InstaGallery = dynamic(() => import('../components/InstaGallery'), { loading: Loading });
+const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
+const BestCategories = dynamic(() => import('../components/BestCategories'));
+const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
+const ServicesBlock = dynamic(() => import('../components/ServicesBlock'));
+const InstaGallery = dynamic(() => import('../components/InstaGallery'));
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;

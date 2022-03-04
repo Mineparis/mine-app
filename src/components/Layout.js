@@ -6,7 +6,6 @@ import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-cons
 import { useTranslation } from 'react-i18next';
 import useSWRImmutable from 'swr/immutable';
 
-import Loading from './Loading';
 import { FormProvider } from './FormContext';
 import NextNProgress from '../components/NextNProgress';
 import { formatMenu } from '../utils/menu';
@@ -14,8 +13,8 @@ import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
 import useSnipcartServices from '../hooks/UseSnipcartServices';
 
-const Header = dynamic(() => import('./Header'), { loading: Loading });
-const Footer = dynamic(() => import('./Footer'), { loading: Loading });
+const Header = dynamic(() => import('./Header'));
+const Footer = dynamic(() => import('./Footer'));
 
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
