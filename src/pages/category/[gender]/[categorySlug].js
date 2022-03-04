@@ -6,14 +6,13 @@ import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
-import Loading from '../../../components/Loading';
 import Hero from '../../../components/Hero';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
 
-const ShopHeader = dynamic(() => import('../../../components/ShopHeader'), { loading: Loading });
-const ShopPagination = dynamic(() => import('../../../components/ShopPagination'), { loading: Loading });
-const Product = dynamic(() => import('../../../components/Product'), { loading: Loading });
+const ShopHeader = dynamic(() => import('../../../components/ShopHeader'));
+const ShopPagination = dynamic(() => import('../../../components/ShopPagination'));
+const Product = dynamic(() => import('../../../components/Product'));
 
 const PAGE_LIMIT = 12;
 
