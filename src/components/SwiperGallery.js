@@ -55,13 +55,12 @@ const SwiperGallery = ({ images, vertical }) => {
 		},
 	};
 
-
 	return (
 		<Row style={galleryStyle}>
 			<Col className={sliderClass} {...sliderColumns}>
 				<ReactIdSwiper {...sliderParams} ref={gallerySwiperRef}>
-					{images.map((img, index) => (
-						<div key={index} className="detail-full-item bg-cover">
+					{images.map((img) => (
+						<div key={img.hash} className="detail-full-item bg-cover">
 							<Image
 								layout="fill"
 								objectFit="contain"
@@ -75,9 +74,9 @@ const SwiperGallery = ({ images, vertical }) => {
 			</Col>
 
 			<Col className={thumbsClass} {...thumbsColumns}>
-				{images.map(({ formats }, index) => (
+				{images.map(({ formats, hash }, index) => (
 					<button
-						key={index}
+						key={hash}
 						onClick={() => slideTo(index)}
 						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
 							}`}
