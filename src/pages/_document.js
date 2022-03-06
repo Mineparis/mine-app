@@ -36,7 +36,7 @@ class MyDocument extends Document {
 
 					<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="lazyOnload" />
 					<Script src="https://code.jquery.com/jquery-3.4.1.min.js" strategy="lazyOnload" />
-					<Script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" strategy="lazyOnload" />
+					<script async defer src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" />
 
 					{/* Hotjar Tracking */}
 					{process.env.NODE_ENV === 'production' && (
