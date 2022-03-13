@@ -34,9 +34,9 @@ class MyDocument extends Document {
 					<meta property="og:type" content="website" />
 					<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
 
-					<Script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" strategy="lazyOnload" />
-					<Script src="https://code.jquery.com/jquery-3.4.1.min.js" strategy="lazyOnload" />
+					<script async defer src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js" />
 					<script async defer src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js" />
+					<Script src="https://code.jquery.com/jquery-3.4.1.min.js" strategy="lazyOnload" />
 
 					{/* Hotjar Tracking */}
 					{process.env.NODE_ENV === 'production' && (
