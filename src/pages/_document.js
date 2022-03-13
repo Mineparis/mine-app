@@ -40,7 +40,7 @@ class MyDocument extends Document {
 
 					{/* Hotjar Tracking */}
 					{process.env.NODE_ENV === 'production' && (
-						<Script strategy="lazyOnload"
+						<script async defer
 							dangerouslySetInnerHTML={{
 								__html: `
 							(function(h,o,t,j,a,r){
