@@ -1,39 +1,37 @@
 import { useState } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
-import Hero from '../../../components/Hero';
-import { fetchAPI } from '../../../lib/api';
-import { DEFAULT_LANG } from '../../../utils/constants';
+import Hero from '../../components/Hero';
+import { fetchAPI } from '../../lib/api';
+import { DEFAULT_LANG } from '../../utils/constants';
 
-const ShopHeader = dynamic(() => import('../../../components/ShopHeader'));
-const ShopPagination = dynamic(() => import('../../../components/ShopPagination'));
-const Product = dynamic(() => import('../../../components/Product'));
+const ShopHeader = dynamic(() => import('../../components/ShopHeader'));
+const ShopPagination = dynamic(() => import('../../components/ShopPagination'));
+const Product = dynamic(() => import('../../components/Product'));
 
 const PAGE_LIMIT = 12;
 
 export const getStaticPaths = async () => {
-	const paths = await fetchAPI('/categories/menu/paths');
+	const paths = await fetchAPI('/products/brands/paths');
 	return {
-		paths: paths.map(({ gender, categorySlug, locale }) => ({ params: { gender, categorySlug }, locale })),
+		paths: paths.map(({ brandSlug, locale }) => ({ params: { brandSlug }, locale })),
 		fallback: false,
 	};
 };
 
 export const getStaticProps = async ({ params, locale }) => {
-	const slug = params.categorySlug;
+	const slugRequested = params.brandSlug;
 	const lang = locale || DEFAULT_LANG;
-	const categories = await fetchAPI(`/categories?slug=${slug}&_locale=${lang}`);
-	const nbProducts = await fetchAPI(`/products/count?categories.slug=${slug}&_locale=${lang}`) || 0;
+	const nbProducts = await fetchAPI(`/products/count?brandSlug=${slugRequested}&_locale=${lang}`) || 0;
 
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
-			category: categories[0] || [],
+			slugRequested,
 			nbProducts,
 			locale: lang,
 		},
@@ -47,34 +45,20 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-const Category = ({ category, nbProducts, locale }) => {
-	const { gender, parent, slug, name, description } = category;
-	const { t } = useTranslation('common');
+const Brand = ({ slugRequested, nbProducts, locale }) => {
 	const [page, setPage] = useState(0);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const categoryName = t(name);
 	const start = page * PAGE_LIMIT;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const { data: products = [] } = useSWRImmutable(
-		`/products?categories.slug=${slug}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
+		`/products?brandSlug=${slugRequested}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
 		fetchAPI
 	);
 
-
-	const genderLabel = t(gender);
-	const parentLabel = t(parent);
-	const titleLabel = `Mine: ${genderLabel} · ${parentLabel} · ${categoryName}`;
-	const breadcrumbs = [
-		{
-			name: genderLabel,
-		},
-		{
-			name: parentLabel,
-			active: true,
-		},
-	];
+	const { brandSlug, brand: brandName } = products?.[0] ?? {};
+	const titleLabel = `Mine: ${brandName}`;
 
 	return (
 		<>
@@ -83,14 +67,9 @@ const Category = ({ category, nbProducts, locale }) => {
 				<meta name="description" content={titleLabel} />
 				<meta property="og:title" content="Mine" />
 				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/category/${parent}/${slug}`} />
+				<meta property="og:url" content={`https://mineparis.com/brand/${brandSlug}`} />
 			</Head>
-			<Hero
-				className="hero-content pb-5"
-				title={categoryName}
-				breadcrumbs={breadcrumbs}
-				content={description}
-			/>
+			<Hero className="hero-content pb-5" title={brandName} />
 			<Container>
 				<Row>
 					<Col xs="12" className="products-grid sidebar-none">
@@ -129,4 +108,4 @@ const Category = ({ category, nbProducts, locale }) => {
 	);
 };
 
-export default Category;
+export default Brand;
