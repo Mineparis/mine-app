@@ -102,7 +102,7 @@ const Category = ({ category, nbProducts, locale }) => {
 
 						{!products.length ? (
 							<div className="d-flex justify-content-center align-items-center py-7 my-6">
-								<Spinner color="dark" size="lg" />
+								<Spinner color="dark" role="status" />
 							</div>
 						) : (
 							<>
