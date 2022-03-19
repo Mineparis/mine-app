@@ -29,6 +29,8 @@ import Logo from "../../public/svg/logo.svg";
 import UseWindowSize from "../hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
+const PROMO_CODE = 'MINE10';
+
 const Header = ({ menu, ...props }) => {
 	const { t } = useTranslation('common');
 	const [collapsed, setCollapsed] = useState(false);
@@ -145,6 +147,16 @@ const Header = ({ menu, ...props }) => {
 			className={`header ${props.headerClasses ? props.headerClasses : ""} ${props.headerAbsolute ? "header-absolute" : ""
 				}`}
 		>
+			{!props.hideTopbar && (
+				<div className="top-bar" ref={topbarRef}>
+					<Container fluid>
+						<Row className="d-flex justify-content-center">
+							{t('topbar_label')}
+							<b className="ml-1">{PROMO_CODE}</b>
+						</Row>
+					</Container>
+				</div>
+			)}
 			<div ref={navbarRef} className="d-flex flex-column justify-content-space-between">
 				<Navbar
 					color={
