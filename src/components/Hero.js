@@ -20,7 +20,7 @@ const Hero = ({
 					{content && (
 						<Row>
 							<Col md="6" xl="6" className="mb-1">
-								<h3 className="lead">{content}</h3>
+								<h3 className="hero-desc">{content}</h3>
 							</Col>
 						</Row>
 					)}
