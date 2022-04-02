@@ -1,71 +1,79 @@
 {
-    "title": "F.A.Q.s",
-    "subtitle": "Frequently asked questions",
-    "breadcrumbs": [{
-            "name": "Home",
-            "link": "/"
-        },
-        {
-            "name": "Frequently asked questions",
-            "active": true
-        }
-    ],
-    "content": "As am hastily invited settled at limited civilly fortune me. Really spring in extent an by. Judge but built party world. Of so am he remember although required. Bachelor unpacked be advanced at. Confined in declared marianne is vicinity.",
-    "questionGroups": [{
-            "title": "Shopping",
-            "questions": [{
-                    "title": "What shipping method does Sell use?",
-                    "content": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream."
-                },
-                {
-                    "title": "What countries do you to?",
-                    "content": "His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table."
-                },
-                {
-                    "title": "One of my items is missing",
-                    "content": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame."
-                },
-                {
-                    "title": "Remote areas - delivery",
-                    "content": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before."
-                }
-            ]
-        },
-        {
-            "title": "Payment",
-            "questions": [{
-                    "title": "Can I pay COD - cash on delivery?",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections</p>"
-                },
-                {
-                    "title": "Payment methods accepted",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections"
-                },
-                {
-                    "title": "What is Paypal?",
-                    "content": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream."
-                },
-                {
-                    "title": "How do the conversion rates work",
-                    "content": "His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table."
-                }
-            ]
-        },
-        {
-            "title": "Warranty and return",
-            "questions": [{
-                    "title": "My product has a problem what should I do?",
-                    "content": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame."
-                },
-                {
-                    "title": "What if the product is broken?",
-                    "content": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before."
-                },
-                {
-                    "title": "Why should I buy insurance at the checkout?",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections"
-                }
-            ]
-        }
-    ]
+	"groups": [
+		{
+			"title": "Livraison",
+			"questions": [
+				{
+					"title": "Pays de livraison",
+					"content": "Nous livrons en France métropolitaine, les DOM-TOM, La Réunion, la Belgique, ainsi que le reste de l’Europe."
+				},
+				{
+					"title": "Options de livraison",
+					"table": [
+						{
+							"col1": "Mode de livraison",
+							"col2": "Délai de livraison*"
+						},
+						{
+							"col1": "Livraison à domicile",
+							"col2": "24h à 48h"
+						},
+						{
+							"col1": "Livraison en point relais",
+							"col2": "2 à 3 jours"
+						}
+					],
+					"info1": "*En jours ouvrés",
+					"info2": "**A noter que des frais de douanes peuvent s’appliquer par le transporteur, en cas de livraison en dehors de livraison hors France métropolitaine. Et que ces délais de livraison s'appliquent uniquement en France."
+				}
+			]
+		},
+		{
+			"title": "Ma Commande",
+			"questions": [
+				{
+					"title": "Validation de la commande",
+					"content": "Dès validation de votre commande, vous recevrez un mail de confirmation comportant le numéro de votre commande. Vous avez la possibilité de suivre votre commande dans votre espace « Mon compte »."
+				},
+				{
+					"title": "Expédition et suivi de ma commande",
+					"content": "Votre commande sera expédiée 24 à 48 heures ouvrées après validation de celle-ci. Vous recevrez un mail de la part du transporteur comportant le numéro de suivi de votre colis. Vous pouvez également suivre votre commande dans votre espace « Mon compte »."
+				}
+			]
+		},
+		{
+			"title": "Retours et remboursements",
+			"questions": [
+				{
+					"title": "Politique de rétractation",
+					"content": "Vous disposez d’un délai de 15 jours après réception de votre commande pour nous retourner les produits qui ne vous conviennent pas, contre remboursement ou avoir. A noter que seuls les produits non ouverts et dans leur état d’origine peuvent faire l’objet d’un retour."
+				},
+				{
+					"title": "Effectuer un retour",
+					"content": "Veuillez contacter notre service client à l’adresse minepariscontact@gmail.com, si vous souhaitez effectuer un retour. Dès réception de votre mail, nous vous enverrons les étapes à suivre, ainsi que votre étiquette de retour."
+				},
+				{
+					"title": "Délai de remboursement",
+					"content": "Nous vous remboursons dans un délai de 14 jours, après réception et vérification des produits retournés. Le remboursement s'effectuera sur le même moyen de paiement que celui utilisé au moment de l'achat."
+				}
+			]
+		},
+		{
+			"title": "Paiement",
+			"questions": [
+				{
+					"title": "Modes de paiement",
+					"content": "Vous avez la possibilité de régler votre commande par: Carte bancaire (Visa, Mastercard, Maestro et American Express) et Paypal"
+				},
+				{
+					"title": "Paiement sécurisé",
+					"content": "Nous ne conservons aucune de vos informations bancaires. Les transactions sont traitées par un module de paiement sécurisé de type SSL. Votre paiement est totalement sécurisé."
+				},
+				{
+					"title": "Autres questions",
+					"content": "Pour toutes autres questions, n’hésitez pas à contacter notre service client à l’adresse minepariscontact@gmail.com"
+				}
+			]
+		}
+	]
 }

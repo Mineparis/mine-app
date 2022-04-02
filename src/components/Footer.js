@@ -46,6 +46,10 @@ const Footer = () => {
 					label: t('contact_us'),
 				},
 				{
+					href: '/faq',
+					label: 'FAQ',
+				},
+				{
 					href: '/',
 					label: t('shipping_returns'),
 				},
@@ -106,7 +110,7 @@ const Footer = () => {
 							</form>
 						</div>
 						{categories.map(({ sectionName, links }) => (
-							<div key={sectionName} className="col-lg-2 col-md-2 mb-2 mb-lg-0">
+							<div key={sectionName} className="col-lg-2 col-md-4 mb-2 mb-lg-0">
 								<h6 className="text-uppercase">{sectionName}</h6>
 								<ul className="list-unstyled footer-list">
 									{links.map(({ href, label }) => (
@@ -120,7 +124,7 @@ const Footer = () => {
 							</div>
 						))}
 
-						<div className="col-lg-2 mb-2 mb-lg-0">
+						<div className="col-lg-2 col-md-2 mb-2 mb-lg-0">
 							<h6 className="text-uppercase">Social</h6>
 							<ul className="list-unstyled footer-list">
 								<li>
