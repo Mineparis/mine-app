@@ -50,10 +50,6 @@ const Footer = () => {
 					label: 'FAQ',
 				},
 				{
-					href: '/',
-					label: t('shipping_returns'),
-				},
-				{
 					href: '/terms-of-use',
 					label: t('terms_of_use'),
 				},
