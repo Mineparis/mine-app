@@ -50,6 +50,10 @@ const Footer = () => {
 					label: 'FAQ',
 				},
 				{
+					href: '/delivery-policy',
+					label: t('delivery_policy'),
+				},
+				{
 					href: '/terms-of-use',
 					label: t('terms_of_use'),
 				},

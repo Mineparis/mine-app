@@ -63,6 +63,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		'/login',
 		'/customer',
 		'/legal-notice',
+		'/delivery-policy',
 		'/faq',
 		'/contact',
 		'/terms-of-use',
