@@ -14,7 +14,6 @@ const Reviews = ({ comments, averageRating }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [start, setStart] = useState(0);
 	const [end, setEnd] = useState(4);
-	const nbComments = comments.length;
 
 	const handleChangePage = (page) => {
 		setCurrentPage(page);
@@ -25,8 +24,6 @@ const Reviews = ({ comments, averageRating }) => {
 		setStart(startIndex);
 		setEnd(startIndex + ITEMS_PER_PAGE);
 	}, [currentPage]);
-
-	if (!nbComments) return;
 
 	return (
 		<Container className="mb-5 col-xs-12 col-md-6">
