@@ -29,7 +29,7 @@ export const getStaticProps = async ({ params, locale }) => {
 	const lang = locale || DEFAULT_LANG;
 	const products = await fetchAPI(`/products?productSlug=${productSlug}&_locale=${lang}`);
 	const product = products?.[0];
-	const accRatings = product.comments.reduce((acc, { ratings }) => acc + ratings, 0);
+	const accRatings = product.comments.reduce((acc, { rating }) => acc + rating, 0);
 	const averageRating = Math.floor(accRatings / product.comments.length);
 
 	const query = qs.stringify({
