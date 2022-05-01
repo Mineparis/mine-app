@@ -26,7 +26,7 @@ const Reviews = ({ comments, averageRating }) => {
 		setEnd(startIndex + ITEMS_PER_PAGE);
 	}, [currentPage]);
 
-	if (!nbComments) return null;
+	if (!nbComments) return;
 
 	return (
 		<Container className="mb-5 col-xs-12 col-md-6">
@@ -45,28 +45,27 @@ const Reviews = ({ comments, averageRating }) => {
 				</Col>
 			</Row>
 			{comments.slice(start, end).map((review) => (
-				<Row key={review.author} className="review" lg="8">
+				<Row key={review.name} className="review" lg="8">
 					<Col className="d-flex align-items-center" lg="2">
-						<div className="mb-2">
-							<h5 className="mt-2 mb-1">{review.author}.</h5>
+						<div className="review-detail">
+							<h5 className="mt-2 mb-1">{review.name}</h5>
 							<Stars
-								stars={review.stars}
+								stars={review.rating}
 								secondColor="gray-300"
 								starClass="fa-xs"
 							/>
 						</div>
 					</Col>
 					<Col>
-						<div className="mr-4 mr-xl-5">
+						<div className="mr-4 mr-xl-5 mb-2">
 							<span className="text-muted">
-								{dateFormat(review.date)}
+								{dateFormat(review.created_at)}
 							</span>
 						</div>
-						<p>{review.text}</p>
+						<p>{review.content}</p>
 					</Col>
 				</Row>
 			))}
-
 			<Pagination
 				currentPage={currentPage}
 				totalItems={nbComments}

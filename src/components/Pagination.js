@@ -52,22 +52,32 @@ const CustomPagination = ({ currentPage, totalItems, itemsPerPage = 5, nbPagesDi
 
 	if (nbPages <= 1) return null;
 
+	const isFirst = currentPage === 1;
+	const isLast = nbPages === currentPage;
+
 	return (
-		<Pagination className="d-flex justify-content-center mt-3">
-			<PaginationItem>
-				<PaginationLink previous onClick={handlePrevPage} />
-			</PaginationItem>
-			{range(start, end).map((pageIndex) => (
-				<PaginationItem active={pageIndex === currentPage} key={pageIndex}>
-					<PaginationLink onClick={() => handleUpdatePage(pageIndex)}>
-						{pageIndex}
-					</PaginationLink>
-				</PaginationItem>
-			))}
-			<PaginationItem>
-				<PaginationLink next onClick={handleNextPage} />
-			</PaginationItem>
-		</Pagination>
+		<nav aria-label="Pagination">
+			<ul class="pagination d-flex justify-content-center mt-3">
+				<li class={`page-item ${isFirst ? 'disabled' : ''}`}>
+					<a class="page-link" aria-label="Precedent" onClick={handlePrevPage}>
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				{range(start, end).map((pageIndex) => {
+					const isActive = pageIndex === currentPage ? 'active' : '';
+					return (
+						<li class={`page-item ${isActive}`} key={pageIndex} onClick={() => handleUpdatePage(pageIndex)}>
+							<a class="page-link">{pageIndex}</a>
+						</li>
+					);
+				})}
+				<li class={`page-item ${isLast ? 'disabled' : ''}`}>
+					<a class="page-link" aria-label="Suivant" onClick={handleNextPage}>
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 	);
 };
 
