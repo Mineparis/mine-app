@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 
 import Stars from "./Stars";
 import Pagination from '../components/Pagination';
-import { dateFormat } from '../utils/date';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -54,11 +53,6 @@ const Reviews = ({ comments, averageRating }) => {
 						</div>
 					</Col>
 					<Col>
-						<div className="mr-4 mr-xl-5 mb-2">
-							<span className="text-muted">
-								{dateFormat(review.created_at)}
-							</span>
-						</div>
 						<p>{review.content}</p>
 					</Col>
 				</Row>
