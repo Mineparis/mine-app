@@ -17,9 +17,12 @@ const MyApp = ({ Component, pageProps }) => {
 	const [hasSetConsent, setHasSetConsent] = useState(null);
 
 	useEffect(() => {
-		const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
-		if (process.env.NODE_ENV === "production" && gaId) {
-			ReactGA.initialize(gaId);
+		if (process.env.NODE_ENV === "production") {
+			ReactGA.initialize([{
+				trackingId: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
+			}, {
+				trackingId: process.env.NEXT_PUBLIC_GOOGLE_ADS,
+			}]);
 		}
 	}, []);
 
