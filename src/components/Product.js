@@ -3,9 +3,10 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { Button } from 'reactstrap';
 
-import Image from "./CustomImage";
 import { getStrapiMedia } from '../lib/media';
 import { getCurrentPrice } from '../utils/price';
+import { gtagReportConversion } from "../utils/gtag";
+import Image from "./CustomImage";
 
 const GOLDEN_RATIO = 1.618;
 const IMAGE_SIZE = 300;
@@ -33,6 +34,10 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 	const soldOut = stock < 1;
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
+
+	const handleClick = () => {
+		gtagReportConversion(window.location.href);
+	};
 
 	return (
 		<>
@@ -75,6 +80,7 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 									data-item-length={len} // longueur en cm (pas de decimale)
 									data-item-width={width} // largeur en cm (pas de decimale)
 									data-item-height={height}
+									onClick={handleClick}
 								>
 									<i className="bi bi-cart" />
 								</Button>
