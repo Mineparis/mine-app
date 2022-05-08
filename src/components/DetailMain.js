@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
 import { getCurrentPrice } from '../utils/price';
-import { gtagReportConversion } from '../utils/gtag';
 import { getStrapiMedia } from '../lib/media';
 
 const DetailMain = ({ product }) => {
@@ -24,10 +23,6 @@ const DetailMain = ({ product }) => {
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const soldOut = stock < 1;
-
-	const handleClick = () => {
-		gtagReportConversion(window.location.href);
-	};
 
 	return (
 		<>
@@ -83,7 +78,6 @@ const DetailMain = ({ product }) => {
 									data-item-length={len} // longueur en cm (pas de decimale)
 									data-item-width={width} // largeur en cm (pas de decimale)
 									data-item-height={height}
-									onClick={handleClick}
 								>
 									{t('add_to_cart')}
 								</Button>
