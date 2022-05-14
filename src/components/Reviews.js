@@ -13,6 +13,7 @@ const Reviews = ({ comments, averageRating }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [start, setStart] = useState(0);
 	const [end, setEnd] = useState(4);
+	const nbComments = comments.length;
 
 	const handleChangePage = (page) => {
 		setCurrentPage(page);
@@ -42,17 +43,19 @@ const Reviews = ({ comments, averageRating }) => {
 			</Row>
 			{comments.slice(start, end).map((review) => (
 				<Row key={review.name} className="review" lg="8">
-					<Col className="d-flex align-items-center" lg="2">
+					<Col className="d-flex align-items-start mb-1" lg="2">
 						<div className="review-detail">
 							<h5 className="mt-2 mb-1">{review.name}</h5>
+						</div>
+					</Col>
+					<Col>
+						<div className='mb-2'>
 							<Stars
 								stars={review.rating}
 								secondColor="gray-300"
 								starClass="fa-xs"
 							/>
 						</div>
-					</Col>
-					<Col>
 						<p>{review.content}</p>
 					</Col>
 				</Row>
