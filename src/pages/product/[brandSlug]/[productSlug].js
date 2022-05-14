@@ -111,7 +111,7 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				<DetailSimilar products={similarProducts} />
 			</section>
 
-			{product.comments > 0 && <Reviews comments={product.comments} averageRating={averageRating} />}
+			{product.comments.length > 0 && <Reviews comments={product.comments} averageRating={averageRating} />}
 		</>
 	);
 };
