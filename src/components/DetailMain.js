@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 
 import { getCurrentPrice } from '../utils/price';
 import { getStrapiMedia } from '../lib/media';
+import Stars from "./Stars";
 
-const DetailMain = ({ product }) => {
+const DetailMain = ({ product, averageRating }) => {
 	const { t } = useTranslation('common');
 	const { asPath } = useRouter();
 
@@ -15,6 +16,7 @@ const DetailMain = ({ product }) => {
 		originalPrice,
 		salePricePercent,
 		descriptions,
+		description,
 		thumbnail,
 		stock,
 		shippingInfo
@@ -23,10 +25,19 @@ const DetailMain = ({ product }) => {
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const soldOut = stock < 1;
+	const desc = descriptions ? descriptions.short : description;
 
 	return (
 		<>
 			<h1 className="h4 font-weight-normal mb-4 font-italic">{name}</h1>
+			<div className="mb-4">
+				<Stars
+					stars={averageRating}
+					secondColor="gray-300"
+					starClass="mr-1"
+					className="mr-2"
+				/>
+			</div>
 			<div className="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between mb-4">
 				<ul className="list-inline mb-2 mb-sm-0">
 					<li className="list-inline-item h4 font-weight-light mb-0">
@@ -40,7 +51,7 @@ const DetailMain = ({ product }) => {
 					)}
 				</ul>
 			</div>
-			<p className="mb-4 text-muted">{descriptions.short}</p>
+			{descriptions?.short && <p className="mb-4 text-muted">{desc}</p>}
 
 			<Form>
 				<Row className="d-flex list-inline mb-5 align-items-center col-12">
@@ -70,7 +81,7 @@ const DetailMain = ({ product }) => {
 									data-item-id={id}
 									data-item-price={currentPrice}
 									data-item-url={asPath}
-									data-item-description={descriptions.short}
+									data-item-description={desc}
 									data-item-image={imageURL}
 									data-item-name={name}
 									data-item-categories=""

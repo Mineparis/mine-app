@@ -12,7 +12,7 @@ import { DEFAULT_LANG } from "../utils/constants";
 const SWIPE_ITEMS_LIMIT = 10;
 
 const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
-const BestCategories = dynamic(() => import('../components/BestCategories'));
+const BigCards = dynamic(() => import('../components/BigCards'));
 const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
 const ServicesBlock = dynamic(() => import('../components/ServicesBlock'));
 const InstaGallery = dynamic(() => import('../components/InstaGallery'));
@@ -56,8 +56,6 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				autoplay
 				loop
 				centeredSlides
-				parallax
-				navigation
 				style={{ height: "80vh", minHeight: "600px" }}
 			/>
 
@@ -84,7 +82,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 			)}
 
 			<section className="pt-6">
-				<BestCategories categoriesSection={categoriesSection} />
+				<BigCards data={categoriesSection} />
 			</section>
 
 			{newProducts.length ? (

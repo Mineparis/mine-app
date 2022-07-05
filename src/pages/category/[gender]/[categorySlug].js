@@ -62,7 +62,6 @@ const Category = ({ category, nbProducts, locale }) => {
 		fetchAPI
 	);
 
-
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
 	const titleLabel = `Mine: ${genderLabel} · ${parentLabel} · ${categoryName}`;

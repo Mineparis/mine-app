@@ -69,6 +69,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		'/terms-of-use',
 		'/magazine',
 		'/brand',
+		'/box'
 	];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 

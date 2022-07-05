@@ -9,6 +9,7 @@
 .rounded-button {
 	display: flex;
 	flex-wrap: wrap;
+  justify-content: center;
 	align-items: center;
 	width: 5rem;
 	height: 5rem;
@@ -17,43 +18,6 @@
   @include hover() {
     opacity: 0.9;
   }
-}
-
-.best-categories {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-
-	@include media-breakpoint-down(md) {
-		flex-direction: column;
-	}
-}
-
-.best-category {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 6rem;
-	height: 35rem;
-
-	.visible-on-hover {
-		visibility: hidden;
-	}
-
-	@include hover() {
-    opacity: 0.8;
-		.visible-on-hover {
-			visibility: visible;
-		}
-  }
-	
-	@include media-breakpoint-down(md) {
-		width: 100%;
-		padding: 5rem 0;
-		.visible-on-hover {
-			visibility: visible;
-		}
-	}
 }
 
 .cursor-pointer {

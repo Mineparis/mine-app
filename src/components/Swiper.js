@@ -26,8 +26,13 @@ const Swiper = (props) => {
 	const wrapperClass = props.wrapperClass ? props.wrapperClass : '';
 	const bgCover = !props.columns ? 'bg-cover' : '';
 	const containerClass = 'container-fluid h-100';
-	const textClass = `${props.columns ? 'text-muted' : 'lead'}  mb-5`;
+	const textClass = `${props.columns ? 'text-muted' : 'lead'} mb-5`;
 	const buttonColor = props.columns ? 'outline-dark' : 'light';
+
+	const navigation = props.data.length > 1 ? {
+		nextEl: `.swiper-button-next.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`,
+		prevEl: `.swiper-button-prev.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`,
+	} : {};
 
 	const breakpoints = [];
 	if (props.sm) {
@@ -86,14 +91,7 @@ const Swiper = (props) => {
 					dynamicBullets: true,
 				}
 				: false,
-		navigation: {
-			nextEl: props.navigation
-				? `.swiper-button-next.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`
-				: "",
-			prevEl: props.navigation
-				? `.swiper-button-prev.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`
-				: "",
-		},
+		navigation,
 		wrapperClass: `swiper-wrapper ${wrapperClass}`,
 	};
 
@@ -121,7 +119,7 @@ const Swiper = (props) => {
 						/>
 						<Container
 							fluid={props.containerFluid}
-							className={`h-100 ${!props.columns ? "px-lg-6" : ""} ${containerClass}`}
+							className={`h-100 ${!props.columns ? "px-lg-12" : ""} ${containerClass}`}
 						>
 							<Row
 								className={`overlay-content h-100 align-items-center ${rowClass}`}
@@ -140,11 +138,21 @@ const Swiper = (props) => {
 										{title}
 									</h2>
 									{text && <p className={textClass}>{text}</p>}
-									<Link href={button.link}>
-										<Button className={buttonClass} color={buttonColor}>
+									{props.handleClickOnButton ? (
+										<Button
+											className={buttonClass}
+											color={buttonColor}
+											onClick={props.handleClickOnButton}
+										>
 											{button.label}
 										</Button>
-									</Link>
+									) : (
+										<Link href={button.link}>
+											<Button className={buttonClass} color={buttonColor}>
+												{button.label}
+											</Button>
+										</Link>
+									)}
 								</Col>
 							</Row>
 						</Container>

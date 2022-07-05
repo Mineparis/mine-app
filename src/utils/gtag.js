@@ -9,7 +9,7 @@ export const gtagReportConversion = (url) => {
 	ReactGA.gtag('event', 'conversion', {
 		send_to: `${gtagId}/${gtagConversionId}`,
 		event_callback: () => {
-			if (typeof (url) != 'undefined') {
+			if (typeof url !== 'undefined') {
 				window.location = url;
 			}
 		}
