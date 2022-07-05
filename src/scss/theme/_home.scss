@@ -10,7 +10,7 @@
     margin-bottom: 10px;
     height: 600px;
     @include media-breakpoint-up(md) {
-        height: 100vh;
+      height: 100vh;
     }
     .swiper-slide {
         padding-top: $headerHeight;

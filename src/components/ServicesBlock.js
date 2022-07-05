@@ -4,7 +4,7 @@ import { Col, Row, Container } from "reactstrap";
 const ServicesBlock = ({ valuesSection }) => {
 	const { title, value1, value2, value3 } = valuesSection;
 	return (
-		<div className="py-6">
+		<section className="py-6">
 			<Container>
 				<Row>
 					<Col className="d-flex justify-content-center mb-5 text-muted">
@@ -48,7 +48,7 @@ const ServicesBlock = ({ valuesSection }) => {
 					</Col>
 				</Row>
 			</Container>
-		</div>
+		</section>
 	);
 };
 

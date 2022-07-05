@@ -1,6 +1,10 @@
 export const formatMenu = (menusRaw) => {
 	if (!menusRaw) {
 		return [
+			// {
+			// 	title: 'Box',
+			// 	link: '/box'
+			// },
 			{
 				title: 'women',
 				megamenu: [],
@@ -17,7 +21,7 @@ export const formatMenu = (menusRaw) => {
 			},
 			{
 				title: 'about_us',
-				link: '/about-us'
+				link: '/about-us',
 			},
 		];
 	}
@@ -28,11 +32,12 @@ export const formatMenu = (menusRaw) => {
 		megamenu: menu,
 	}));
 
+	const box = {
+		title: 'box',
+		link: '/box'
+	};
+
 	const defaultMenu = [
-		// {
-		// 	title: 'box',
-		// 	link: '/box'
-		// },
 		{
 			title: 'about_us',
 			link: '/about-us'
@@ -44,4 +49,5 @@ export const formatMenu = (menusRaw) => {
 	];
 
 	return [...menuByGender, ...defaultMenu];
+	// return [box, ...menuByGender, ...defaultMenu];
 };

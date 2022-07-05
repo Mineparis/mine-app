@@ -57,22 +57,22 @@ const CustomPagination = ({ currentPage, totalItems, itemsPerPage = 5, nbPagesDi
 
 	return (
 		<nav aria-label="Pagination">
-			<ul class="pagination d-flex justify-content-center mt-3">
-				<li class={`page-item ${isFirst ? 'disabled' : ''}`}>
-					<a class="page-link" aria-label="Precedent" onClick={handlePrevPage}>
+			<ul className="pagination d-flex justify-content-center mt-3">
+				<li className={`page-item ${isFirst ? 'disabled' : ''}`}>
+					<a className="page-link" aria-label="Precedent" onClick={handlePrevPage}>
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
 				{range(start, end).map((pageIndex) => {
 					const isActive = pageIndex === currentPage ? 'active' : '';
 					return (
-						<li class={`page-item ${isActive}`} key={pageIndex} onClick={() => handleUpdatePage(pageIndex)}>
-							<a class="page-link">{pageIndex}</a>
+						<li className={`page-item ${isActive}`} key={pageIndex} onClick={() => handleUpdatePage(pageIndex)}>
+							<a className="page-link">{pageIndex}</a>
 						</li>
 					);
 				})}
-				<li class={`page-item ${isLast ? 'disabled' : ''}`}>
-					<a class="page-link" aria-label="Suivant" onClick={handleNextPage}>
+				<li className={`page-item ${isLast ? 'disabled' : ''}`}>
+					<a className="page-link" aria-label="Suivant" onClick={handleNextPage}>
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>
