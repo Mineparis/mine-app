@@ -23,22 +23,24 @@ export const getStaticProps = async ({ locale }) => {
 	};
 };
 
-const BoxConcept = ({ title, description }) => (
-	<section className="py-6">
-		<Container>
-			<Row>
-				<Col className="d-flex justify-content-center mb-4">
-					<h3>{title}</h3>
-				</Col>
-			</Row>
-			<Row className="d-flex justify-content-center">
-				<Col md="8" xl="8" className="d-flex justify-content-center">
-					<p className="lead">{description}</p>
-				</Col>
-			</Row>
-		</Container>
-	</section>
-);
+const BoxConcept = ({ title, description }) => {
+	return (
+		<section className="py-6">
+			<Container>
+				<Row>
+					<Col className="d-flex justify-content-center mb-4">
+						<h3>{title}</h3>
+					</Col>
+				</Row>
+				<Row className="d-flex justify-content-center">
+					<Col md="8" xl="8" className="d-flex justify-content-center">
+						<div className="ck-content" dangerouslySetInnerHTML={{ __html: description }} />
+					</Col>
+				</Row>
+			</Container>
+		</section>
+	);
+};
 
 const BoxHowTo = ({ title, steps }) => (
 	<section id="how-to" className="pt-6 pb-5">

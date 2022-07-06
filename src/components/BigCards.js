@@ -42,7 +42,7 @@ const BigCards = ({ isBox, data }) => {
 						</Col>
 					);
 				}
-				console.log({ cardData });
+
 				return (
 					<Col key={cardLabel} className="box-card dark-overlay">
 						<div className="overlay-content text-center text-white">
