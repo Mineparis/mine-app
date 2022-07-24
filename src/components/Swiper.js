@@ -138,7 +138,7 @@ const Swiper = (props) => {
 										{title}
 									</h2>
 									{text && <p className={textClass}>{text}</p>}
-									{props.handleClickOnButton ? (
+									{props.handleClickOnButton && button?.link === 'anchor' && (
 										<Button
 											className={buttonClass}
 											color={buttonColor}
@@ -146,7 +146,8 @@ const Swiper = (props) => {
 										>
 											{button.label}
 										</Button>
-									) : (
+									)}
+									{button?.link && button?.link !== 'anchor' && (
 										<Link href={button.link}>
 											<Button className={buttonClass} color={buttonColor}>
 												{button.label}
