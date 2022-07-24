@@ -1,10 +1,10 @@
 export const formatMenu = (menusRaw) => {
 	if (!menusRaw) {
 		return [
-			// {
-			// 	title: 'Box',
-			// 	link: '/box'
-			// },
+			{
+				title: 'Box',
+				link: '/box'
+			},
 			{
 				title: 'women',
 				megamenu: [],
@@ -48,6 +48,5 @@ export const formatMenu = (menusRaw) => {
 		},
 	];
 
-	return [...menuByGender, ...defaultMenu];
-	// return [box, ...menuByGender, ...defaultMenu];
+	return [box, ...menuByGender, ...defaultMenu];
 };
