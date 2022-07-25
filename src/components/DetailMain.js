@@ -16,16 +16,16 @@ const DetailMain = ({ product, averageRating }) => {
 		originalPrice,
 		salePricePercent,
 		descriptions,
-		description,
 		thumbnail,
 		stock,
 		shippingInfo
 	} = product;
+
 	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const soldOut = stock < 1;
-	const desc = descriptions ? descriptions.short : description;
+	const isBox = asPath.split('/').includes('box');
 
 	return (
 		<>
@@ -53,7 +53,7 @@ const DetailMain = ({ product, averageRating }) => {
 					)}
 				</ul>
 			</div>
-			{descriptions?.short && <p className="mb-4 text-muted">{desc}</p>}
+			{!isBox && <p className="mb-4 text-muted">{descriptions.short}</p>}
 
 			<Form>
 				<Row className="d-flex list-inline mb-5 align-items-center col-12">
@@ -83,7 +83,7 @@ const DetailMain = ({ product, averageRating }) => {
 									data-item-id={id}
 									data-item-price={currentPrice}
 									data-item-url={asPath}
-									data-item-description={desc}
+									data-item-description={descriptions.short}
 									data-item-image={imageURL}
 									data-item-name={name}
 									data-item-categories=""

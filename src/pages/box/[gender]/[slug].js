@@ -60,12 +60,12 @@ const MontlyBox = ({ box, lastBoxes, averageRating }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 
-	const { slug, carousel, images, products, description } = box;
+	const { slug, carousel, images, products, descriptions } = box;
 	const [month, year] = slug?.split('-') ?? [];
 	const titleLabel = `Mine Box ${month} ${year}`;
 
 	const tabOptions = [
-		{ title: 'Description', text: description },
+		{ title: 'Description', text: descriptions.long },
 	];
 
 	if (router.isFallback) {
