@@ -21,6 +21,8 @@ const MyApp = ({ Component, pageProps }) => {
 			ReactGA.initialize([{
 				trackingId: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
 			}, {
+				trackingId: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_GA4,
+			}, {
 				trackingId: process.env.NEXT_PUBLIC_GOOGLE_ADS,
 			}]);
 		}
