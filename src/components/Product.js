@@ -47,8 +47,8 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 					{soldOut && <div className="ribbon ribbon-danger">{t('sold_out')}</div>}
 					{!soldOut && (
 						<div className="badges-engagement">
-							{isVegan && <span class="badge badge-light">Vegan</span>}
-							{isCrueltyFree && <span class="badge badge-light">Cruelty free</span>}
+							{isVegan && <span className="badge badge-light">Vegan</span>}
+							{isCrueltyFree && <span className="badge badge-light">Cruelty free</span>}
 						</div>
 					)}
 
