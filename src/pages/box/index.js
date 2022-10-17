@@ -91,7 +91,7 @@ const Box = ({ data }) => {
 
 			<BoxHowTo {...boxHowToSection} />
 
-			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
+			{valuesSection && <ServicesBlock data={valuesSection} />}
 		</>
 	);
 };

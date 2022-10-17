@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import Link from "next/link";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Button } from "reactstrap";
 
 import Swiper from '../components/Swiper';
 import BackgroundImage from "../components/BackgroundImage";
@@ -38,7 +39,15 @@ export const getStaticProps = async ({ locale }) => {
 const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }) => {
 	const { t } = useTranslation('common');
 
-	const { carousel, ourDescription, surveySection, valuesSection, categoriesSection } = homeData;
+	const {
+		carousel,
+		ourDescription,
+		surveySection,
+		valuesSection,
+		categoriesSection,
+		boxSection,
+		engagementText,
+	} = homeData;
 
 	return (
 		<>
@@ -90,7 +99,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 					<SwiperProducts title={t('new_arrivals')} products={newProducts} />
 				</section>
 			) : null}
-			{/* 
+
 			{boxSection && (
 				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
 					<Col>
@@ -107,7 +116,9 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 						</Link>
 					</Col>
 				</BackgroundImage>
-			)} */}
+			)}
+
+			{valuesSection && <ServicesBlock data={valuesSection} />}
 
 			{magazinePosts.length ? (
 				<section className="py-5" style={{ background: '#979694' }}>
@@ -115,7 +126,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				</section>
 			) : null}
 
-			{valuesSection && <ServicesBlock valuesSection={valuesSection} />}
+			{engagementText && (
+				<section className="py-5">
+					<p className="lead text-center">{engagementText}</p>
+				</section>
+			)}
 
 			<section className="pt-3">
 				<InstaGallery />

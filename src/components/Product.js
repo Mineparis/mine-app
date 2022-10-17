@@ -6,6 +6,7 @@ import { Button } from 'reactstrap';
 import { getStrapiMedia } from '../lib/media';
 import { getCurrentPrice } from '../utils/price';
 import Image from "./CustomImage";
+import Stars from "./Stars";
 
 const GOLDEN_RATIO = 1.618;
 const IMAGE_SIZE = 300;
@@ -25,7 +26,11 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 		thumbnail,
 		stock,
 		isNewProduct,
-		shippingInfo
+		shippingInfo,
+		isVegan,
+		isCrueltyFree,
+		averageRating,
+		currencies,
 	} = data;
 	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
 
@@ -40,6 +45,12 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 				<div className="product-image">
 					{isNewProduct && withNewFlag && <div className="ribbon ribbon-info">{t('new')}</div>}
 					{soldOut && <div className="ribbon ribbon-danger">{t('sold_out')}</div>}
+					{!soldOut && (
+						<div className="badges-engagement">
+							{isVegan && <span class="badge badge-light">Vegan</span>}
+							{isCrueltyFree && <span class="badge badge-light">Cruelty free</span>}
+						</div>
+					)}
 
 					<Image
 						className="img-fluid"
@@ -92,6 +103,14 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 						<span className="font-weight-bold mr-1">{currentPrice.toFixed(2)} €</span>
 						{salePricePercent > 0 && <span className="text-muted font-weight-light"><del>{originalPrice.toFixed(2)} €</del></span>}
 					</>
+				</div>
+				<div className="mb-4">
+					<Stars
+						stars={averageRating}
+						secondColor="gray-300"
+						starClass="mr-1"
+						className="mr-2"
+					/>
 				</div>
 			</div>
 		</>
