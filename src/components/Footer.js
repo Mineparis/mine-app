@@ -166,7 +166,7 @@ const Footer = () => {
 						<div className="d-flex flex-end justify-content-end col-md-6 align-items-center">
 							{/* Language dropdown */}
 							<div className="d-flex justify-content-between align-items-center col-md-4">
-								<label htmlFor="language" className="mx-1">{t('language')}</label>
+								<label htmlFor="language" className="mx-1 my-0">{t('language')}</label>
 								<select id="language" defaultValue={langSelected.value} onChange={handleChangeLanguage}>
 									{languageOptions.map(({ label, value }) => <option key={value} value={value}>{label}</option>)}
 								</select>

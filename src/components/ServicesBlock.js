@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Row, Container } from "reactstrap";
 
-const ServicesBlock = ({ valuesSection }) => {
-	const { title, value1, value2, value3 } = valuesSection;
+const ServicesBlock = ({ data }) => {
+	const { title, value1, value2, value3 } = data;
 	return (
 		<section className="py-6">
 			<Container>

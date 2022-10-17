@@ -39,12 +39,12 @@ export const formatMenu = (menusRaw) => {
 
 	const defaultMenu = [
 		{
-			title: 'about_us',
-			link: '/about-us'
-		},
-		{
 			title: 'Magazine',
 			link: '/magazine'
+		},
+		{
+			title: 'about_us',
+			link: '/about-us'
 		},
 	];
 

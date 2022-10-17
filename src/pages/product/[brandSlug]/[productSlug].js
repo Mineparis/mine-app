@@ -69,6 +69,8 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 		);
 	}
 
+	if (typeof window === 'undefined' || !window?.Snipcart) return null;
+
 	const tabOptions = [
 		{ title: 'Description', text: product.descriptions.long },
 		{ title: t('using_advice'), text: product.usingAdvice },
