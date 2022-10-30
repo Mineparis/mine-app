@@ -9,6 +9,7 @@ import { useTranslation } from 'next-i18next';
 
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
+import { getCommentsAverageRating } from '../../../utils/comments';
 
 const DetailMain = dynamic(() => import('../../../components/DetailMain'));
 const DetailSimilar = dynamic(() => import('../../../components/DetailSimilar'));
@@ -29,8 +30,7 @@ export const getStaticProps = async ({ params, locale }) => {
 	const lang = locale || DEFAULT_LANG;
 	const products = await fetchAPI(`/products?productSlug=${productSlug}&_locale=${lang}`);
 	const product = products?.[0];
-	const accRatings = product.comments.reduce((acc, { rating }) => acc + rating, 0);
-	const averageRating = Math.floor(accRatings / product.comments.length);
+	const averageRating = getCommentsAverageRating(product.comments);
 
 	const query = qs.stringify({
 		_where: {
