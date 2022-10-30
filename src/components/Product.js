@@ -5,6 +5,7 @@ import { Button } from 'reactstrap';
 
 import { getStrapiMedia } from '../lib/media';
 import { getCurrentPrice } from '../utils/price';
+import { getCommentsAverageRating } from '../utils/comments';
 import Image from "./CustomImage";
 import Stars from "./Stars";
 
@@ -29,15 +30,16 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 		shippingInfo,
 		isVegan,
 		isCrueltyFree,
-		averageRating,
+		comments,
 		currencies,
 	} = data;
 	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
 
 	const link = `/product/${brandSlug}/${productSlug}`;
 	const soldOut = stock < 1;
-	const imageURL = getStrapiMedia(thumbnail?.formats.small);
+	const imageURL = getStrapiMedia(thumbnail?.formats?.small ?? thumbnail?.formats?.thumbnail);
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
+	const averageRating = getCommentsAverageRating(comments);
 
 	return (
 		<>
