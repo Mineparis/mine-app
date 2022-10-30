@@ -6,7 +6,7 @@ import ReactIdSwiper from "react-id-swiper";
 
 import Post from "./Post";
 
-import "swiper/css/swiper.css";
+import "swiper/swiper.min.css";
 
 const SwiperMagazine = ({ posts, title, ...props }) => {
 	const { t } = useTranslation('common');
