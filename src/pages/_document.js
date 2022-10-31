@@ -40,9 +40,10 @@ class MyDocument extends Document {
 
 					{/* Hotjar Tracking */}
 					{process.env.NODE_ENV === 'production' && (
-						<script async defer
-							dangerouslySetInnerHTML={{
-								__html: `
+						<>
+							<script async defer
+								dangerouslySetInnerHTML={{
+									__html: `
 							(function(h,o,t,j,a,r){
 								h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
 								h._hjSettings={hjid:2829073,hjsv:6};
@@ -52,8 +53,15 @@ class MyDocument extends Document {
 								a.appendChild(r);
 						})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 						`,
-							}}
-						/>
+								}}
+							/>
+							{/* Mailchimp */}
+							<script id="mcjs" async defer
+								dangerouslySetInnerHTML={{
+									__html: `!function(c,h,i,m,p){m = c.createElement(h), p = c.getElementsByTagName(h)[0], m.async = 1, m.src = i, p.parentNode.insertBefore(m, p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/e4165b25dead80b294e826446/f59f0094e1a493fdab8cde0a4.js");`
+								}}
+							/>
+						</>
 					)}
 				</Head>
 				<body>
