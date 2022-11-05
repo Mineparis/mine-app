@@ -5,7 +5,7 @@ import ReactIdSwiper from "react-id-swiper";
 
 import Product from "./Product";
 
-import "swiper/swiper.min.css";
+import "swiper/css/swiper.css";
 
 const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 	const swiperRef = useRef(null);
