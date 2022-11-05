@@ -30,16 +30,14 @@ const DetailMain = ({ product, averageRating }) => {
 	return (
 		<>
 			<h1 className="h4 font-weight-normal mb-4 font-italic">{name}</h1>
-			{averageRating && (
-				<div className="mb-4">
-					<Stars
-						stars={averageRating}
-						secondColor="gray-300"
-						starClass="mr-1"
-						className="mr-2"
-					/>
-				</div>
-			)}
+			<div className="mb-4">
+				<Stars
+					stars={averageRating}
+					secondColor="gray-300"
+					starClass="mr-1"
+					className="mr-2"
+				/>
+			</div>
 			<div className="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between mb-4">
 				<ul className="list-inline mb-2 mb-sm-0">
 					<li className="list-inline-item h4 font-weight-light mb-0">
