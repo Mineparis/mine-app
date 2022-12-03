@@ -6,35 +6,37 @@ import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
-import Hero from '../../../components/Hero';
-import { fetchAPI } from '../../../lib/api';
-import { DEFAULT_LANG } from '../../../utils/constants';
+import Hero from '../../../../components/Hero';
+import { fetchAPI } from '../../../../lib/api';
+import { DEFAULT_LANG } from '../../../../utils/constants';
 
-const ShopHeader = dynamic(() => import('../../../components/ShopHeader'));
-const ShopPagination = dynamic(() => import('../../../components/ShopPagination'));
-const Product = dynamic(() => import('../../../components/Product'));
+const ShopHeader = dynamic(() => import('../../../../components/ShopHeader'));
+const ShopPagination = dynamic(() => import('../../../../components/ShopPagination'));
+const Product = dynamic(() => import('../../../../components/Product'));
 
 const PAGE_LIMIT = 12;
 
 export const getStaticPaths = async () => {
 	const paths = await fetchAPI('/categories/menu/paths');
+
 	return {
-		paths: paths.map(({ gender, categorySlug, locale }) => ({ params: { gender, categorySlug }, locale })),
+		paths: paths.map(({ gender, categoryType, categoryName, locale }) => ({ params: { gender, categoryType, categoryName }, locale })),
 		fallback: false,
 	};
 };
 
 export const getStaticProps = async ({ params, locale }) => {
-	const slug = params.categorySlug;
+	const { gender, categoryType, categoryName } = params;
 	const lang = locale || DEFAULT_LANG;
-	const categories = await fetchAPI(`/categories?slug=${slug}&_locale=${lang}`);
-	const nbProducts = await fetchAPI(`/products/count?categories.slug=${slug}&_locale=${lang}`) || 0;
+	const categoryNameCamelCase = categoryName[0].toUpperCase() + categoryName.slice(1);
+	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&name=${categoryNameCamelCase}&_locale=${lang}`);
+
+	if (!categories?.length) return { notFound: true };
 
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			category: categories[0] || [],
-			nbProducts,
 			locale: lang,
 		},
 	};
@@ -47,24 +49,26 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-const Category = ({ category, nbProducts, locale }) => {
-	const { gender, parent, slug, name, description } = category;
+const Category = ({ category, locale }) => {
+	const { gender, parent, name, description } = category;
 	const { t } = useTranslation('common');
 	const [page, setPage] = useState(0);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const categoryName = t(name);
+	const categoryNameCamelCase = name[0].toUpperCase() + name.slice(1);
+	const categoryNameLabel = t(name);
 	const start = page * PAGE_LIMIT;
-	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const { data: products = [] } = useSWRImmutable(
-		`/products?categories.slug=${slug}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
+		`/products?categories.gender=${gender}&categories.parent=${parent}&categories.name=${categoryNameCamelCase}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
 		fetchAPI
 	);
 
+	const nbProducts = products.length;
+	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
-	const titleLabel = `Mine: ${genderLabel} · ${parentLabel} · ${categoryName}`;
+	const titleLabel = `Mine: ${genderLabel} · ${parentLabel} · ${categoryNameLabel}`;
 	const breadcrumbs = [
 		{
 			name: genderLabel,
@@ -82,11 +86,11 @@ const Category = ({ category, nbProducts, locale }) => {
 				<meta name="description" content={titleLabel} />
 				<meta property="og:title" content="Mine" />
 				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/category/${parent}/${slug}`} />
+				<meta property="og:url" content={`https://mineparis.com/category/${gender}/${parent}/${name}`} />
 			</Head>
 			<Hero
 				className="hero-content pb-5"
-				title={categoryName}
+				title={categoryNameLabel}
 				breadcrumbs={breadcrumbs}
 				content={description}
 			/>
