@@ -27,11 +27,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params, locale }) => {
 	const { gender, categoryType, categoryName } = params;
-	console.log({ categoryName });
 	const lang = locale || DEFAULT_LANG;
 	const categoryNameCamelCase = categoryName[0].toUpperCase() + categoryName.slice(1);
 	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&name=${categoryNameCamelCase}&_locale=${lang}`);
-	console.log({ categories });
 
 	if (!categories?.length) return { notFound: true };
 

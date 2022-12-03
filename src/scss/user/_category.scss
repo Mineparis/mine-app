@@ -13,7 +13,28 @@
 
 .badges-engagement {
 	position: absolute;
+
 	span {
 		margin: 0 5px;
 	}
+}
+
+.subcategory-nav-item {
+	text-transform: capitalize;
+	background-color: #F3F2F2;
+	margin-right: 1rem;
+	font-weight: normal;
+	letter-spacing: normal;
+
+	&:hover {
+		background-color: darken(#F3F2F2, 8%);
+	}
+}
+
+.subcategory-nav-item-selected {
+	text-transform: capitalize;
+	background-color: darken(#F3F2F2, 15%);
+	margin-right: 1rem;
+	font-weight: normal;
+	letter-spacing: normal;
 }

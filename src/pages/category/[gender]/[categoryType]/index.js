@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import dynamic from "next/dynamic";
+import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
+
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
 import Hero from '../../../../components/Hero';
@@ -16,29 +19,26 @@ const Product = dynamic(() => import('../../../../components/Product'));
 
 const PAGE_LIMIT = 12;
 
-export const getStaticPaths = async () => {
-	const paths = await fetchAPI('/categories/menu/paths');
-	console.log({ paths });
-	return {
-		paths: paths.map(({ gender, categoryType, locale }) => ({ params: { gender, categoryType }, locale })),
-		fallback: false,
-	};
-};
-
-export const getStaticProps = async ({ params, locale }) => {
+export const getServerSideProps = async ({ query, locale, params, res }) => {
 	const { gender, categoryType } = params;
-	console.log({ params });
+
+	res.setHeader('Cache-Control', `s-maxage=600, stale-while-revalidate`);
+
 	const lang = locale || DEFAULT_LANG;
 	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&_locale=${lang}`);
+	const menuData = await fetchAPI('/categories/menu/paths');
 
-	if (!categories?.length) {
-		return { notFound: true };
-	}
+	const subCategories = menuData.reduce((acc, data) =>
+		(data.categoryType === categoryType) ? [...acc, data.categoryName] : acc
+		, []);
+
+	if (!categories?.length) return { notFound: true };
 
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			category: categories[0] || [],
+			subCategories,
 			locale: lang,
 		},
 	};
@@ -51,19 +51,31 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-const Category = ({ category, locale }) => {
+const toCapitalize = (value) => value.charAt(0).toUpperCase() + value.slice(1);
+
+const setAllCategoryNameFilter = (typesSelected) =>
+	typesSelected
+		.map(value => `&categories.name=${toCapitalize(value)}`)
+		.join('');
+
+const Category = ({ category, subCategories, locale }) => {
 	const { gender, parent, description } = category;
 	const { t } = useTranslation('common');
+	const router = useRouter();
+
 	const [page, setPage] = useState(0);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
+	const [typesSelected, setTypesSelected] = useState([]);
 
 	const start = page * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
-	const { data: products = [] } = useSWRImmutable(
-		`/products?categories.gender=${gender}&categories.parent=${parent}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
-		fetchAPI
-	);
+	const URL = `/products?categories.gender=${gender}&categories.parent=${parent}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
+	const URLWithQueryParams = typesSelected.length ? URL + `${setAllCategoryNameFilter(typesSelected)}` : URL;
 
+	const { mutate } = useSWRConfig();
+	const { data: products = [] } = useSWRImmutable(URLWithQueryParams, fetchAPI);
+
+	const baseURL = router.asPath.split('?')[0];
 	const nbProducts = products.length;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
@@ -75,6 +87,37 @@ const Category = ({ category, locale }) => {
 			active: true
 		},
 	];
+
+	useEffect(() => {
+		const typesQueryParams = router.query?.types;
+
+		if (typesQueryParams) {
+			const typesSearched = typesQueryParams.split(',');
+			const isSame = typesSearched.every(typeSearched => typesSelected.includes(typeSearched));
+			if (!isSame) {
+				setTypesSelected(typesSearched);
+				mutate(URLWithQueryParams);
+			}
+		}
+	}, [router.query.types]);
+
+	const handleChangeType = (typeName) => () => {
+		const newTypesSelected = typesSelected.includes(typeName)
+			? typesSelected.filter(typeNameSelected => typeNameSelected !== typeName)
+			: [...typesSelected, typeName];
+
+		setTypesSelected(newTypesSelected);
+		router.push(newTypesSelected.length ? `${baseURL}?types=${newTypesSelected.join(',')}` : baseURL);
+	};
+
+	const handleResetType = () => {
+		if (typesSelected.length) {
+			setTypesSelected([]);
+			router.push(baseURL);
+		};
+	};
+
+	const noTypesSelected = !typesSelected.length ? '-selected' : '';
 
 	return (
 		<>
@@ -99,6 +142,32 @@ const Category = ({ category, locale }) => {
 							sortOptionSelected={sortOptionSelected}
 							setSortOptionSelected={setSortOptionSelected}
 						/>
+
+						<Col>
+							<Row className="mb-4">
+								<button
+									type="button"
+									className={`btn subcategory-nav-item${noTypesSelected}`}
+									onClick={handleResetType}
+								>
+									{t('all')}
+								</button>
+								{subCategories.map(name => {
+									const selected = typesSelected.includes(name) ? '-selected' : '';
+
+									return (
+										<button
+											key={name}
+											type="button"
+											className={`btn subcategory-nav-item${selected}`}
+											onClick={handleChangeType(name)}
+										>
+											{name}
+										</button>
+									);
+								})}
+							</Row>
+						</Col>
 
 						{!products.length ? (
 							<div className="d-flex justify-content-center align-items-center py-7 my-6">

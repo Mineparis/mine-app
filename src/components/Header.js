@@ -259,10 +259,12 @@ const Header = ({ menu, ...props }) => {
 															<Row className="pr-lg-0 pl-lg-5 pt-lg-5">
 																{item?.megamenu?.map((megamenuItem, index) => (
 																	<Col key={index} lg="3">
-																		{megamenuItem?.map(({ title, links }, index) => (
+																		{megamenuItem?.map(({ title, links, categoryTypeLink }, index) => (
 																			<React.Fragment key={index}>
 																				<h6 className="text-uppercase">
-																					{t(title)}
+																					<Link href={categoryTypeLink.link}>
+																						{t(title)}
+																					</Link>
 																				</h6>
 																				<ul className="megamenu-list list-unstyled">
 																					{links.map((link, index) => (
