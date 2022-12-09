@@ -20,16 +20,15 @@ export const getStaticPaths = async () => {
 	const paths = await fetchAPI('/categories/menu/paths');
 
 	return {
-		paths: paths.map(({ gender, categoryType, categoryName, locale }) => ({ params: { gender, categoryType, categoryName }, locale })),
+		paths: paths.map(({ gender, categoryType, categoryId, locale }) => ({ params: { gender, categoryType, categoryId }, locale })),
 		fallback: false,
 	};
 };
 
 export const getStaticProps = async ({ params, locale }) => {
-	const { gender, categoryType, categoryName } = params;
+	const { gender, categoryType, categoryId } = params;
 	const lang = locale || DEFAULT_LANG;
-	const categoryNameCamelCase = categoryName[0].toUpperCase() + categoryName.slice(1);
-	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&name=${categoryNameCamelCase}&_locale=${lang}`);
+	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&categoryId=${categoryId}&_locale=${lang}`);
 
 	if (!categories?.length) return { notFound: true };
 
@@ -50,17 +49,16 @@ const sortQueryMapping = {
 };
 
 const Category = ({ category, locale }) => {
-	const { gender, parent, name, description } = category;
+	const { gender, parent, name, description, categoryId } = category;
 	const { t } = useTranslation('common');
 	const [page, setPage] = useState(0);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const categoryNameCamelCase = name[0].toUpperCase() + name.slice(1);
 	const categoryNameLabel = t(name);
 	const start = page * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const { data: products = [] } = useSWRImmutable(
-		`/products?categories.gender=${gender}&categories.parent=${parent}&categories.name=${categoryNameCamelCase}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
+		`/products?categories.gender=${gender}&categories.parent=${parent}&categories.categoryId=${categoryId}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
 		fetchAPI
 	);
 
