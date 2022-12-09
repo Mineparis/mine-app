@@ -20,7 +20,9 @@ export const getStaticPaths = async () => {
 	const paths = await fetchAPI('/categories/menu/paths');
 
 	return {
-		paths: paths.map(({ gender, categoryType, categoryId, locale }) => ({ params: { gender, categoryType, categoryId }, locale })),
+		paths: paths.map(({ gender, categoryType, categoryId, locale }) =>
+			({ params: { gender, categoryType, categoryId }, locale })
+		),
 		fallback: false,
 	};
 };

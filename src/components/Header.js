@@ -57,7 +57,7 @@ const Header = ({ menu, ...props }) => {
 
 	const onLinkClick = (parent) => {
 		if (isSmallScreen) setCollapsed(!collapsed);
-		setParentName(parent);
+		if (parent) setParentName(parent);
 	};
 
 	const makeNavbarSticky = () => {
@@ -263,7 +263,9 @@ const Header = ({ menu, ...props }) => {
 																			<React.Fragment key={index}>
 																				<h6 className="text-uppercase">
 																					<Link href={categoryTypeLink.link}>
-																						{t(title)}
+																						<a onClick={() => onLinkClick()}>
+																							{t(title)}
+																						</a>
 																					</Link>
 																				</h6>
 																				<ul className="megamenu-list list-unstyled">
