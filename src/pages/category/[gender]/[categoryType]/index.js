@@ -26,10 +26,15 @@ export const getServerSideProps = async ({ locale, params, res }) => {
 
 	const lang = locale || DEFAULT_LANG;
 	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&_locale=${lang}`);
-	const menuData = await fetchAPI('/categories/menu/paths');
+	const menuData = await fetchAPI(`/categories/menu/paths`);
 
 	const subCategories = menuData.reduce((acc, data) =>
-		(data.categoryType === categoryType) ? [...acc, { categoryId: data.categoryId, name: data.categoryName }] : acc
+		(data.gender === gender &&
+			data.categoryType === categoryType &&
+			data.locale === lang
+		)
+			? [...acc, { categoryId: data.categoryId, name: data.categoryName }]
+			: acc
 		, []);
 
 	if (!categories?.length) return { notFound: true };
