@@ -19,7 +19,7 @@ const Product = dynamic(() => import('../../../../components/Product'));
 
 const PAGE_LIMIT = 12;
 
-export const getServerSideProps = async ({ query, locale, params, res }) => {
+export const getServerSideProps = async ({ locale, params, res }) => {
 	const { gender, categoryType } = params;
 
 	res.setHeader('Cache-Control', `s-maxage=600, stale-while-revalidate`);
@@ -29,7 +29,7 @@ export const getServerSideProps = async ({ query, locale, params, res }) => {
 	const menuData = await fetchAPI('/categories/menu/paths');
 
 	const subCategories = menuData.reduce((acc, data) =>
-		(data.categoryType === categoryType) ? [...acc, data.categoryName] : acc
+		(data.categoryType === categoryType) ? [...acc, { categoryId: data.categoryId, name: data.categoryName }] : acc
 		, []);
 
 	if (!categories?.length) return { notFound: true };
@@ -51,11 +51,9 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-const toCapitalize = (value) => value.charAt(0).toUpperCase() + value.slice(1);
-
 const setAllCategoryNameFilter = (typesSelected) =>
 	typesSelected
-		.map(value => `&categories.name=${toCapitalize(value)}`)
+		.map(value => `&categories.categoryId=${value}`)
 		.join('');
 
 const Category = ({ category, subCategories, locale }) => {
@@ -101,10 +99,10 @@ const Category = ({ category, subCategories, locale }) => {
 		}
 	}, [router.query.types]);
 
-	const handleChangeType = (typeName) => () => {
-		const newTypesSelected = typesSelected.includes(typeName)
-			? typesSelected.filter(typeNameSelected => typeNameSelected !== typeName)
-			: [...typesSelected, typeName];
+	const handleChangeType = (catId) => () => {
+		const newTypesSelected = typesSelected.includes(catId)
+			? typesSelected.filter(catIdSelected => catIdSelected !== catId)
+			: [...typesSelected, catId];
 
 		setTypesSelected(newTypesSelected);
 		router.push(newTypesSelected.length ? `${baseURL}?types=${newTypesSelected.join(',')}` : baseURL);
@@ -152,15 +150,15 @@ const Category = ({ category, subCategories, locale }) => {
 								>
 									{t('all')}
 								</button>
-								{subCategories.map(name => {
-									const selected = typesSelected.includes(name) ? '-selected' : '';
+								{subCategories.map(({ name, categoryId }) => {
+									const selected = typesSelected.includes(categoryId) ? '-selected' : '';
 
 									return (
 										<button
-											key={name}
+											key={categoryId}
 											type="button"
 											className={`btn subcategory-nav-item${selected}`}
-											onClick={handleChangeType(name)}
+											onClick={handleChangeType(categoryId)}
 										>
 											{name}
 										</button>
