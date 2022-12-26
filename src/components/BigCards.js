@@ -17,7 +17,7 @@ const BigCards = ({ isBox, data }) => {
 				const cardName = t(cardLabel);
 				const currentCardType = cardLabel.split('_')[0];
 				const defaultCardData = { womenURL: '', menURL: '' };
-				const cardData = isBox ? data?.[`${currentCardType}URL`] || '' : data?.[currentCardType] || defaultCardData;
+				const cardData = isBox ? `box/${currentCardType}/${data?.[`${currentCardType}URL`]}` || '' : data?.[currentCardType] || defaultCardData;
 				const isBeardCat = currentCardType === 'beard';
 
 				if (isBox) {
