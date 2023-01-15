@@ -4,16 +4,15 @@ import Head from 'next/head';
 import dynamic from "next/dynamic";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
-import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
+import DetailMain from '../../../components/DetailMain';
+import Product from '../../../components/Product';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
 
-const DetailMain = dynamic(() => import('../../../components/DetailMain'));
 const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
 const Swiper = dynamic(() => import('../../../components/Swiper'));
-const Product = dynamic(() => import('../../../components/Product'));
 const Accordeon = dynamic(() => import('../../../components/Accordeon'));
 
 export const getStaticPaths = async () => {
