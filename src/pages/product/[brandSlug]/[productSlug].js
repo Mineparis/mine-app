@@ -7,12 +7,12 @@ import { Container, Row, Col, Spinner } from 'reactstrap';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
+import DetailMain from '../../../components/DetailMain';
+import DetailSimilar from '../../../components/DetailSimilar';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
 import { getCommentsAverageRating } from '../../../utils/comments';
 
-const DetailMain = dynamic(() => import('../../../components/DetailMain'));
-const DetailSimilar = dynamic(() => import('../../../components/DetailSimilar'));
 const Accordeon = dynamic(() => import('../../../components/Accordeon'));
 const Reviews = dynamic(() => import('../../../components/Reviews'));
 const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
@@ -68,8 +68,6 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 			</div>
 		);
 	}
-
-	if (typeof window === 'undefined' || !window?.Snipcart) return null;
 
 	const tabOptions = [
 		{ title: 'Description', text: product.descriptions.long },

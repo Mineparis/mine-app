@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { Container, Row, Col, Card, CardBody, Button } from "reactstrap";
 
+import ServicesBlock from '../components/ServicesBlock';
 import Swiper from '../components/Swiper';
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
@@ -15,7 +16,6 @@ const SWIPE_ITEMS_LIMIT = 10;
 const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
 const BigCards = dynamic(() => import('../components/BigCards'));
 const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
-const ServicesBlock = dynamic(() => import('../components/ServicesBlock'));
 const InstaGallery = dynamic(() => import('../components/InstaGallery'));
 
 export const getStaticProps = async ({ locale }) => {
