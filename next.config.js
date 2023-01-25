@@ -20,13 +20,6 @@ const nextConfig = {
 	target: "experimental-serverless-trace",
 	generateBuildId: () => process.env.BUILD_ID,
 	// experimental: { esmExternals: false },
-	pageExtensions: ["mdx", "jsx", "js", "ts", "tsx"],
-	// See https://github.com/netlify/netlify-plugin-nextjs/issues/223
-	unstableNetlifyFunctionsSupport: {
-		"pages/category/[gender]/[categoryType]/index.js": {
-			includeDirs: ["public"]
-		}
-	},
 };
 
 const SentryWebpackPluginOptions = {
