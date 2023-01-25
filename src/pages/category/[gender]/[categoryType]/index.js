@@ -18,6 +18,14 @@ const ShopHeader = dynamic(() => import('../../../../components/ShopHeader'));
 const ShopPagination = dynamic(() => import('../../../../components/ShopPagination'));
 
 const PAGE_LIMIT = 12;
+const i18nConfig = {
+	i18n: {
+		defaultLocale: 'fr',
+		locales: ['fr', 'en'],
+		ns: ["common"],
+		defaultNS: "common",
+	}
+};
 
 export const getServerSideProps = async ({ locale, params, res }) => {
 	const { gender, categoryType } = params;
@@ -41,7 +49,7 @@ export const getServerSideProps = async ({ locale, params, res }) => {
 
 	return {
 		props: {
-			...(await serverSideTranslations(lang, 'common')),
+			...(await serverSideTranslations(lang, 'common', i18nConfig)),
 			category: categories[0] || [],
 			subCategories,
 			locale: lang,
