@@ -8,7 +8,7 @@ const { i18n } = require('./next-i18next.config');
 const nextConfig = {
 	images: {
 		domains: ['localhost', 'source.unsplash.com', 'res.cloudinary.com'],
-		formats: ['image/avif', 'image/webp'],
+		formats: ['image/webp'],
 		// loader: "imgix", // Uncomment this line for STATIC EXPORT
 		// path: "", // Uncomment this line for STATIC EXPORT
 	},
@@ -17,7 +17,6 @@ const nextConfig = {
 	},
 	i18n,
 	// trailingSlash: true // Uncomment this line for STATIC EXPORT
-	target: "experimental-serverless-trace",
 	generateBuildId: () => process.env.BUILD_ID,
 	// experimental: { esmExternals: false },
 };
