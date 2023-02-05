@@ -47,5 +47,7 @@
 	"prettier": {
 		"trailingComma": "es5"
 	},
-	"devDependencies": {}
+	"devDependencies": {
+		"@netlify/plugin-nextjs": "^4.30.3"
+	}
 }
