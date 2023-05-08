@@ -104,7 +104,7 @@ const Swiper = (props) => {
 				const rowClass = positionMapping.row[position];
 				const contentClass = positionMapping.content[position];
 				const subtitleClass = positionMapping.subtitle[position];
-				const titleClass = 'mb-5 display-4 font-weight-bold text-uppercase';
+				const titleClass = 'mb-5 display-5 font-weight-bold text-uppercase';
 				const buttonClass = 'rounded-button';
 				const image = img ? getStrapiMedia(img) : staticImg;
 

@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import Link from "next/link";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { Container, Row, Col, Card, CardBody, Button } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
 import ServicesBlock from '../components/ServicesBlock';
 import Swiper from '../components/Swiper';
@@ -15,6 +14,7 @@ const SWIPE_ITEMS_LIMIT = 10;
 
 const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
 const BigCards = dynamic(() => import('../components/BigCards'));
+const BigCardsWithText = dynamic(() => import('../components/BigCardsWithText'));
 const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
 const InstaGallery = dynamic(() => import('../components/InstaGallery'));
 
@@ -46,6 +46,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 		valuesSection,
 		categoriesSection,
 		boxSection,
+		routineSection,
 		engagementText,
 	} = homeData;
 
@@ -100,7 +101,12 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				</section>
 			) : null}
 
-			{boxSection && (
+			{routineSection ? (
+				<section>
+					<BigCardsWithText {...routineSection} />
+				</section>
+			) : null}
+			{/* {boxSection && (
 				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
 					<Col>
 						<h2 className="text-white">{boxSection.title}</h2>
@@ -116,21 +122,29 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 						</Link>
 					</Col>
 				</BackgroundImage>
-			)}
+			)} */}
 
 			{valuesSection && <ServicesBlock data={valuesSection} />}
 
-			{magazinePosts.length ? (
-				<section className="py-5" style={{ background: '#979694' }}>
-					<SwiperMagazine title="Magazine" posts={magazinePosts} />
+			{/* {skinSection ? (
+				<section>
+					<BigCardsWithText {...skinSection} imageName="skin-section" />
 				</section>
-			) : null}
+			) : null} */}
+
 
 			{engagementText && (
 				<section className="py-5">
 					<p className="lead text-center">{engagementText}</p>
 				</section>
 			)}
+
+
+			{magazinePosts.length ? (
+				<section className="py-5" style={{ background: '#979694' }}>
+					<SwiperMagazine title="Magazine" posts={magazinePosts} />
+				</section>
+			) : null}
 
 			<section className="pt-3">
 				<InstaGallery />

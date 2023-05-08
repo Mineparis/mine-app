@@ -12,7 +12,7 @@ const BigCards = ({ isBox, data }) => {
 	const cardsLabel = isBox ? boxesLabel : categoriesLabel;
 
 	return (
-		<div id="big-cards" className="box-cards">
+		<div id="big-cards" className="big-cards">
 			{cardsLabel.map(cardLabel => {
 				const cardName = t(cardLabel);
 				const currentCardType = cardLabel.split('_')[0];
@@ -22,9 +22,8 @@ const BigCards = ({ isBox, data }) => {
 
 				if (isBox) {
 					return (
-						<Col key={cardLabel} className="box-card dark-overlay">
+						<Col key={cardLabel} className="big-card dark-overlay">
 							<div className="overlay-content text-center text-white">
-
 								<h3>{cardName}</h3>
 								<div className="d-flex flex-row visible-on-hover justify-content-center mt-4">
 									<Link href={cardData}>
@@ -44,7 +43,7 @@ const BigCards = ({ isBox, data }) => {
 				}
 
 				return (
-					<Col key={cardLabel} className="box-card dark-overlay">
+					<Col key={cardLabel} className="big-card dark-overlay">
 						<div className="overlay-content text-center text-white">
 							{isBeardCat ? (
 								<Link href={cardData.menURL}>
