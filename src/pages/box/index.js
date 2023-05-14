@@ -46,14 +46,15 @@ const BoxHowTo = ({ title, steps }) => (
 	<section id="how-to" className="pt-6 pb-5">
 		<Container>
 			<Row>
-				<Col className="d-flex justify-content-center mb-4">
+				<Col className="mb-4">
 					<h3>{title}</h3>
 				</Col>
 			</Row>
 			<Row className="d-flex justify-content-center">
-				{steps.map(({ id, step }) => (
+				{steps.map(({ id, step, subtitle }) => (
 					<Col key={`step-${id}`} md="4" xl="4">
-						<p className="lead">{step}</p>
+						{subtitle && <h5 className="d-flex justify-content-center mb-3 lead">{subtitle}</h5>}
+						<p>{step}</p>
 					</Col>
 				))}
 			</Row>

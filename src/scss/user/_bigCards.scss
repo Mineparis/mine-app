@@ -1,4 +1,4 @@
-.box-cards {
+.big-cards {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -8,7 +8,7 @@
 	}
 }
 
-.box-card {
+.big-card {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -20,15 +20,17 @@
 	}
 
 	@include hover() {
-    opacity: 0.8;
+		opacity: 0.8;
+
 		.visible-on-hover {
 			visibility: visible;
 		}
-  }
-	
+	}
+
 	@include media-breakpoint-down(md) {
 		width: 100%;
 		padding: 5rem 0;
+
 		.visible-on-hover {
 			visibility: visible;
 		}

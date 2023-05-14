@@ -108,7 +108,10 @@ const MontlyBox = ({ box, lastBoxes, averageRating }) => {
 							xl="5"
 							className="py-4 pl-lg-5"
 						>
-							<DetailMain product={box} averageRating={averageRating} />
+							<DetailMain
+								product={box}
+								averageRating={averageRating}
+							/>
 							<Accordeon options={tabOptions} />
 						</Col>
 					</Row>

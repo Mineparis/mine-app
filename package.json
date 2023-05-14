@@ -48,6 +48,6 @@
 		"trailingComma": "es5"
 	},
 	"devDependencies": {
-		"@netlify/plugin-nextjs": "^4.30.3"
+		"@netlify/plugin-nextjs": "^4.36.1"
 	}
 }

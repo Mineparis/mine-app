@@ -13,12 +13,13 @@ const DetailMain = ({ product, averageRating }) => {
 	const {
 		id,
 		name,
+		brand,
 		originalPrice,
 		salePricePercent,
 		descriptions,
 		thumbnail,
 		stock,
-		shippingInfo
+		shippingInfo,
 	} = product;
 
 	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
@@ -26,17 +27,20 @@ const DetailMain = ({ product, averageRating }) => {
 	const imageURL = getStrapiMedia(thumbnail?.formats.small);
 	const soldOut = stock < 1;
 	const isBox = asPath.split('/').includes('box');
+	const nbComments = product?.comments?.length ?? 0;
 
 	return (
 		<>
-			<h1 className="h4 font-weight-normal mb-4 font-italic">{name}</h1>
-			<div className="mb-4">
+			<h1 className="h5 mb-4 text-uppercase font-weight-light">{brand}</h1>
+			<h1 className="h3 mb-4 font-weight-normal">{name}</h1>
+			<div className="d-flex mb-4">
 				<Stars
 					stars={averageRating}
 					secondColor="gray-300"
 					starClass="mr-1"
 					className="mr-2"
 				/>
+				<p>({nbComments})</p>
 			</div>
 			<div className="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between mb-4">
 				<ul className="list-inline mb-2 mb-sm-0">

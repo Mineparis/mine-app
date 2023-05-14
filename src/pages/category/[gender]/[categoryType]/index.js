@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import dynamic from "next/dynamic";
-import { useSWRConfig } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 
 import { Container, Row, Col, Spinner } from 'reactstrap';
@@ -13,6 +11,7 @@ import Product from '../../../../components/Product';
 import Hero from '../../../../components/Hero';
 import { fetchAPI } from '../../../../lib/api';
 import { DEFAULT_LANG } from '../../../../utils/constants';
+import useFilter from '../../../../hooks/UseFilter';
 
 const ShopHeader = dynamic(() => import('../../../../components/ShopHeader'));
 const ShopPagination = dynamic(() => import('../../../../components/ShopPagination'));
@@ -64,29 +63,27 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-const setAllCategoryNameFilter = (typesSelected) =>
-	typesSelected
-		.map(value => `&categories.categoryId=${value}`)
-		.join('');
 
 const Category = ({ category, subCategories, locale }) => {
 	const { gender, parent, description } = category;
 	const { t } = useTranslation('common');
-	const router = useRouter();
 
 	const [page, setPage] = useState(0);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
-	const [typesSelected, setTypesSelected] = useState([]);
 
 	const start = page * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const URL = `/products?categories.gender=${gender}&categories.parent=${parent}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
-	const URLWithQueryParams = typesSelected.length ? URL + `${setAllCategoryNameFilter(typesSelected)}` : URL;
 
-	const { mutate } = useSWRConfig();
+	const {
+		handleChangeType,
+		handleResetType,
+		URLWithQueryParams,
+		typesSelected,
+	} = useFilter(URL);
+
 	const { data: products = [] } = useSWRImmutable(URLWithQueryParams, fetchAPI);
 
-	const baseURL = router.asPath.split('?')[0];
 	const nbProducts = products.length;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
@@ -98,35 +95,6 @@ const Category = ({ category, subCategories, locale }) => {
 			active: true
 		},
 	];
-
-	useEffect(() => {
-		const typesQueryParams = router.query?.types;
-
-		if (typesQueryParams) {
-			const typesSearched = typesQueryParams.split(',');
-			const isSame = typesSearched.every(typeSearched => typesSelected.includes(typeSearched));
-			if (!isSame) {
-				setTypesSelected(typesSearched);
-				mutate(URLWithQueryParams);
-			}
-		}
-	}, [router.query.types]);
-
-	const handleChangeType = (catId) => () => {
-		const newTypesSelected = typesSelected.includes(catId)
-			? typesSelected.filter(catIdSelected => catIdSelected !== catId)
-			: [...typesSelected, catId];
-
-		setTypesSelected(newTypesSelected);
-		router.push(newTypesSelected.length ? `${baseURL}?types=${newTypesSelected.join(',')}` : baseURL);
-	};
-
-	const handleResetType = () => {
-		if (typesSelected.length) {
-			setTypesSelected([]);
-			router.push(baseURL);
-		};
-	};
 
 	const noTypesSelected = !typesSelected.length ? '-selected' : '';
 
