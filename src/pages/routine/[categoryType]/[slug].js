@@ -36,7 +36,13 @@ export const getServerSideProps = async ({ params, locale, res }) => {
 	const routines = await fetchAPI(`/routines?slug=${slug}&_locale=${lang}`);
 	const menuData = await fetchAPI(`/categories/menu/paths`);
 
-	const subCategories = menuData.reduce((acc, data) =>
+	const menuDataCategoryNames = menuData.map(({ categoryName }) => categoryName);
+
+	const menuDataFiltered = menuData.filter(({ categoryName }, index) => {
+		return !menuDataCategoryNames.includes(categoryName, index + 1);
+	});
+
+	const subCategories = menuDataFiltered.reduce((acc, data) =>
 		(data.categoryType === categoryType &&
 			data.locale === lang)
 			? [...acc, { categoryId: data.categoryId, name: data.categoryName }]
