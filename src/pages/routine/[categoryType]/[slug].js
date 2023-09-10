@@ -74,12 +74,13 @@ const Routine = ({ routine, subCategories, locale }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 
-	const [page, setPage] = useState(0);
+	const [page, setPage] = useState(1);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const start = page * PAGE_LIMIT;
+	const start = page === 1 ? 0 : (page - 1) * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const URL = `/products?&routines.id=${id}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
+	const countURL = `/products?&routines.id=${id}&_sort=${sortQuery}&_locale=${locale}`;
 
 	const {
 		handleChangeType,
@@ -89,9 +90,10 @@ const Routine = ({ routine, subCategories, locale }) => {
 	} = useFilter(URL);
 
 	const { data: products = [] } = useSWRImmutable(URLWithQueryParams, fetchAPI);
+	const { data: productData } = useSWRImmutable(countURL, fetchAPI);
+	const totalProducts = productData?.length ?? 0;
 
-	const nbProducts = products.length;
-	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
+	const totalPages = Math.ceil(totalProducts / PAGE_LIMIT);
 	const routineNameLabel = t(slug);
 	const parentLabel = t(parent);
 	const titleLabel = `Mine: ${parentLabel} · ${routineNameLabel}`;
@@ -128,7 +130,7 @@ const Routine = ({ routine, subCategories, locale }) => {
 				<Row>
 					<Col xs="12" className="products-grid sidebar-none">
 						<ShopHeader
-							nbProducts={nbProducts}
+							nbProducts={totalProducts}
 							sortOptionSelected={sortOptionSelected}
 							setSortOptionSelected={setSortOptionSelected}
 						/>
@@ -174,8 +176,8 @@ const Routine = ({ routine, subCategories, locale }) => {
 								</Row>
 
 								<ShopPagination
-									page={page + 1}
-									totalItems={nbProducts}
+									page={page}
+									totalItems={totalProducts}
 									totalPages={totalPages}
 									handleChangePage={setPage}
 								/>

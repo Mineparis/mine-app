@@ -2,7 +2,7 @@ import React from "react";
 
 const Stars = ({ stars, color, secondColor, className, starClass }) => {
 	const starsArray = Array.from({ length: 5 }, (_, index) => {
-		const starFilledClassName = index <= stars
+		const starFilledClassName = index < stars
 			? color ? `text-${color}` : 'text-primary'
 			: `text-${secondColor || 'muted'}`;
 
