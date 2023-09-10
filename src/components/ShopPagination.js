@@ -1,4 +1,4 @@
-import { range } from 'ramda/src/range';
+import { range } from 'ramda';
 
 const LEFT_PAGE = 'LEFT';
 const RIGHT_PAGE = 'RIGHT';
@@ -15,7 +15,7 @@ const PAGE_NEIGHBOURS = 2;
  * [x] => represents current page
  * {...x} => represents page neighbours
  */
-const fetchPageNumbers = (currentPage, totalPages) => {
+const fetchPageNumbers = (page, totalPages) => {
 	/**
 	 * totalNumbers: the total page numbers to show on the control
 	 * totalBlocks: totalNumbers + 2 to cover for the left(<) and right(>) controls
@@ -24,8 +24,8 @@ const fetchPageNumbers = (currentPage, totalPages) => {
 	const totalBlocks = totalNumbers + 2;
 
 	if (totalPages > totalBlocks) {
-		const startPage = Math.max(2, currentPage - PAGE_NEIGHBOURS);
-		const endPage = Math.min(totalPages - 1, currentPage + PAGE_NEIGHBOURS);
+		const startPage = Math.max(2, page - PAGE_NEIGHBOURS);
+		const endPage = Math.min(totalPages - 1, page + PAGE_NEIGHBOURS);
 		let pages = range(startPage, endPage);
 
 		/**
@@ -63,12 +63,12 @@ const fetchPageNumbers = (currentPage, totalPages) => {
 		return [1, ...pages, totalPages];
 	}
 
-	return range(1, totalPages);
+	return range(1, totalPages + 1);
 };
 
-const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage }) => {
+const ShopPagination = ({ page, totalItems, totalPages, handleChangePage }) => {
 	if (!totalItems || totalPages === 1) return null;
-	const pages = fetchPageNumbers(currentPage, totalPages);
+	const pages = fetchPageNumbers(page, totalPages);
 
 	const goToPage = (pageIndex) => {
 		const page = Math.max(0, Math.min(pageIndex, totalPages));
@@ -78,16 +78,17 @@ const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage 
 	const handleClick = (page) => (event) => {
 		event.preventDefault();
 		goToPage(page);
+		window.scrollTo(0, 300);
 	};
 
 	const handleMoveLeft = (event) => {
 		event.preventDefault();
-		gotoPage(currentPage - (PAGE_NEIGHBOURS * 2) - 1);
+		gotoPage(page - (PAGE_NEIGHBOURS * 2) - 1);
 	};
 
 	const handleMoveRight = (event) => {
 		event.preventDefault();
-		gotoPage(currentPage + (PAGE_NEIGHBOURS * 2) + 1);
+		gotoPage(page + (PAGE_NEIGHBOURS * 2) + 1);
 	};
 
 	return (
@@ -96,8 +97,8 @@ const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage 
 			aria-label="page navigation"
 		>
 			<ul className="pagination">
-				{pages.map((page, index) => {
-					if (page === LEFT_PAGE) {
+				{pages.map((pageIndex, index) => {
+					if (pageIndex === LEFT_PAGE) {
 						return (
 							<li key={index} className="page-item">
 								<a className="page-link" href="#" aria-label="Previous" onClick={handleMoveLeft}>
@@ -107,9 +108,9 @@ const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage 
 							</li>
 						);
 					}
-					if (page === RIGHT_PAGE) {
+					if (pageIndex === RIGHT_PAGE) {
 						return (
-							<li key={index} className="page-item">
+							<li key={pageIndex} className="page-item">
 								<a className="page-link" href="#" aria-label="Next" onClick={handleMoveRight}>
 									<span aria-hidden="true">&raquo;</span>
 									<span className="sr-only">Next</span>
@@ -119,8 +120,8 @@ const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage 
 					}
 
 					return (
-						<li key={index} className={`page-item${currentPage === page ? ' active' : ''}`}>
-							<a className="page-link" href="#" onClick={handleClick(page)}>{page}</a>
+						<li key={pageIndex} className={`page-item${pageIndex === page ? ' active' : ''}`}>
+							<a className="page-link" href="#" onClick={handleClick(pageIndex)}>{pageIndex}</a>
 						</li>
 					);
 				})
@@ -130,4 +131,4 @@ const ShopPagination = ({ currentPage, totalItems, totalPages, handleChangePage 
 	);
 };
 
-export default ShopPagination;
+export default ShopPagination;;

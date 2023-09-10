@@ -53,18 +53,18 @@ const sortQueryMapping = {
 const Category = ({ category, locale }) => {
 	const { gender, parent, name, description, categoryId } = category;
 	const { t } = useTranslation('common');
-	const [page, setPage] = useState(0);
+	const [page, setPage] = useState(1);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
 	const categoryNameLabel = t(name);
-	const start = page * PAGE_LIMIT;
+	const start = page === 1 ? 0 : (page - 1) * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
-	const { data: products = [] } = useSWRImmutable(
-		`/products?categories.gender=${gender}&categories.parent=${parent}&categories.categoryId=${categoryId}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`,
-		fetchAPI
-	);
+	const URL = `/products?categories.gender=${gender}&categories.parent=${parent}&categories.categoryId=${categoryId}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
+	const countURL = `/products?categories.gender=${gender}&categories.parent=${parent}&categories.categoryId=${categoryId}&_sort=${sortQuery}&_locale=${locale}`;
+	const { data: products = [] } = useSWRImmutable(URL, fetchAPI);
+	const { data: productData } = useSWRImmutable(countURL, fetchAPI);
+	const nbProducts = productData?.length ?? 0;
 
-	const nbProducts = products.length;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
@@ -118,7 +118,7 @@ const Category = ({ category, locale }) => {
 								</Row>
 
 								<ShopPagination
-									page={page + 1}
+									page={page}
 									totalItems={nbProducts}
 									totalPages={totalPages}
 									handleChangePage={setPage}

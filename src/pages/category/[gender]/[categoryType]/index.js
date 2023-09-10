@@ -68,12 +68,13 @@ const Category = ({ category, subCategories, locale }) => {
 	const { gender, parent, description } = category;
 	const { t } = useTranslation('common');
 
-	const [page, setPage] = useState(0);
+	const [page, setPage] = useState(1);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const start = page * PAGE_LIMIT;
+	const start = page === 1 ? 0 : (page - 1) * PAGE_LIMIT;
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const URL = `/products?categories.gender=${gender}&categories.parent=${parent}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
+	const countURL = `/products?categories.gender=${gender}&categories.parent=${parent}&_locale=${locale}`;
 
 	const {
 		handleChangeType,
@@ -83,8 +84,9 @@ const Category = ({ category, subCategories, locale }) => {
 	} = useFilter(URL);
 
 	const { data: products = [] } = useSWRImmutable(URLWithQueryParams, fetchAPI);
+	const { data: productData } = useSWRImmutable(countURL, fetchAPI);
+	const nbProducts = productData?.length ?? 0;
 
-	const nbProducts = products.length;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
@@ -163,7 +165,7 @@ const Category = ({ category, subCategories, locale }) => {
 								</Row>
 
 								<ShopPagination
-									page={page + 1}
+									page={page}
 									totalItems={nbProducts}
 									totalPages={totalPages}
 									handleChangePage={setPage}
