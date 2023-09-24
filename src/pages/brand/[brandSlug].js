@@ -18,7 +18,7 @@ const PAGE_LIMIT = 12;
 export const getStaticPaths = async () => {
 	const paths = await fetchAPI('/products/brands/paths');
 	return {
-		paths: paths.map(({ brandSlug, locale }) => ({ params: { brandSlug }, locale })),
+		paths: paths.map(({ brandSlug, locale }) => ({ params: { brandSlug: `${brandSlug}` }, locale })),
 		fallback: false,
 	};
 };
