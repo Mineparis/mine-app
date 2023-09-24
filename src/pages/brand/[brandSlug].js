@@ -53,10 +53,7 @@ const Brand = ({ slugRequested, nbProducts, locale }) => {
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const URL = `/products?brandSlug=${slugRequested}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
-	const countURL = `/products?brandSlug=${slugRequested}&_sort=${sortQuery}&_locale=${locale}`;
 	const { data: products = [] } = useSWRImmutable(URL, fetchAPI);
-	const { data: productData = 0 } = useSWRImmutable(countURL, fetchAPI);
-	const nbProducts = productData?.length ?? 0;
 
 	const { brandSlug, brand: brandName } = products?.[0] ?? {};
 	const titleLabel = `Mine: ${brandName}`;
