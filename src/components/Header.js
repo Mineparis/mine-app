@@ -29,7 +29,7 @@ import Logo from "../../public/svg/logo.svg";
 import UseWindowSize from "../hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
-const PROMO_CODE = 'MINE20';
+const PROMO_CODE = 'MINE30';
 
 const Header = ({ menu, ...props }) => {
 	const { t } = useTranslation('common');
