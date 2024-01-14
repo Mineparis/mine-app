@@ -9,16 +9,22 @@ import { DEFAULT_LANG } from "../../utils/constants";
 
 const BigCards = dynamic(() => import('../../components/BigCards'));
 const ServicesBlock = dynamic(() => import('../../components/ServicesBlock'));
+const SwiperMagazine = dynamic(() => import('../../components/SwiperMagazine'));
+const InstaGallery = dynamic(() => import('../../components/InstaGallery'));
+
+const SWIPE_ITEMS_LIMIT = 10;
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
 
 	const data = await fetchAPI(`/boxpage?_locale=${lang}`);
+	const magazinePosts = await fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`);
 
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			data,
+			magazinePosts: magazinePosts || [],
 		},
 	};
 };
@@ -62,7 +68,7 @@ const BoxHowTo = ({ title, steps }) => (
 	</section>
 );
 
-const Box = ({ data }) => {
+const Box = ({ data, magazinePosts }) => {
 	const { carousel, boxConceptSection, boxHowToSection, valuesSection, bigCardsSection } = data;
 
 	const handleClickOnButton = e => {
@@ -93,6 +99,16 @@ const Box = ({ data }) => {
 			<BoxHowTo {...boxHowToSection} />
 
 			{valuesSection && <ServicesBlock data={valuesSection} />}
+
+			{magazinePosts.length ? (
+				<section className="py-5" style={{ background: '#979694' }}>
+					<SwiperMagazine title="Magazine" posts={magazinePosts} />
+				</section>
+			) : null}
+
+			<section className="pt-3">
+				<InstaGallery />
+			</section>
 		</>
 	);
 };

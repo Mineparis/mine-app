@@ -8,22 +8,20 @@ const BigImage = ({ label, link, index, imageName }) => {
 	const src = imageName ? `/img/bigCards/${imageName}.jpg` : `/img/bigCards/subcategory${index}.jpg`;
 
 	return (
-		<Col key={label} className="big-card-text dark-overlay">
-			{link ? (
-				<div className="overlay-content text-center text-white cursor-pointer">
-					<Link href={link} passHref>
-						<h5 className="cursor-pointer">{label}</h5>
-					</Link>
+		<Link href={link} passHref>
+			<Col key={label} className="big-card-text dark-overlay cursor-pointer">
+				<div className="overlay-content text-center text-white">
+					<h5>{label}</h5>
 				</div>
-			) : null}
-			<Image
-				src={src}
-				layout="fill"
-				objectFit="cover"
-				objectPosition="top"
-				alt={label}
-			/>
-		</Col>
+				<Image
+					src={src}
+					layout="fill"
+					objectFit="cover"
+					objectPosition="top"
+					alt={label}
+				/>
+			</Col>
+		</Link>
 	);
 };
 

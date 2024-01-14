@@ -16,7 +16,6 @@ const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
 const BigCards = dynamic(() => import('../components/BigCards'));
 const BigCardsWithText = dynamic(() => import('../components/BigCardsWithText'));
 const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
-const InstaGallery = dynamic(() => import('../components/InstaGallery'));
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
@@ -145,10 +144,6 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 					<SwiperMagazine title="Magazine" posts={magazinePosts} />
 				</section>
 			) : null}
-
-			<section className="pt-3">
-				<InstaGallery />
-			</section>
 		</>
 	);
 };
