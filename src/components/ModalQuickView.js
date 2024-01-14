@@ -118,14 +118,16 @@ const ModalQuickView = ({ isOpen, toggle, product }) => {
 									<del>$90.00</del>
 								</li>
 							</ul>
-							<div className="d-flex align-items-center text-sm">
-								<Stars
-									stars={product.stars}
-									className="mr-2 mb-0"
-									secondColor="gray-300"
-								/>
-								<span className="text-muted text-uppercase">25 reviews</span>
-							</div>
+							{product.stars ? (
+								<div className="d-flex align-items-center text-sm">
+									<Stars
+										stars={product.stars}
+										className="mr-2 mb-0"
+										secondColor="gray-300"
+									/>
+									<span className="text-muted text-uppercase">25 reviews</span>
+								</div>
+							) : null}
 						</div>
 						<p className="mb-4 text-muted">
 							Samsa was a travelling salesman - and above it there hung a

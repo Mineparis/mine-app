@@ -25,6 +25,8 @@ const Reviews = ({ comments, averageRating }) => {
 		setEnd(startIndex + ITEMS_PER_PAGE);
 	}, [currentPage]);
 
+	if (!nbComments) return null;
+
 	return (
 		<Container className="mb-5 col-xs-12 col-md-6">
 			<Row className="mb-4">
@@ -35,7 +37,6 @@ const Reviews = ({ comments, averageRating }) => {
 						starClass="mr-1"
 						className="mr-2"
 					/>
-
 					<span className="text-muted text-uppercase text-sm mt-1">
 						{nbComments} {t('reviews')}
 					</span>
@@ -49,7 +50,7 @@ const Reviews = ({ comments, averageRating }) => {
 						</div>
 					</Col>
 					<Col>
-						<div className='mb-2'>
+						<div className="mb-2">
 							<Stars
 								stars={review.rating}
 								secondColor="gray-300"

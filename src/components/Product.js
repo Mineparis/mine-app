@@ -104,15 +104,17 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 						{salePricePercent > 0 && <span className="text-muted font-weight-light"><del>{originalPrice.toFixed(2)} €</del></span>}
 					</>
 				</div>
-				<div className="d-flex mb-4">
-					<Stars
-						stars={averageRating}
-						secondColor="gray-300"
-						starClass="mr-1"
-						className="mr-2"
-					/>
-					<p>({comments?.length ?? 0})</p>
-				</div>
+				{averageRating ? (
+					<div className="d-flex mb-4">
+						<Stars
+							stars={averageRating}
+							secondColor="gray-300"
+							starClass="mr-1"
+							className="mr-2"
+						/>
+						<p>({comments?.length ?? 0})</p>
+					</div>
+				) : null}
 			</div>
 		</>
 	);
