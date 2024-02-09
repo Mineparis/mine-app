@@ -68,16 +68,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				style={{ height: "80vh", minHeight: "600px" }}
 			/>
 
-			<section className="pt-6">
-				<Container>
-					<Row>
-						<Col md="6" xl="6" className="mb-5">
-							<p className="lead">{ourDescription}</p>
-						</Col>
-					</Row>
-					<SwiperProducts title={t('best_sellers')} products={bestSellersProducts} />
-				</Container>
-			</section>
+			{newProducts.length ? (
+				<section className="py-6">
+					<SwiperProducts title={t('new_arrivals')} products={newProducts} />
+				</section>
+			) : null}
 
 			{surveySection && (
 				<section className="position-relative py-3">
@@ -94,11 +89,16 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				<BigCards data={categoriesSection} />
 			</section>
 
-			{newProducts.length ? (
-				<section className="py-6">
-					<SwiperProducts title={t('new_arrivals')} products={newProducts} />
-				</section>
-			) : null}
+			<section className="pt-6">
+				<Container>
+					<Row>
+						<Col md="6" xl="6" className="mb-5">
+							<p className="lead">{ourDescription}</p>
+						</Col>
+					</Row>
+					<SwiperProducts title={t('best_sellers')} products={bestSellersProducts} />
+				</Container>
+			</section>
 
 			{routineSection ? (
 				<section>
