@@ -28,7 +28,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const menu = useMemo(() => formatMenu(menuByGender), [menuByGender]);
 
 	const loggedUser = false;
-	const hideTopbar = false;
+	const hideTopbar = true;
 	const hideFooter = false;
 	const className = null;
 
