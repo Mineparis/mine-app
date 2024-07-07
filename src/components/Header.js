@@ -29,7 +29,7 @@ import Logo from "../../public/svg/logo.svg";
 import UseWindowSize from "../hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
-const PROMO_CODE = 'FDM20';
+const PROMO_CODE = '';
 
 const Header = ({ menu, ...props }) => {
 	const { t } = useTranslation('common');
