@@ -5,8 +5,16 @@
 	background-color: #D9D9D9;
 
 	.card-text {
-		width: 30%;
+		&[data-single-card="true"] {
+			flex: 1.5;
+		}
+
+		&[data-single-card="false"] {
+			flex: 0.5;
+		}
+
 		margin-right: 1rem;
+		margin-bottom: 1rem;
 		flex-direction: column;
 		justify-content: center;
 	}

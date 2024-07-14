@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -6,6 +7,7 @@ import { Container, Row, Col, Card, CardBody } from "reactstrap";
 
 import ServicesBlock from '../components/ServicesBlock';
 import Swiper from '../components/Swiper';
+import SurveyModal from '../components/SurveyModal';
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG } from "../utils/constants";
@@ -23,6 +25,7 @@ export const getStaticProps = async ({ locale }) => {
 	const bestSellersProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=sold:DESC&_locale=${lang}`);
 	const newProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&isNewProduct=true&_locale=${lang}`);
 	const magazinePosts = await fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`);
+	const surveys = await fetchAPI(`/surveys?&_locale=${lang}`);
 
 	return {
 		props: {
@@ -31,12 +34,14 @@ export const getStaticProps = async ({ locale }) => {
 			bestSellersProducts,
 			newProducts,
 			magazinePosts,
+			survey: surveys?.[0],
 		},
 	};
 };
 
-const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }) => {
+const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], survey }) => {
 	const { t } = useTranslation('common');
+	const [isSurveyOpen, setIsSurveyOpen] = useState(false);
 
 	const {
 		carousel,
@@ -48,6 +53,10 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 		routineSection,
 		engagementText,
 	} = homeData;
+
+	const handleToggleSurveyModal = (isOpen = true) => {
+		setIsSurveyOpen(isOpen);
+	};
 
 	return (
 		<>
@@ -123,6 +132,17 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 				</BackgroundImage>
 			)} */}
 
+			{survey ? (
+				<section>
+					<BigCardsWithText
+						title={t('section_survey_title')}
+						description={t('section_survey_description')}
+						imageName="skincare"
+						onClick={handleToggleSurveyModal}
+					/>
+				</section>
+			) : null}
+
 			{valuesSection && <ServicesBlock data={valuesSection} />}
 
 			{/* {skinSection ? (
@@ -130,7 +150,6 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 					<BigCardsWithText {...skinSection} imageName="skin-section" />
 				</section>
 			) : null} */}
-
 
 			{engagementText && (
 				<section className="py-5">
@@ -144,6 +163,8 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [] }
 					<SwiperMagazine title="Magazine" posts={magazinePosts} />
 				</section>
 			) : null}
+
+			{survey ? <SurveyModal survey={survey} isOpen={isSurveyOpen} onToggleModal={handleToggleSurveyModal} /> : null}
 		</>
 	);
 };

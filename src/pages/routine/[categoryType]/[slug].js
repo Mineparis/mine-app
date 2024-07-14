@@ -98,19 +98,6 @@ const Routine = ({ routine, subCategories, locale }) => {
 	const parentLabel = t(parent);
 	const titleLabel = `Mine: ${parentLabel} · ${routineNameLabel}`;
 
-	useEffect(() => {
-		const typesQueryParams = router.query?.types;
-
-		if (typesQueryParams) {
-			const typesSearched = typesQueryParams.split(',');
-			const isSame = typesSearched.every(typeSearched => typesSelected.includes(typeSearched));
-			if (!isSame) {
-				setTypesSelected(typesSearched);
-				mutate(URLWithQueryParams);
-			}
-		}
-	}, [router.query.types]);
-
 	const noTypesSelected = !typesSelected.length ? '-selected' : '';
 
 	return (

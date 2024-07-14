@@ -70,5 +70,8 @@
 	"men_box": "Box homme",
 	"discover": "Découvrir",
 	"monthly_selection": "Sélection du mois",
-	"all": "Tous"
+	"all": "Tous",
+	"do_survey": "Faire le quiz",
+	"section_survey_title": "Trouvez les produits beauté qu'il vous faut",
+	"section_survey_description": "Répondez à quelques questions et laissez-nous vous guider vers les produits de beauté parfaits pour vous."
 }
