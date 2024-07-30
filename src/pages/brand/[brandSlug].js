@@ -16,7 +16,7 @@ const ShopPagination = dynamic(() => import('../../components/ShopPagination'));
 const PAGE_LIMIT = 12;
 
 export const getStaticPaths = async () => {
-	const paths = await fetchAPI('/products/brands/paths');
+	const paths = await fetchAPI('/products/brands/paths?_locale=fr&_locale=en');
 	return {
 		paths: paths.map(({ brandSlug, locale }) => ({ params: { brandSlug: `${brandSlug}` }, locale })),
 		fallback: false,
