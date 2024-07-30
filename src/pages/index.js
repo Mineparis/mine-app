@@ -34,7 +34,7 @@ export const getStaticProps = async ({ locale }) => {
 			bestSellersProducts,
 			newProducts,
 			magazinePosts,
-			survey: surveys?.[0],
+			survey: surveys?.[0] ?? null,
 		},
 	};
 };
