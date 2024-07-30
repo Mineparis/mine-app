@@ -15,8 +15,8 @@ const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'))
 const Swiper = dynamic(() => import('../../../components/Swiper'));
 const Accordeon = dynamic(() => import('../../../components/Accordeon'));
 
-export const getStaticPaths = async () => {
-	const boxes = await fetchAPI('/boxes');
+export const getStaticPaths = async (aa) => {
+	const boxes = await fetchAPI('/boxes?_locale=fr&_locale=en');
 	return {
 		paths: boxes?.map(({ gender, slug, locale }) => ({ params: { gender, slug }, locale })) ?? [],
 		fallback: false,
