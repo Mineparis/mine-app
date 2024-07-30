@@ -77,9 +77,9 @@ const SurveyModal = ({ survey, isOpen = false, onToggleModal }) => {
 						<div className="d-flex flex-column d-grid gap-2 col-lg-6 col-md-12 mx-auto">
 							{responses
 								.sort((a, b) => a.number - b.number)
-								.map(({ label, number }) => (
+								.map(({ label, number }, index) => (
 									<Button
-										key={number}
+										key={`${index}-${number}`}
 										className="my-2"
 										onClick={() => handleSelectResponse(number)}
 									>
