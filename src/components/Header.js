@@ -24,8 +24,6 @@ import {
 import useScrollPosition from "@react-hook/window-scroll";
 import useSize from "@react-hook/size";
 
-import Logo from "../../public/svg/logo.svg";
-
 import UseWindowSize from "../hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
@@ -61,15 +59,18 @@ const Header = ({ menu, ...props }) => {
 	};
 
 	const makeNavbarSticky = () => {
-		if (props.nav.sticky) {
-			if (scrollY > topbarHeight) {
-				setAdditionalNavClasses("fixed-top");
-				if (navbarHeight > 0 && !props.headerAbsolute) {
-					props.setPaddingTop(navbarHeight);
-				}
-			} else {
+		if (!props.nav.sticky) {
+			if (additionalNavClasses) {
 				setAdditionalNavClasses("");
 				props.setPaddingTop(0);
+			}
+			return;
+		}
+
+		if (scrollY > topbarHeight) {
+			setAdditionalNavClasses("fixed-top");
+			if (navbarHeight > 0 && !props.headerAbsolute) {
+				props.setPaddingTop(navbarHeight);
 			}
 		} else {
 			setAdditionalNavClasses("");
@@ -122,11 +123,13 @@ const Header = ({ menu, ...props }) => {
 		if (!shouldDisplay) return null;
 
 		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
+		const logoStyle = { filter: additionalNavClasses ? undefined : 'invert(1)' };
+
 		return (
 			<>
 				<Link className="mx-auto" href="/" passHref>
 					<a className="py-1 navbar-brand">
-						<Logo />
+						<img src="/svg/logo.svg" alt="" style={logoStyle} />
 					</a>
 				</Link>
 				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
