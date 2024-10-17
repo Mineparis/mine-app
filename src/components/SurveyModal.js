@@ -3,8 +3,6 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { Button, Modal, ModalHeader, ModalBody, Container, Row, Col, Progress } from 'reactstrap';
 
-import Logo from "../../public/svg/logo.svg";
-
 const SurveyModal = ({ survey, isOpen = false, onToggleModal }) => {
 	const router = useRouter();
 	const { t } = useTranslation('common');
@@ -112,7 +110,7 @@ const SurveyModal = ({ survey, isOpen = false, onToggleModal }) => {
 						{hasPrevBtn && <Button type="button" onClick={handleGoPrevPage} outline><i className="bi bi-arrow-left" /></Button>}
 					</div>
 					<div className="d-flex justify-content-center pl-5">
-						<Logo />
+						<img src="svg/logo.svg" alt="" />
 					</div>
 				</ModalHeader>
 				<ModalBody>
