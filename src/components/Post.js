@@ -37,7 +37,7 @@ const Post = ({
 			<div className="card-body mt-3">
 				<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
 					<a className="card-title text-dark text-decoration-none">
-						<h5 className="my-2">{title}</h5>
+						<h5 className="my-2 line-clamp">{title}</h5>
 					</a>
 				</Link>
 				{!withoutDate && (
