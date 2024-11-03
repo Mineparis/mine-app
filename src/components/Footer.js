@@ -63,6 +63,13 @@ const Footer = () => {
 				},
 			]
 		},
+		{
+			sectionName: t('Events'),
+			links: [{
+				href: '/event/makeup-masterclass-2024',
+				label: 'Make-up masterclass'
+			}]
+		}
 	];
 
 	const languageOptions = [{

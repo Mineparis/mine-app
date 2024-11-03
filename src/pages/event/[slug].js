@@ -76,7 +76,7 @@ const Event = ({ data }) => {
 						<h2 className="mb-5">
 							{firstSection.title}
 						</h2>
-						<p className="text-lg text-muted">
+						<p className="text-lg text-muted mb-4">
 							{firstSection.description}
 						</p>
 						<Link href={firstSection.button.link}>
@@ -105,7 +105,7 @@ const Event = ({ data }) => {
 									{secondSection.subtitle}
 								</h6>
 								<h2 className="mb-4">{secondSection.title}</h2>
-								<p className="text-lg text-muted">
+								<p className="text-lg text-muted mb-4">
 									{secondSection.description}
 								</p>
 								<Link href={secondSection.button.link}>
@@ -122,7 +122,7 @@ const Event = ({ data }) => {
 									{thirdSection.subtitle}
 								</h6>
 								<h2 className="mb-4">{thirdSection.title}</h2>
-								<p className="text-lg text-muted">
+								<p className="text-lg text-muted mb-4">
 									{thirdSection.description}
 								</p>
 								<Link href={thirdSection.button.link}>

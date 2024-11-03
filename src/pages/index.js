@@ -110,7 +110,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 			</section>
 
 			{routineSection ? (
-				<section>
+				<section className="bg-light">
 					<BigCardsWithText {...routineSection} />
 				</section>
 			) : null}
@@ -159,7 +159,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 
 
 			{magazinePosts.length ? (
-				<section className="py-5" style={{ background: '#979694' }}>
+				<section className="py-5 bg-brown">
 					<SwiperMagazine title="Magazine" posts={magazinePosts} />
 				</section>
 			) : null}

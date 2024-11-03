@@ -52,7 +52,7 @@ const BoxHowTo = ({ title, steps }) => (
 	<section id="how-to" className="pt-6 pb-5">
 		<Container>
 			<Row>
-				<Col className="mb-4">
+				<Col className="d-flex justify-content-center mb-4 text-muted lead">
 					<h3>{title}</h3>
 				</Col>
 			</Row>
