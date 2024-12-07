@@ -9,7 +9,7 @@ import { useTranslation } from 'next-i18next';
 import DetailMain from '../../../components/DetailMain';
 import Product from '../../../components/Product';
 import { fetchAPI } from '../../../lib/api';
-import { DEFAULT_LANG } from '../../../utils/constants';
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
 
 const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
 const Swiper = dynamic(() => import('../../../components/Swiper'));
@@ -52,6 +52,7 @@ export const getStaticProps = async ({ params, locale }) => {
 			lastBoxes,
 			averageRating,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS,
 	};
 };
 

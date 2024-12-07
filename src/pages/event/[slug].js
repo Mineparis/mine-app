@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { DEFAULT_LANG } from "../../utils/constants";
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
 import { fetchAPI } from "../../lib/api";
 import Head from "next/head";
 import Image from "next/image";
@@ -27,6 +27,7 @@ export const getStaticProps = async ({ params, locale }) => {
 			...(await serverSideTranslations(lang, 'common')),
 			data,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 };
 

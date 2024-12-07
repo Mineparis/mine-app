@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Hero from "../../components/Hero";
 import { dateFormat } from "../../utils/date";
-import { DEFAULT_LANG } from "../../utils/constants";
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
 import { fetchAPI } from "../../lib/api";
 
 export const getStaticPaths = async () => {
@@ -29,6 +29,7 @@ export const getStaticProps = async ({ params, locale }) => {
 			content,
 			created_at,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 };
 
