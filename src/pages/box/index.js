@@ -5,7 +5,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import Swiper from '../../components/Swiper';
 import { fetchAPI } from "../../lib/api";
-import { DEFAULT_LANG } from "../../utils/constants";
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
 
 const BigCards = dynamic(() => import('../../components/BigCards'));
 const ServicesBlock = dynamic(() => import('../../components/ServicesBlock'));
@@ -26,6 +26,7 @@ export const getStaticProps = async ({ locale }) => {
 			data,
 			magazinePosts: magazinePosts || [],
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS,
 	};
 };
 

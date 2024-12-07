@@ -10,7 +10,7 @@ import { useTranslation } from 'next-i18next';
 import DetailMain from '../../../components/DetailMain';
 import DetailSimilar from '../../../components/DetailSimilar';
 import { fetchAPI } from '../../../lib/api';
-import { DEFAULT_LANG } from '../../../utils/constants';
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
 import { getCommentsAverageRating } from '../../../utils/comments';
 
 const Accordeon = dynamic(() => import('../../../components/Accordeon'));
@@ -52,6 +52,7 @@ export const getStaticProps = async ({ params, locale }) => {
 			similarProducts,
 			averageRating,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 };
 

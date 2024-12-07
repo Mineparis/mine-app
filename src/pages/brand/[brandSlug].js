@@ -8,7 +8,7 @@ import { Container, Row, Col, Spinner } from 'reactstrap';
 import Product from '../../components/Product';
 import Hero from '../../components/Hero';
 import { fetchAPI } from '../../lib/api';
-import { DEFAULT_LANG } from '../../utils/constants';
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
 
 const ShopHeader = dynamic(() => import('../../components/ShopHeader'));
 const ShopPagination = dynamic(() => import('../../components/ShopPagination'));
@@ -35,6 +35,7 @@ export const getStaticProps = async ({ params, locale }) => {
 			nbProducts,
 			locale: lang,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 };
 

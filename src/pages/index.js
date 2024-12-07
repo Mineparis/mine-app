@@ -10,7 +10,7 @@ import Swiper from '../components/Swiper';
 import SurveyModal from '../components/SurveyModal';
 import BackgroundImage from "../components/BackgroundImage";
 import { fetchAPI } from "../lib/api";
-import { DEFAULT_LANG } from "../utils/constants";
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../utils/constants";
 
 const SWIPE_ITEMS_LIMIT = 10;
 
@@ -36,6 +36,7 @@ export const getStaticProps = async ({ locale }) => {
 			magazinePosts,
 			survey: surveys?.[0] ?? null,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS,
 	};
 };
 

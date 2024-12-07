@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Post from '../../components/Post';
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
-import { DEFAULT_LANG } from '../../utils/constants';
+import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
 
 export async function getStaticProps({ locale }) {
 	const lang = locale || DEFAULT_LANG;
@@ -18,6 +18,7 @@ export async function getStaticProps({ locale }) {
 			...(await serverSideTranslations(lang, 'common')),
 			allPosts,
 		},
+		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 }
 
