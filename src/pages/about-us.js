@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from "../components/CustomImage";
 import { fetchAPI } from "../lib/api";
 import { getStrapiMedia } from "../lib/media";
-import { REVALIDATE_PAGE_SECONDS } from 'utils/constants';
+import { REVALIDATE_PAGE_SECONDS } from '../utils/constants';
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
