@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
@@ -9,15 +8,15 @@ import ServicesBlock from '../components/ServicesBlock';
 import Swiper from '../components/Swiper';
 import SurveyModal from '../components/SurveyModal';
 import BackgroundImage from "../components/BackgroundImage";
+import SwiperProducts from '../components/SwiperProducts';
+import BigCards from '../components/BigCards';
+import BigCardsWithText from '../components/BigCardsWithText';
+import SwiperMagazine from '../components/SwiperMagazine';
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../utils/constants";
 
 const SWIPE_ITEMS_LIMIT = 10;
 
-const SwiperProducts = dynamic(() => import('../components/SwiperProducts'));
-const BigCards = dynamic(() => import('../components/BigCards'));
-const BigCardsWithText = dynamic(() => import('../components/BigCardsWithText'));
-const SwiperMagazine = dynamic(() => import('../components/SwiperMagazine'));
 
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;

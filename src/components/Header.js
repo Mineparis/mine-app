@@ -125,28 +125,26 @@ const Header = ({ menu, ...props }) => {
 		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
 		const logoStyle = { filter: additionalNavClasses ? undefined : 'invert(1)' };
 
-		return (
-			<>
-				<Link className="mx-auto" href="/" passHref>
-					<a className="py-1 navbar-brand">
-						<img src="/svg/logo.svg" alt="" style={logoStyle} />
-					</a>
-				</Link>
-				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
-					<div className="navbar-icon-link snipcart-customer-signin">
-						<i className="bi bi-person-circle" />
-					</div>
-					<div className="navbar-icon-link snipcart-checkout">
-						<i className="bi bi-cart" />
-						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
-					</div>
+		return (<>
+			<Link className="mx-auto" href="/" passHref>
+
+				<img src="/svg/logo.svg" alt="" style={logoStyle} />
+
+			</Link>
+			<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
+				<div className="navbar-icon-link snipcart-customer-signin">
+					<i className="bi bi-person-circle" />
 				</div>
-			</>
-		);
+				<div className="navbar-icon-link snipcart-checkout">
+					<i className="bi bi-cart" />
+					<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
+				</div>
+			</div>
+		</>);
 	};
 
 	return (
-		<header
+		(<header
 			className={`header ${props.headerClasses ? props.headerClasses : ""} ${props.headerAbsolute ? "header-absolute" : ""
 				}`}
 		>
@@ -188,9 +186,8 @@ const Header = ({ menu, ...props }) => {
 								{menu?.map((item) =>
 									item.dropdown || item.megamenu ? (
 										// show entire menu to unlogged user or hide items that have hideToLoggedUser set to true
-										!props.loggedUser ||
-											(props.loggedUser && !item.hideToLoggedUser) ? (
-											<Dropdown
+										(!props.loggedUser ||
+											(props.loggedUser && !item.hideToLoggedUser) ? (<Dropdown
 												nav
 												inNavbar
 												key={item.title}
@@ -265,10 +262,10 @@ const Header = ({ menu, ...props }) => {
 																		{megamenuItem?.map(({ title, links, categoryTypeLink }, index) => (
 																			<React.Fragment key={index}>
 																				<h6 className="text-uppercase">
-																					<Link href={categoryTypeLink.link}>
-																						<a onClick={() => onLinkClick()}>
-																							{t(title)}
-																						</a>
+																					<Link href={categoryTypeLink.link} onClick={() => onLinkClick()}>
+
+																						{t(title)}
+
 																					</Link>
 																				</h6>
 																				<ul className="megamenu-list list-unstyled">
@@ -314,10 +311,7 @@ const Header = ({ menu, ...props }) => {
 														)}
 													</Row>
 												</DropdownMenu>
-											</Dropdown>
-										) : (
-											""
-										)
+											</Dropdown>) : (""))
 									) : (props.loggedUser && !item.hideToLoggedUser) ||
 										!props.loggedUser ? (
 										<NavItem
@@ -359,7 +353,7 @@ const Header = ({ menu, ...props }) => {
 					</Container>
 				</Navbar>
 			</div>
-		</header>
+		</header>)
 	);
 };
 

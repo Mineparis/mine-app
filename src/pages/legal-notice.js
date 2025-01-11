@@ -17,9 +17,9 @@ export const getStaticProps = async ({ locale }) => {
 
 function LinkText({ href, children }) {
 	return (
-		<Link href={href || ''}>
-			<a><b>{children}</b></a>
-		</Link>
+		(<Link href={href || ''}>
+			<b>{children}</b>
+		</Link>)
 	);
 }
 

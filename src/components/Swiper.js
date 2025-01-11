@@ -5,6 +5,8 @@ import { Container, Row, Col, Button } from "reactstrap";
 
 import { getStrapiMedia } from "../lib/media";
 
+import "swiper/css";
+
 const positionMapping = {
 	subtitle: {
 		left: 'text-white mb-3',
@@ -98,7 +100,7 @@ const Swiper = (props) => {
 	if (!props.data) return null;
 
 	return (
-		<ReactIdSwiper {...params}>
+		(<ReactIdSwiper {...params}>
 			{props.data.map(({ position, addDarkOverlay, img, staticImg, title, subtitle, text, button }, index) => {
 				const darkOverlay = addDarkOverlay ? 'dark-overlay' : '';
 				const rowClass = positionMapping.row[position];
@@ -109,7 +111,7 @@ const Swiper = (props) => {
 				const image = img ? getStrapiMedia(img) : staticImg;
 
 				return (
-					<div key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
+					(<div key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
 						<Image
 							layout="fill"
 							objectFit="cover"
@@ -148,7 +150,7 @@ const Swiper = (props) => {
 										</Button>
 									)}
 									{button?.link && button?.link !== 'anchor' && (
-										<Link href={button.link}>
+										<Link href={button.link} legacyBehavior>
 											<Button className={buttonClass} color={buttonColor}>
 												{button.label}
 											</Button>
@@ -157,11 +159,11 @@ const Swiper = (props) => {
 								</Col>
 							</Row>
 						</Container>
-					</div>
+					</div>)
 				);
 			})
 			}
-		</ReactIdSwiper>
+		</ReactIdSwiper>)
 	);
 };
 

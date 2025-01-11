@@ -26,7 +26,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params, locale }) => {
 	const slugRequested = params.brandSlug;
 	const lang = locale || DEFAULT_LANG;
-	const nbProducts = await fetchAPI(`/products/count?brandSlug=${slugRequested}&_locale=${lang}`) || 0;
+	const nbProducts = (await fetchAPI(`/products/count?brandSlug=${slugRequested}&_locale=${lang}`)) || 0;
 
 	return {
 		props: {

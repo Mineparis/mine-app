@@ -2,7 +2,7 @@ import React from "react";
 import ReactIdSwiper from "react-id-swiper";
 import Image from "next/image";
 
-import "swiper/css/swiper.css";
+import "swiper/css";
 
 const SwiperBrands = (props) => {
 	const params = {

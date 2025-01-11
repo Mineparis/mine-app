@@ -84,7 +84,7 @@ const Footer = () => {
 	const langSelected = languageOptions.find(({ value }) => value === router.locale);
 
 	return (
-		<footer className="main-footer bg-primary text-gray-300">
+		(<footer className="main-footer bg-primary text-gray-300">
 			{/* Main block - menus, subscribe form*/}
 			<div className="py-4">
 				<div className="container">
@@ -122,8 +122,8 @@ const Footer = () => {
 								<ul className="list-unstyled footer-list">
 									{links.map(({ href, label }) => (
 										<li key={label}>
-											<Link href={href}>
-												<a className="text-decoration-none">{label}</a>
+											<Link href={href} className="text-decoration-none">
+												{label}
 											</Link>
 										</li>
 									))}
@@ -159,7 +159,6 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-
 			{/* Copyright section of the footer*/}
 			<div className="py-4 font-weight-light">
 				<div className="container">
@@ -195,7 +194,7 @@ const Footer = () => {
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer>)
 	);
 };
 

@@ -5,6 +5,8 @@ import { Row, Col } from "reactstrap";
 
 import { getStrapiMedia } from '../lib/media';
 
+import "swiper/css";
+
 const SwiperGallery = ({ images, vertical }) => {
 	const [activeSlide, setActiveSlide] = useState(0);
 

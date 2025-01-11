@@ -23,7 +23,7 @@ const BigImage = ({ label, link, index, imageName }) => {
 	);
 
 	const WithLink = (
-		<Link href={link} passHref>
+		<Link href={link} passHref legacyBehavior>
 			{Content}
 		</Link>
 	);
@@ -37,12 +37,12 @@ const BigCardsWithText = ({ title, description, cards, buttonLink, imageName, on
 	const isSingleCard = !cards || cards.length < 2;
 
 	return (
-		<div id="big-cards-text" className="big-cards-text">
+		(<div id="big-cards-text" className="big-cards-text">
 			<div className="card-text d-flex align-items-center" data-single-card={isSingleCard}>
 				<p className="lead font-weight-bolder text-center">{title}</p>
 				<p>{description}</p>
 				{!onClick && buttonLink ? (
-					<Link href={buttonLink} passHref>
+					<Link href={buttonLink} passHref legacyBehavior>
 						<Button color="primary" outline>{t('see_more')}</Button>
 					</Link>
 				) : null}
@@ -56,7 +56,7 @@ const BigCardsWithText = ({ title, description, cards, buttonLink, imageName, on
 					<BigImage key={label} label={label} link={link} index={index} />
 				))}
 			</div>
-		</div>
+		</div>)
 	);
 };
 

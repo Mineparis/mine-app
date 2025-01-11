@@ -6,7 +6,7 @@ import ReactIdSwiper from "react-id-swiper";
 
 import Post from "./Post";
 
-import "swiper/css/swiper.css";
+import "swiper/css";
 
 const SwiperMagazine = ({ posts, title, ...props }) => {
 	const { t } = useTranslation('common');
@@ -48,7 +48,7 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 	if (!posts.length) return null;
 
 	return (
-		<Container>
+		(<Container>
 			<Row className="d-flex justify-content-between mx-1 mb-2">
 				<Col xs="12" md="10">
 					<h3 className="text-white">{title}</h3>
@@ -71,12 +71,12 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 			</Row>
 			<Row>
 				<Col className="d-flex justify-content-center my-4">
-					<Link href="/magazine">
+					<Link href="/magazine" legacyBehavior>
 						<Button className="text-white border-white" outline>{t('see_more')}</Button>
 					</Link>
 				</Col>
 			</Row>
-		</Container>
+		</Container>)
 	);
 };
 
