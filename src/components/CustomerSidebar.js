@@ -1,6 +1,6 @@
 import ActiveLink from "./ActiveLink";
 import { Col } from "reactstrap";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const CustomerSidebar = (props) => {
 	return (

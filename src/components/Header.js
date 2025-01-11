@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
 import Router from "next/router";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useTranslation } from "next-i18next";
 import {
 	Collapse,

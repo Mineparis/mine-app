@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import { dateFormat } from '../utils/date';
 import { getStrapiMedia } from '../lib/media';

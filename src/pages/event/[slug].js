@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
 import { fetchAPI } from "../../lib/api";
 import Head from "next/head";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export const getStaticPaths = async () => {

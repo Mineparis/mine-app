@@ -1,7 +1,7 @@
 import { Row, Col } from "reactstrap";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 
 const CartItem = ({ item, review }) => {

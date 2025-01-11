@@ -1,6 +1,6 @@
 import { Container, Row, Col } from 'reactstrap';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'react-i18next';
 

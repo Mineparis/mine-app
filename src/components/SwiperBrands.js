@@ -1,6 +1,6 @@
 import React from "react";
 import ReactIdSwiper from "react-id-swiper";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import "swiper/css";
 
