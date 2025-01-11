@@ -8,7 +8,6 @@ import Layout from '../components/Layout';
 
 import '../../public/fonts/hkgrotesk/stylesheet.css';
 import '../scss/style.default.scss';
-import 'react-image-lightbox/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
