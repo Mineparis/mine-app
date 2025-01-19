@@ -4,7 +4,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
-
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
 import Product from '../../../../components/Product';
@@ -17,14 +16,6 @@ const ShopHeader = dynamic(() => import('../../../../components/ShopHeader'));
 const ShopPagination = dynamic(() => import('../../../../components/ShopPagination'));
 
 const PAGE_LIMIT = 12;
-const i18nConfig = {
-	i18n: {
-		defaultLocale: 'fr',
-		locales: ['fr', 'en'],
-		ns: ["common"],
-		defaultNS: "common",
-	}
-};
 
 export const getServerSideProps = async ({ locale, params, res }) => {
 	const { gender, categoryType } = params;
@@ -35,20 +26,15 @@ export const getServerSideProps = async ({ locale, params, res }) => {
 	const categories = await fetchAPI(`/categories?gender=${gender}&parent=${categoryType}&_locale=${lang}`);
 	const menuData = await fetchAPI(`/categories/menu/paths`);
 
-	const subCategories = menuData.reduce((acc, data) =>
-		(data.gender === gender &&
-			data.categoryType === categoryType &&
-			data.locale === lang
-		)
-			? [...acc, { categoryId: data.categoryId, name: data.categoryName }]
-			: acc
-		, []);
+	const subCategories = menuData.filter(data =>
+		data.gender === gender && data.categoryType === categoryType && data.locale === lang
+	).map(data => ({ categoryId: data.categoryId, name: data.categoryName }));
 
 	if (!categories?.length) return { notFound: true };
 
 	return {
 		props: {
-			...(await serverSideTranslations(lang, 'common', i18nConfig)),
+			...(await serverSideTranslations(lang, 'common')),
 			category: categories[0] || [],
 			subCategories,
 			locale: lang,
@@ -63,7 +49,6 @@ const sortQueryMapping = {
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
 
-
 const Category = ({ category, subCategories, locale }) => {
 	const { gender, parent, description } = category;
 	const { t } = useTranslation('common');
@@ -71,8 +56,9 @@ const Category = ({ category, subCategories, locale }) => {
 	const [page, setPage] = useState(1);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
-	const start = page === 1 ? 0 : (page - 1) * PAGE_LIMIT;
+	const start = (page - 1) * PAGE_LIMIT; // Calcul du début pour la pagination
 	const sortQuery = sortQueryMapping[sortOptionSelected];
+
 	const URL = `/products?categories.gender=${gender}&categories.parent=${parent}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
 	const countURL = `/products?categories.gender=${gender}&categories.parent=${parent}&_locale=${locale}`;
 
@@ -85,9 +71,9 @@ const Category = ({ category, subCategories, locale }) => {
 
 	const { data: products = [] } = useSWRImmutable(URLWithQueryParams, fetchAPI);
 	const { data: productData } = useSWRImmutable(countURL, fetchAPI);
-	const nbProducts = productData?.length ?? 0;
+	const nbProducts = productData?.length ?? 0; // Total des produits sans limite
 
-	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
+	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT); // Total des pages en fonction du nombre total de produits
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
 	const titleLabel = `Mine: ${genderLabel} · ${parentLabel}`;
@@ -99,6 +85,78 @@ const Category = ({ category, subCategories, locale }) => {
 	];
 
 	const noTypesSelected = !typesSelected.length ? '-selected' : '';
+
+	// Ne pas afficher la pagination si le nombre de produits est inférieur à PAGE_LIMIT + 1
+	if (nbProducts <= PAGE_LIMIT) {
+		return (
+			<>
+				<Head>
+					<title>{titleLabel}</title>
+					<meta name="description" content={titleLabel} />
+					<meta property="og:title" content="Mine" />
+					<meta property="og:description" content={titleLabel} />
+					<meta property="og:url" content={`https://mineparis.com/category/${gender}/${parent}`} />
+				</Head>
+				<Hero
+					className="hero-content pb-5"
+					title={parentLabel}
+					breadcrumbs={breadcrumbs}
+					content={description}
+				/>
+				<Container>
+					<Row>
+						<Col xs="12" className="products-grid sidebar-none">
+							<ShopHeader
+								nbProducts={nbProducts}
+								sortOptionSelected={sortOptionSelected}
+								setSortOptionSelected={setSortOptionSelected}
+							/>
+
+							<Col>
+								<Row className="mb-4">
+									<button
+										type="button"
+										className={`btn subcategory-nav-item${noTypesSelected}`}
+										onClick={handleResetType}
+									>
+										{t('all')}
+									</button>
+									{subCategories.map(({ name, categoryId }) => {
+										const selected = typesSelected.includes(categoryId) ? '-selected' : '';
+
+										return (
+											<button
+												key={categoryId}
+												type="button"
+												className={`btn subcategory-nav-item${selected}`}
+												onClick={handleChangeType(categoryId)}
+											>
+												{name}
+											</button>
+										);
+									})}
+								</Row>
+							</Col>
+
+							{!products.length ? (
+								<div className="d-flex justify-content-center align-items-center py-7 my-6">
+									<Spinner color="dark" role="status" />
+								</div>
+							) : (
+								<Row>
+									{products.map((productData) => (
+										<Col key={productData.id} xs="6" sm="4" md="4" lg="3" xl="3">
+											<Product data={productData} />
+										</Col>
+									))}
+								</Row>
+							)}
+						</Col>
+					</Row>
+				</Container>
+			</>
+		);
+	}
 
 	return (
 		<>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Button, Col } from "reactstrap";
 import { useTranslation } from 'next-i18next';
 
@@ -14,11 +14,13 @@ const BigImage = ({ label, link, index, imageName }) => {
 			</div>
 			<Image
 				src={src}
-				layout="fill"
-				objectFit="cover"
-				objectPosition="top"
 				alt={label}
-			/>
+				fill
+				sizes="100vw"
+				style={{
+					objectFit: "cover",
+					objectPosition: "top"
+				}} />
 		</Col>
 	);
 

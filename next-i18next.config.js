@@ -3,7 +3,8 @@ module.exports = {
 		defaultLocale: 'fr',
 		locales: ['fr', 'en'],
 	},
-	fallbackLng: {
-		default: ['fr'],
-	}
+	react: {
+		useSuspense: false,
+		wait: true,
+	},
 };

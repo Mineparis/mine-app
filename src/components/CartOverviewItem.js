@@ -1,20 +1,20 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 
 const CartOverviewItem = (props) => {
 	const item = props.item;
 
 	return (
-		(<div className="navbar-cart-product">
-			<div className="d-flex align-items-center">
+        (<div className="navbar-cart-product">
+            <div className="d-flex align-items-center">
 				<Link href={item.link}>
 
 					<Image
-						layout="fill"
-						className="img-fluid navbar-cart-product-image"
-						src={item.img}
-						alt="..."
-					/>
+                        className="img-fluid navbar-cart-product-image"
+                        src={item.img}
+                        alt="..."
+                        fill
+                        sizes="100vw" />
 
 				</Link>
 				<div className="w-100">
@@ -37,8 +37,8 @@ const CartOverviewItem = (props) => {
 					</div>
 				</div>
 			</div>
-		</div>)
-	);
+        </div>)
+    );
 };
 
 export default CartOverviewItem;

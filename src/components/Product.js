@@ -56,7 +56,7 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 				<Image
 					className="img-fluid"
 					src={imageURL}
-					alt={thumbnail?.alternativeText}
+					alt={thumbnail?.alternativeText ?? ''}
 					width={IMAGE_SIZE}
 					height={IMAGE_SIZE * GOLDEN_RATIO}
 					loading={loading}

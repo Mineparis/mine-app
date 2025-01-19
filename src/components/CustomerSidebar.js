@@ -1,23 +1,23 @@
 import ActiveLink from "./ActiveLink";
 import { Col } from "reactstrap";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 const CustomerSidebar = (props) => {
 	return (
-		<Col
+        (<Col
 			xl={props.xl ? props.xl : "3"}
 			lg={props.lg ? props.lg : "4"}
 			className="mb-5"
 		>
-			<div className="customer-sidebar card border-0">
+            <div className="customer-sidebar card border-0">
 				<div className="customer-profile">
 					<a className="d-inline-block" href="#">
 						<Image
-							layout="fill"
-							className="img-fluid rounded-circle customer-image"
-							src="/img/photo/kyle-loftus-589739-unsplash-avatar.jpg"
-							alt="Customer Profile Image"
-						/>
+                            className="img-fluid rounded-circle customer-image"
+                            src="/img/photo/kyle-loftus-589739-unsplash-avatar.jpg"
+                            alt="Customer Profile Image"
+                            fill
+                            sizes="100vw" />
 					</a>
 					<h5>Julie Lescaut</h5>
 					<p className="text-muted text-sm mb-0">Ostrava, Czech Republic</p>
@@ -72,8 +72,8 @@ const CustomerSidebar = (props) => {
 					</ActiveLink>
 				</nav>
 			</div>
-		</Col>
-	);
+        </Col>)
+    );
 };
 
 export default CustomerSidebar;

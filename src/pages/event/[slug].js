@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
 import { fetchAPI } from "../../lib/api";
 import Head from "next/head";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticPaths = async () => {
@@ -46,10 +46,11 @@ const Event = ({ data }) => {
 				className="bg-image"
 				src={jumbotronImage}
 				alt={jumbotron.subtitle}
-				layout="fill"
+				priority
+				fill
+				sizes="100vw"
 				objectFit="cover"
 				objectPosition="top"
-				priority
 			/>
 			<div className="overlay-content w-100">
 				<Container>
@@ -92,7 +93,8 @@ const Event = ({ data }) => {
 							className="bg-image"
 							src={secondSectionImage}
 							alt={secondSection.subtitle}
-							layout="fill"
+							fill
+							sizes="100vw"
 							objectFit="cover"
 							objectPosition="center"
 						/>
@@ -133,7 +135,8 @@ const Event = ({ data }) => {
 							className="bg-image"
 							src={thirdSectionImage}
 							alt={thirdSection.subtitle}
-							layout="fill"
+							fill
+							sizes="100vw"
 							objectFit="cover"
 							objectPosition="center"
 						/>

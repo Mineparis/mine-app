@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card } from "reactstrap";
 import Link from "next/link";
-import image from "next/legacy/image";
+import image from "next/image";
 
 const HomeOurPicks = () => {
 	return (<>

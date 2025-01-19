@@ -1,13 +1,14 @@
 import { Container, Row, Col } from 'reactstrap';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from "next/image";
+import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'react-i18next';
 
-import Post from '../../components/Post';
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
+
+const Post = dynamic(() => import('../../components/Post'));
 
 export async function getStaticProps({ locale }) {
 	const lang = locale || DEFAULT_LANG;
@@ -23,8 +24,6 @@ export async function getStaticProps({ locale }) {
 }
 
 const Magazine = ({ allPosts = [] }) => {
-	const { t } = useTranslation('common');
-
 	const [mainPost, ...posts] = allPosts;
 
 	return (<>
@@ -34,9 +33,11 @@ const Magazine = ({ allPosts = [] }) => {
 					src={getStrapiMedia(mainPost.thumbnail)}
 					className="bg-image"
 					alt={mainPost.slug}
-					layout="fill"
-					objectFit="cover"
-				/>
+					fill
+					sizes="100vw"
+					style={{
+						objectFit: "cover"
+					}} />
 				<Container>
 					<Row className="d-flex justify-content-center">
 						<Col lg="6">

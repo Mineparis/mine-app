@@ -1,8 +1,8 @@
 import React from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 import { Col } from "reactstrap";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const BigCards = ({ isBox, data }) => {
 	const { t } = useTranslation('common');
@@ -33,10 +33,11 @@ const BigCards = ({ isBox, data }) => {
 							</div>
 							<Image
 								src={`/img/bigCards/${cardLabel}.jpg`}
-								layout="fill"
+								alt={cardName}
+								fill
+								sizes="100vw"
 								objectFit="cover"
 								objectPosition="top"
-								alt={cardName}
 							/>
 						</Col>)
 					);
@@ -65,10 +66,11 @@ const BigCards = ({ isBox, data }) => {
 						</div>
 						<Image
 							src={`/img/bigCards/${cardLabel}.jpg`}
-							layout="fill"
+							alt={cardName}
+							fill
+							sizes="100vw"
 							objectFit="cover"
 							objectPosition="top"
-							alt={cardName}
 						/>
 					</Col>)
 				);

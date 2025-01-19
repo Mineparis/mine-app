@@ -7,7 +7,18 @@ const { i18n } = require('./next-i18next.config');
 // next.js configuration
 const nextConfig = {
 	images: {
-		domains: ['localhost', 'source.unsplash.com', 'res.cloudinary.com'],
+		remotePatterns: [{
+			protocol: 'http',
+			hostname: 'localhost',
+		},
+		{
+			protocol: 'https',
+			hostname: 'source.unsplash.com',
+		},
+		{
+			protocol: 'https',
+			hostname: 'res.cloudinary.com',
+		}],
 		formats: ['image/webp'],
 		// loader: "imgix", // Uncomment this line for STATIC EXPORT
 		// path: "", // Uncomment this line for STATIC EXPORT

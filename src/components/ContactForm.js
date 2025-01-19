@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { toast } from 'react-toastify';
 import { Row, Col, Form, FormGroup, Input, Button } from "reactstrap";
 import * as Sentry from "@sentry/nextjs";

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
 import Router from "next/router";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import {
 	Collapse,
@@ -125,22 +125,24 @@ const Header = ({ menu, ...props }) => {
 		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
 		const logoStyle = { filter: additionalNavClasses ? undefined : 'invert(1)' };
 
-		return (<>
-			<Link className="mx-auto" href="/" passHref>
+		return (
+			<>
+				<Link className="mx-auto" href="/" passHref>
 
-				<img src="/svg/logo.svg" alt="" style={logoStyle} />
+					<img src="/svg/logo.svg" alt="" style={logoStyle} />
 
-			</Link>
-			<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
-				<div className="navbar-icon-link snipcart-customer-signin">
-					<i className="bi bi-person-circle" />
+				</Link>
+				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
+					<div className="navbar-icon-link snipcart-customer-signin">
+						<i className="bi bi-person-circle" />
+					</div>
+					<div className="navbar-icon-link snipcart-checkout">
+						<i className="bi bi-cart" />
+						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
+					</div>
 				</div>
-				<div className="navbar-icon-link snipcart-checkout">
-					<i className="bi bi-cart" />
-					<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
-				</div>
-			</div>
-		</>);
+			</>
+		);
 	};
 
 	return (

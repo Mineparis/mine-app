@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from 'reactstrap';
 
 import ServicesBlock from '../components/ServicesBlock';
 import Swiper from '../components/Swiper';
@@ -17,14 +17,16 @@ import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../utils/constants";
 
 const SWIPE_ITEMS_LIMIT = 10;
 
-
 export const getStaticProps = async ({ locale }) => {
 	const lang = locale || DEFAULT_LANG;
-	const homeData = await fetchAPI(`/homepage?_locale=${lang}`);
-	const bestSellersProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=sold:DESC&_locale=${lang}`);
-	const newProducts = await fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&isNewProduct=true&_locale=${lang}`);
-	const magazinePosts = await fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`);
-	const surveys = await fetchAPI(`/surveys?&_locale=${lang}`);
+
+	const [homeData, bestSellersProducts, newProducts, magazinePosts, surveys] = await Promise.all([
+		fetchAPI(`/homepage?_locale=${lang}`),
+		fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=sold:DESC&_locale=${lang}`),
+		fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&isNewProduct=true&_locale=${lang}`),
+		fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`),
+		fetchAPI(`/surveys?&_locale=${lang}`),
+	]);
 
 	return {
 		props: {
@@ -40,8 +42,9 @@ export const getStaticProps = async ({ locale }) => {
 };
 
 const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], survey }) => {
-	const { t } = useTranslation('common');
+	const { t, i18n } = useTranslation('common');
 	const [isSurveyOpen, setIsSurveyOpen] = useState(false);
+	const [isClient, setIsClient] = useState(false); // Permet de savoir si on est côté client
 
 	const {
 		carousel,
@@ -58,6 +61,19 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 		setIsSurveyOpen(isOpen);
 	};
 
+	useEffect(() => {
+		setIsClient(true);
+
+		const userLang = navigator.language || navigator.userLanguage;
+		if (userLang.startsWith('fr') && i18n.language !== 'fr') {
+			i18n.changeLanguage('fr');
+		} else if (userLang.startsWith('en') && i18n.language !== 'en') {
+			i18n.changeLanguage('en');
+		}
+	}, [i18n]);
+
+	if (!isClient) return null;
+
 	return (
 		<>
 			<Head>
@@ -65,6 +81,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 				<meta property="og:title" content="Mine" />
 				<meta property="og:url" content="https://mineparis.com" />
 			</Head>
+
 			<Swiper
 				data={carousel}
 				delay={10000}
@@ -114,23 +131,6 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 					<BigCardsWithText {...routineSection} />
 				</section>
 			) : null}
-			{/* {boxSection && (
-				<BackgroundImage src={boxSection.staticImg} alt="box" isDarkOverlay>
-					<Col>
-						<h2 className="text-white">{boxSection.title}</h2>
-					</Col>
-					<Col className="my-5 px-6">
-						<p className="text-lg text-white">{boxSection.subtitle}</p>
-					</Col>
-					<Col className="d-flex justify-content-center">
-						<Link href={boxSection.button.link}>
-							<Button className="rounded-button bg-white text-primary">
-								{boxSection.button.label}
-							</Button>
-						</Link>
-					</Col>
-				</BackgroundImage>
-			)} */}
 
 			{survey ? (
 				<section>
@@ -145,18 +145,11 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 
 			{valuesSection && <ServicesBlock data={valuesSection} />}
 
-			{/* {skinSection ? (
-				<section>
-					<BigCardsWithText {...skinSection} imageName="skin-section" />
-				</section>
-			) : null} */}
-
 			{engagementText && (
 				<section className="py-5">
 					<p className="lead text-center">{engagementText}</p>
 				</section>
 			)}
-
 
 			{magazinePosts.length ? (
 				<section className="py-5 bg-brown">

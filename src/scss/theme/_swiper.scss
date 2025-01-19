@@ -8,8 +8,6 @@ $colors: (
 	'white': #ffffff,
 	'black': theme-color('dark')) !default;
 
-@import "../../../node_modules/swiper/swiper.scss";
-
 .swiper-container-mx-negative {
 	margin-left: -15px;
 	margin-right: -15px;

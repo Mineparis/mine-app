@@ -10,6 +10,7 @@ import '../../public/fonts/hkgrotesk/stylesheet.css';
 import '../scss/style.default.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import 'swiper/css/bundle';
 
 const MyApp = ({ Component, pageProps }) => {
 	const { events } = useRouter();
@@ -28,7 +29,8 @@ const MyApp = ({ Component, pageProps }) => {
 	}, []);
 
 	useEffect(() => {
-		const handleRouteChange = url => hasSetConsent !== false && ReactGA.pageview(url);
+		const handleRouteChange = url => hasSetConsent !== false && ReactGA.send({ hitType: "pageview", page: url });
+
 		events.on('routeChangeComplete', handleRouteChange);
 
 		return () => {

@@ -1,8 +1,7 @@
 import React from "react";
-import ReactIdSwiper from "react-id-swiper";
-import Image from "next/legacy/image";
-
-import "swiper/css";
+import Image from "next/image";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 
 const SwiperBrands = (props) => {
 	const params = {
@@ -24,16 +23,19 @@ const SwiperBrands = (props) => {
 	};
 
 	return (
-		<ReactIdSwiper {...params}>
+		(<Swiper modules={[Navigation, Pagination]} {...params}>
 			{props.brands.map((brand, index) => (
-				<div
-					key={index}
-					className="h-auto d-flex align-items-center justify-content-center"
-				>
-					<Image layout="fill" src={brand.img} alt={brand.title} className="img-fluid w-6rem" />
-				</div>
+				<SwiperSlide key={index} className="h-auto d-flex align-items-center justify-content-center">
+					<Image
+						src={brand.img}
+						alt={brand.title}
+						className="img-fluid w-6rem"
+						fill
+						sizes="100vw"
+					/>
+				</SwiperSlide>
 			))}
-		</ReactIdSwiper>
+		</Swiper>)
 	);
 };
 

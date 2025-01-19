@@ -1,15 +1,15 @@
 import { Row, Col } from "reactstrap";
 
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useState } from "react";
 
 const CartItem = ({ item, review }) => {
 	const [quantity, setQuantity] = useState(item.items);
 
 	return (
-		(<div className="cart-item">
-			<Row className=" d-flex align-items-center text-left text-md-center">
+        (<div className="cart-item">
+            <Row className=" d-flex align-items-center text-left text-md-center">
 				<Col xs="12" md="5">
 					<a className="cart-remove close mt-3 d-md-none" href="#">
 						<i className="fa fa-times"> </i>
@@ -17,7 +17,7 @@ const CartItem = ({ item, review }) => {
 					<div className="d-flex align-items-center">
 						<Link href={item.link}>
 
-							<Image className="cart-item-img" src={item.img} alt="..." layout="fill" />
+							<Image className="cart-item-img" src={item.img} alt="..." fill sizes="100vw" />
 
 						</Link>
 						<div className="cart-title text-left">
@@ -105,8 +105,8 @@ const CartItem = ({ item, review }) => {
 					</Row>
 				</Col>
 			</Row>
-		</div>)
-	);
+        </div>)
+    );
 };
 
 export default CartItem;

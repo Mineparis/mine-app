@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import useSWRImmutable from 'swr/immutable';
 
 import { FormProvider } from './FormContext';

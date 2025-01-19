@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import { dateFormat } from '../utils/date';
 import { getStrapiMedia } from '../lib/media';
@@ -13,28 +13,21 @@ const Post = ({
 	withoutSummary = false,
 	withoutDate = false,
 }) => {
-	const height = withoutSummary && withoutDate
-		? '23rem'
-		: withoutSummary && !withoutDate
-			? '28rem'
-			: '40rem';
-
 	return (
-		(<div className="card mb-30px" style={{ height }}>
-			<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
-
-				<Image
-					className="card-img-top"
-					layout="responsive"
-					objectFit="cover"
-					src={getStrapiMedia(thumbnail)}
-					alt={slug}
-					width={100}
-					height={100}
-				/>
-
+		<div className="card mb-30px">
+			<Link href="/magazine/[slug]" as={`/magazine/${slug}`} className="card-title text-dark text-decoration-none">
+				<div>
+					<Image
+						className="card-img-top"
+						src={getStrapiMedia(thumbnail)}
+						alt={slug}
+						width={1000}
+						height={300}
+					/>
+				</div>
 			</Link>
-			<div className="card-body mt-3">
+
+			<div className="card-body">
 				<Link
 					href="/magazine/[slug]"
 					as={`/magazine/${slug}`}
@@ -52,14 +45,13 @@ const Post = ({
 					<Link
 						href="/magazine/[slug]"
 						as={`/magazine/${slug}`}
-						className="card-text text-dark text-decoration-none">
-
+						className="card-text text-dark text-decoration-none"
+					>
 						<p className="my-2 text-muted">{summary}</p>
-
 					</Link>
 				)}
 			</div>
-		</div>)
+		</div>
 	);
 };
 
