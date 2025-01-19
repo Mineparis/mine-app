@@ -1,4 +1,4 @@
 export const getCurrentPrice = (price, salePercent) => {
-	if (!salePercent) return price;
-	return price * (1 - salePercent);
-}
+	const newPrice = salePercent ? price * (1 - salePercent) : price;
+	return newPrice.toFixed(2);
+};

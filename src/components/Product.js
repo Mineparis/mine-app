@@ -100,7 +100,7 @@ const Product = ({ data, loading, withNewFlag = false }) => {
 						</Link>
 					</p>
 					<>
-						<span className="font-weight-bold mr-1">{currentPrice.toFixed(2)} €</span>
+						<span className="font-weight-bold mr-1">{currentPrice} €</span>
 						{salePricePercent > 0 && <span className="text-muted font-weight-light"><del>{originalPrice.toFixed(2)} €</del></span>}
 					</>
 				</div>
