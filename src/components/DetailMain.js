@@ -47,7 +47,7 @@ const DetailMain = ({ product, averageRating }) => {
 			<div className="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between mb-4">
 				<ul className="list-inline mb-2 mb-sm-0">
 					<li className="list-inline-item h4 font-weight-light mb-0">
-						{currentPrice.toFixed(2)} €
+						{currentPrice} €
 					</li>
 
 					{salePricePercent > 0 && (
