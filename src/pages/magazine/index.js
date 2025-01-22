@@ -1,14 +1,12 @@
 import { Container, Row, Col } from 'reactstrap';
 import Link from 'next/link';
 import Image from "next/image";
-import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
-
-const Post = dynamic(() => import('../../components/Post'));
+import Post from '@components/Post';
 
 export async function getStaticProps({ locale }) {
 	const lang = locale || DEFAULT_LANG;

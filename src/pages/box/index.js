@@ -1,16 +1,14 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col } from "reactstrap";
 
-import Swiper from '../../components/Swiper';
+import Swiper from '@components/Swiper';
 import { fetchAPI } from "../../lib/api";
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../../utils/constants";
-
-const BigCards = dynamic(() => import('../../components/BigCards'));
-const ServicesBlock = dynamic(() => import('../../components/ServicesBlock'));
-const SwiperMagazine = dynamic(() => import('../../components/SwiperMagazine'));
-const InstaGallery = dynamic(() => import('../../components/InstaGallery'));
+import BigCards from '@components/BigCards';
+import ServicesBlock from '@components/ServicesBlock';
+import SwiperMagazine from '@components/SwiperMagazine';
+import InstaGallery from '@components/InstaGallery';
 
 const SWIPE_ITEMS_LIMIT = 10;
 

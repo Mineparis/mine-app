@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
-import Product from '../../components/Product';
-import Hero from '../../components/Hero';
+import Product from '@components/Product';
+import Hero from '@components/Hero';
 import { fetchAPI } from '../../lib/api';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
 
-const ShopHeader = dynamic(() => import('../../components/ShopHeader'));
-const ShopPagination = dynamic(() => import('../../components/ShopPagination'));
+import ShopHeader from '@components/ShopHeader';
+import ShopPagination from '@components/ShopPagination';
 
 const PAGE_LIMIT = 12;
 

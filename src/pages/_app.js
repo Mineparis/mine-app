@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import ReactGA from "react-ga4";
 import { useRouter } from 'next/router';
 
-import Layout from '../components/Layout';
+import Layout from '@components/Layout';
 
 import '../../public/fonts/hkgrotesk/stylesheet.css';
 import '../scss/style.default.scss';

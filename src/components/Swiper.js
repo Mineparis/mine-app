@@ -41,11 +41,10 @@ const SwiperJumbotron = ({
 	xxxl,
 	...props
 }) => {
-	const className = props.className ? props.className : '';
-	const navigationColor = props.navigationColor ? props.navigationColor : 'white';
-	const wrapperClass = props.wrapperClass ? props.wrapperClass : '';
+	const navigationColor = props.navigationColor || 'white';
+	const wrapperClass = props.wrapperClass || '';
 	const bgCover = !props.columns ? 'bg-cover' : '';
-	const containerClass = 'container-fluid h-100';
+	const containClass = 'container-fluid h-100';
 	const textClass = `${props.columns ? 'text-muted' : 'lead'} mb-5`;
 	const buttonColor = props.columns ? 'outline-dark' : 'light';
 
@@ -57,10 +56,9 @@ const SwiperJumbotron = ({
 	const breakpoints = getBreakpoints({ sm, md, lg, xl, xxl, xxxl });
 
 	const params = {
-		containerClass: `swiper-container ${className}`,
 		slidesPerView: props.slidesPerView,
 		effect: props.effect,
-		allowTouchMove: props.allowTouchMove === false ? false : true,
+		allowTouchMove: props.allowTouchMove || true,
 		spaceBetween: props.spaceBetween,
 		centeredSlides: props.centeredSlides,
 		roundLengths: props.roundLengths,
@@ -110,7 +108,7 @@ const SwiperJumbotron = ({
 						/>
 						<Container
 							fluid={props.containerFluid}
-							className={`h-100 ${!props.columns ? "px-lg-12" : ""} ${containerClass}`}
+							className={`h-100 ${!props.columns ? "px-lg-12" : ""} ${containClass}`}
 						>
 							<Row
 								className={`overlay-content h-100 align-items-center ${rowClass}`}

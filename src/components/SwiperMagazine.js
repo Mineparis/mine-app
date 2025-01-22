@@ -17,7 +17,6 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 		slidesPerView: 2,
 		spaceBetween: 20,
 		loop: false,
-		loopFillGroupWithBlank: true,
 		breakpoints: {
 			1024: { slidesPerView: 4 },
 		},
@@ -54,7 +53,7 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 				<Row>
 					<Swiper modules={[Navigation, Pagination]} {...sliderParams}>
 						{posts.map(({ slug, thumbnail, title }) => (
-							<SwiperSlide key={slug} spaceBetween={50}>
+							<SwiperSlide key={slug}>
 								<Post slug={slug} thumbnail={thumbnail} title={title} withoutSummary withoutDate />
 							</SwiperSlide>
 						))}

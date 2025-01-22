@@ -4,14 +4,14 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { Container, Row, Col, Card, CardBody } from 'reactstrap';
 
-import ServicesBlock from '../components/ServicesBlock';
-import Swiper from '../components/Swiper';
-import SurveyModal from '../components/SurveyModal';
-import BackgroundImage from "../components/BackgroundImage";
-import SwiperProducts from '../components/SwiperProducts';
-import BigCards from '../components/BigCards';
-import BigCardsWithText from '../components/BigCardsWithText';
-import SwiperMagazine from '../components/SwiperMagazine';
+import ServicesBlock from '@components/ServicesBlock';
+import Swiper from '@components/Swiper';
+import SurveyModal from '@components/SurveyModal';
+import BackgroundImage from "@components/BackgroundImage";
+import SwiperProducts from '@components/SwiperProducts';
+import BigCards from '@components/BigCards';
+import BigCardsWithText from '@components/BigCardsWithText';
+import SwiperMagazine from '@components/SwiperMagazine';
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../utils/constants";
 
@@ -23,7 +23,7 @@ export const getStaticProps = async ({ locale }) => {
 	const [homeData, bestSellersProducts, newProducts, magazinePosts, surveys] = await Promise.all([
 		fetchAPI(`/homepage?_locale=${lang}`),
 		fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=sold:DESC&_locale=${lang}`),
-		fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&isNewProduct=true&_locale=${lang}`),
+		fetchAPI(`/products?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC&_locale=${lang}`),
 		fetchAPI(`/blogs?_limit=${SWIPE_ITEMS_LIMIT}&_sort=created_at:DESC`),
 		fetchAPI(`/surveys?&_locale=${lang}`),
 	]);

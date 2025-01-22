@@ -14,7 +14,7 @@ const BigImage = ({ label, link, index, imageName }) => {
 			</div>
 			<Image
 				src={src}
-				alt={label}
+				alt=""
 				fill
 				sizes="100vw"
 				style={{
