@@ -4,4 +4,7 @@ module.exports = {
 		locales: ['fr', 'en'],
 		localeDetection: true,
 	},
+	...(typeof window === undefined
+		? { localePath: path.resolve('./public/locales') }
+		: {})
 };
