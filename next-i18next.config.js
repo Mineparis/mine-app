@@ -3,7 +3,8 @@ module.exports = {
 		defaultLocale: 'fr',
 		locales: ['fr', 'en'],
 	},
-	...(typeof window === undefined
-		? { localePath: path.resolve('./public/locales') }
-		: {})
+	react: {
+		useSuspense: false,
+		wait: true,
+	},
 };

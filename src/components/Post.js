@@ -13,32 +13,28 @@ const Post = ({
 	withoutSummary = false,
 	withoutDate = false,
 }) => {
-	const height = withoutSummary && withoutDate
-		? '23rem'
-		: withoutSummary && !withoutDate
-			? '28rem'
-			: '40rem';
-
 	return (
-		<div className="card mb-30px" style={{ height }}>
-			<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
-				<a>
+		<div className="card mb-30px">
+			<Link href="/magazine/[slug]" as={`/magazine/${slug}`} className="card-title text-dark text-decoration-none">
+				<div>
 					<Image
 						className="card-img-top"
-						layout="responsive"
-						objectFit="cover"
 						src={getStrapiMedia(thumbnail)}
 						alt={slug}
-						width={100}
-						height={100}
+						width={1000}
+						height={300}
 					/>
-				</a>
+				</div>
 			</Link>
-			<div className="card-body mt-3">
-				<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
-					<a className="card-title text-dark text-decoration-none">
-						<h5 className="my-2 line-clamp">{title}</h5>
-					</a>
+
+			<div className="card-body">
+				<Link
+					href="/magazine/[slug]"
+					as={`/magazine/${slug}`}
+					className="card-title text-dark text-decoration-none">
+
+					<h5 className="my-2 line-clamp">{title}</h5>
+
 				</Link>
 				{!withoutDate && (
 					<p className="text-gray-500 text-sm my-3">
@@ -46,10 +42,12 @@ const Post = ({
 					</p>
 				)}
 				{!withoutSummary && (
-					<Link href="/magazine/[slug]" as={`/magazine/${slug}`}>
-						<a className="card-text text-dark text-decoration-none">
-							<p className="my-2 text-muted">{summary}</p>
-						</a>
+					<Link
+						href="/magazine/[slug]"
+						as={`/magazine/${slug}`}
+						className="card-text text-dark text-decoration-none"
+					>
+						<p className="my-2 text-muted">{summary}</p>
 					</Link>
 				)}
 			</div>

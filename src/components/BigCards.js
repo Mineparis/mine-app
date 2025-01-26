@@ -1,8 +1,8 @@
 import React from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import Link from "next/link";
 import { Col } from "reactstrap";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const BigCards = ({ isBox, data }) => {
 	const { t } = useTranslation('common');
@@ -12,7 +12,7 @@ const BigCards = ({ isBox, data }) => {
 	const cardsLabel = isBox ? boxesLabel : categoriesLabel;
 
 	return (
-		<div id="big-cards" className="big-cards">
+		(<div id="big-cards" className="big-cards">
 			{cardsLabel.map(cardLabel => {
 				const cardName = t(cardLabel);
 				const currentCardType = cardLabel.split('_')[0];
@@ -22,41 +22,42 @@ const BigCards = ({ isBox, data }) => {
 
 				if (isBox) {
 					return (
-						<Col key={cardLabel} className="big-card dark-overlay">
+						(<Col key={cardLabel} className="big-card dark-overlay">
 							<div className="overlay-content text-center text-white">
 								<h3>{cardName}</h3>
 								<div className="d-flex flex-row visible-on-hover justify-content-center mt-4">
-									<Link href={cardData}>
+									<Link href={cardData} legacyBehavior>
 										<h4 className="cursor-pointer">{t('discover')}</h4>
 									</Link>
 								</div>
 							</div>
 							<Image
 								src={`/img/bigCards/${cardLabel}.jpg`}
-								layout="fill"
+								alt={cardName}
+								fill
+								sizes="100vw"
 								objectFit="cover"
 								objectPosition="top"
-								alt={cardName}
 							/>
-						</Col>
+						</Col>)
 					);
 				}
 
 				return (
-					<Col key={cardLabel} className="big-card dark-overlay">
+					(<Col key={cardLabel} className="big-card dark-overlay">
 						<div className="overlay-content text-center text-white">
 							{isBeardCat ? (
-								<Link href={cardData.menURL}>
+								<Link href={cardData.menURL} legacyBehavior>
 									<h3 className="cursor-pointer">{cardName}</h3>
 								</Link>
 							) : (
 								<>
 									<h3>{cardName}</h3>
 									<div className="d-flex flex-row visible-on-hover mt-4">
-										<Link href={cardData.womenURL}>
+										<Link href={cardData.womenURL} legacyBehavior>
 											<h4 className="pr-4 cursor-pointer">{t('women')}</h4>
 										</Link>
-										<Link href={cardData.menURL}>
+										<Link href={cardData.menURL} legacyBehavior>
 											<h4 className="pl-4 cursor-pointer">{t('men')}</h4>
 										</Link>
 									</div>
@@ -65,15 +66,16 @@ const BigCards = ({ isBox, data }) => {
 						</div>
 						<Image
 							src={`/img/bigCards/${cardLabel}.jpg`}
-							layout="fill"
+							alt={cardName}
+							fill
+							sizes="100vw"
 							objectFit="cover"
 							objectPosition="top"
-							alt={cardName}
 						/>
-					</Col>
+					</Col>)
 				);
 			})}
-		</div>
+		</div>)
 	);
 };
 

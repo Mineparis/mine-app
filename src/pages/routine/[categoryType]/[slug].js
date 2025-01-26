@@ -1,31 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
-import dynamic from "next/dynamic";
 import useSWRImmutable from 'swr/immutable';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 
-import Product from '../../../components/Product';
-import Hero from '../../../components/Hero';
-import Swiper from '../../../components/Swiper';
+import Product from '@components/Product';
+import Hero from '@components/Hero';
+import Swiper from '@components/Swiper';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
 import useFilter from '../../../hooks/UseFilter';
-
-const ShopHeader = dynamic(() => import('../../../components/ShopHeader'));
-const ShopPagination = dynamic(() => import('../../../components/ShopPagination'));
+import ShopHeader from '@components/ShopHeader';
+import ShopPagination from '@components/ShopPagination';
 
 const PAGE_LIMIT = 12;
-const i18nConfig = {
-	i18n: {
-		defaultLocale: 'fr',
-		locales: ['fr', 'en'],
-		ns: ["common"],
-		defaultNS: "common",
-	}
-};
 
 export const getServerSideProps = async ({ params, locale, res }) => {
 	const { slug, categoryType } = params;
@@ -53,7 +43,7 @@ export const getServerSideProps = async ({ params, locale, res }) => {
 
 	return {
 		props: {
-			...(await serverSideTranslations(lang, 'common', i18nConfig)),
+			...(await serverSideTranslations(lang, 'common')),
 			routine: routines[0] || [],
 			subCategories,
 			locale: lang,

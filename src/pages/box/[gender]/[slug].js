@@ -1,21 +1,19 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import dynamic from "next/dynamic";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import { useTranslation } from 'next-i18next';
 
-import DetailMain from '../../../components/DetailMain';
-import Product from '../../../components/Product';
+import DetailMain from '@components/DetailMain';
+import Product from '@components/Product';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
+import SwiperGallery from '@components/SwiperGallery';
+import Swiper from '@components/Swiper';
+import Accordeon from '@components/Accordeon';
 
-const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
-const Swiper = dynamic(() => import('../../../components/Swiper'));
-const Accordeon = dynamic(() => import('../../../components/Accordeon'));
-
-export const getStaticPaths = async (aa) => {
+export const getStaticPaths = async () => {
 	const boxes = await fetchAPI('/boxes?_locale=fr&_locale=en');
 	return {
 		paths: boxes?.map(({ gender, slug, locale }) => ({ params: { gender, slug }, locale })) ?? [],

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import ReactIdSwiper from "react-id-swiper";
 import { Container, Row, Col, Button } from "reactstrap";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 import { getStrapiMedia } from "../lib/media";
 
@@ -20,12 +21,30 @@ const positionMapping = {
 	}
 };
 
-const Swiper = (props) => {
-	const className = props.className ? props.className : '';
-	const navigationColor = props.navigationColor ? props.navigationColor : 'white';
-	const wrapperClass = props.wrapperClass ? props.wrapperClass : '';
+const getBreakpoints = ({ sm = 1, md = 1, lg = 1, xl = 1, xxl = 1, xxxl = 1 }) => {
+	const breakpoints = {};
+	if (sm) breakpoints[565] = { slidesPerView: sm };
+	if (md) breakpoints[768] = { slidesPerView: md };
+	if (lg) breakpoints[991] = { slidesPerView: lg };
+	if (xl) breakpoints[1200] = { slidesPerView: xl };
+	if (xxl) breakpoints[1400] = { slidesPerView: xxl };
+	if (xxxl) breakpoints[1600] = { slidesPerView: xxxl };
+	return breakpoints;
+};
+
+const SwiperJumbotron = ({
+	sm,
+	md,
+	lg,
+	xl,
+	xxl,
+	xxxl,
+	...props
+}) => {
+	const navigationColor = props.navigationColor || 'white';
+	const wrapperClass = props.wrapperClass || '';
 	const bgCover = !props.columns ? 'bg-cover' : '';
-	const containerClass = 'container-fluid h-100';
+	const containClass = 'container-fluid h-100';
 	const textClass = `${props.columns ? 'text-muted' : 'lead'} mb-5`;
 	const buttonColor = props.columns ? 'outline-dark' : 'light';
 
@@ -34,43 +53,12 @@ const Swiper = (props) => {
 		prevEl: `.swiper-button-prev.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`,
 	} : {};
 
-	const breakpoints = [];
-	if (props.sm) {
-		breakpoints[565] = {
-			slidesPerView: props.sm,
-		};
-	}
-	if (props.md) {
-		breakpoints[768] = {
-			slidesPerView: props.md,
-		};
-	}
-	if (props.lg) {
-		breakpoints[991] = {
-			slidesPerView: props.lg,
-		};
-	}
-	if (props.xl) {
-		breakpoints[1200] = {
-			slidesPerView: props.xl,
-		};
-	}
-	if (props.xxl) {
-		breakpoints[1400] = {
-			slidesPerView: props.xxl,
-		};
-	}
-	if (props.xxxl) {
-		breakpoints[1600] = {
-			slidesPerView: props.xxxl,
-		};
-	}
+	const breakpoints = getBreakpoints({ sm, md, lg, xl, xxl, xxxl });
 
 	const params = {
-		containerClass: `swiper-container ${className}`,
 		slidesPerView: props.slidesPerView,
 		effect: props.effect,
-		allowTouchMove: props.allowTouchMove === false ? false : true,
+		allowTouchMove: props.allowTouchMove || true,
 		spaceBetween: props.spaceBetween,
 		centeredSlides: props.centeredSlides,
 		roundLengths: props.roundLengths,
@@ -98,7 +86,7 @@ const Swiper = (props) => {
 	if (!props.data) return null;
 
 	return (
-		<ReactIdSwiper {...params}>
+		<Swiper modules={[Navigation, Pagination, Autoplay]} {...params}>
 			{props.data.map(({ position, addDarkOverlay, img, staticImg, title, subtitle, text, button }, index) => {
 				const darkOverlay = addDarkOverlay ? 'dark-overlay' : '';
 				const rowClass = positionMapping.row[position];
@@ -109,17 +97,18 @@ const Swiper = (props) => {
 				const image = img ? getStrapiMedia(img) : staticImg;
 
 				return (
-					<div key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
+					<SwiperSlide key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
 						<Image
-							layout="fill"
 							objectFit="cover"
 							objectPosition="top"
 							src={image}
+							alt={title}
+							fill
 							priority
 						/>
 						<Container
 							fluid={props.containerFluid}
-							className={`h-100 ${!props.columns ? "px-lg-12" : ""} ${containerClass}`}
+							className={`h-100 ${!props.columns ? "px-lg-12" : ""} ${containClass}`}
 						>
 							<Row
 								className={`overlay-content h-100 align-items-center ${rowClass}`}
@@ -148,7 +137,7 @@ const Swiper = (props) => {
 										</Button>
 									)}
 									{button?.link && button?.link !== 'anchor' && (
-										<Link href={button.link}>
+										<Link href={button.link} legacyBehavior>
 											<Button className={buttonClass} color={buttonColor}>
 												{button.label}
 											</Button>
@@ -157,12 +146,14 @@ const Swiper = (props) => {
 								</Col>
 							</Row>
 						</Container>
-					</div>
+					</SwiperSlide>
 				);
-			})
-			}
-		</ReactIdSwiper>
+			})}
+
+			{/* Pagination */}
+			<div className="swiper-pagination swiper-pagination-black" />
+		</Swiper>
 	);
 };
 
-export default Swiper;
+export default SwiperJumbotron;

@@ -3,7 +3,7 @@ import { Row, Col, Container } from 'reactstrap';
 import { useTranslation } from 'next-i18next';
 
 import Stars from "./Stars";
-import Pagination from '../components/Pagination';
+import Pagination from '@components/Pagination';
 
 const ITEMS_PER_PAGE = 5;
 

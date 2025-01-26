@@ -4,13 +4,13 @@ import { ToastContainer } from 'react-toastify';
 import ReactGA from "react-ga4";
 import { useRouter } from 'next/router';
 
-import Layout from '../components/Layout';
+import Layout from '@components/Layout';
 
 import '../../public/fonts/hkgrotesk/stylesheet.css';
 import '../scss/style.default.scss';
-import 'react-image-lightbox/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import 'swiper/css/bundle';
 
 const MyApp = ({ Component, pageProps }) => {
 	const { events } = useRouter();
@@ -29,7 +29,8 @@ const MyApp = ({ Component, pageProps }) => {
 	}, []);
 
 	useEffect(() => {
-		const handleRouteChange = url => hasSetConsent !== false && ReactGA.pageview(url);
+		const handleRouteChange = url => hasSetConsent !== false && ReactGA.send({ hitType: "pageview", page: url });
+
 		events.on('routeChangeComplete', handleRouteChange);
 
 		return () => {

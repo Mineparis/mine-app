@@ -28,7 +28,7 @@ const Login = () => {
 	const { t } = useTranslation('common');
 
 	return (
-		<Container>
+		(<Container>
 			<Row className="justify-content-center">
 				<Col lg="5">
 					<div className="block">
@@ -68,7 +68,7 @@ const Login = () => {
 							<p className="text-muted">
 								{t('new_account_contact_message')}{" "}
 								<Link href="/contact">
-									<a>{t('contact_us')}</a>
+									{t('contact_us')}
 								</Link>
 								.
 							</p>
@@ -109,7 +109,7 @@ const Login = () => {
 					</div>
 				</Col>
 			</Row>
-		</Container>
+		</Container>)
 	);
 };
 

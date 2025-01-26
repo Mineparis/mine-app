@@ -1,25 +1,16 @@
-import React, { useState, useRef } from "react";
-import Image from "next/image";
-import ReactIdSwiper from "react-id-swiper";
+import React, { useState } from "react";
 import { Row, Col } from "reactstrap";
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { getStrapiMedia } from '../lib/media';
 
 const SwiperGallery = ({ images, vertical }) => {
 	const [activeSlide, setActiveSlide] = useState(0);
+	const [swiperInstance, setSwiperInstance] = useState();
 
-	const gallerySwiperRef = useRef(null);
 	const galleryStyle = { top: '10rem' };
-
-	const slideTo = (index) => {
-		setActiveSlide(index);
-		if (
-			gallerySwiperRef.current !== null &&
-			gallerySwiperRef.current.swiper !== null
-		) {
-			gallerySwiperRef.current.swiper.slideToLoop(index);
-		}
-	};
 
 	const hasMultipleImage = images?.length > 1;
 
@@ -49,37 +40,41 @@ const SwiperGallery = ({ images, vertical }) => {
 		} : {},
 		slidesPerView: 1,
 		spaceBetween: 0,
-		on: {
-			slideChange: () =>
-				setActiveSlide(gallerySwiperRef.current.swiper.realIndex),
-		},
+		onSwiper: setSwiperInstance,
+	};
+
+	const handleSlideChange = () => () => setActiveSlide(swiperInstance.realIndex);
+
+	const handleClickImg = (index) => {
+		setActiveSlide(index);
+		swiperInstance.slideToLoop(index);
 	};
 
 	return (
 		<Row style={galleryStyle}>
 			<Col className={sliderClass} {...sliderColumns}>
-				<ReactIdSwiper {...sliderParams} ref={gallerySwiperRef}>
+				<Swiper modules={[Navigation, Pagination, Autoplay]} {...sliderParams} onSlideChange={handleSlideChange}>
 					{images.map((img) => (
-						<div key={img.hash} className="detail-full-item bg-cover">
+						<SwiperSlide key={img.hash} className="detail-full-item bg-cover">
 							<Image
-								layout="fill"
-								objectFit="contain"
-								objectPosition="center"
 								src={getStrapiMedia(img)}
 								priority
+								fill
+								sizes="100vw"
+								objectFit="contain"
+								objectPosition="center"
+								alt={img.alternativeText || ''}
 							/>
-						</div>
+						</SwiperSlide>
 					))}
-				</ReactIdSwiper>
+				</Swiper>
 			</Col>
-
 			<Col className={thumbsClass} {...thumbsColumns}>
-				{images.map(({ formats, hash }, index) => (
+				{images.map(({ formats, hash, alternativeText }, index) => (
 					<button
 						key={hash}
-						onClick={() => slideTo(index)}
-						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""
-							}`}
+						onClick={() => handleClickImg(index)}
+						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""}`}
 					>
 						<Image
 							layout="responsive"
@@ -88,6 +83,7 @@ const SwiperGallery = ({ images, vertical }) => {
 							objectFit="contain"
 							objectPosition="center"
 							src={getStrapiMedia(formats.thumbnail)}
+							alt={alternativeText || ''}
 						/>
 					</button>
 				))}

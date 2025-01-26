@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation, Trans } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row } from "reactstrap";
 import { DEFAULT_LANG } from '../utils/constants';
@@ -17,9 +17,9 @@ export const getStaticProps = async ({ locale }) => {
 
 function LinkText({ href, children }) {
 	return (
-		<Link href={href || ''}>
-			<a><b>{children}</b></a>
-		</Link>
+		(<Link href={href || ''}>
+			<b>{children}</b>
+		</Link>)
 	);
 }
 

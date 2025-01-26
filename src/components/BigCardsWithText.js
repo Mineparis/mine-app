@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import { Button, Col } from "reactstrap";
 import { useTranslation } from 'next-i18next';
 
@@ -14,16 +14,18 @@ const BigImage = ({ label, link, index, imageName }) => {
 			</div>
 			<Image
 				src={src}
-				layout="fill"
-				objectFit="cover"
-				objectPosition="top"
-				alt={label}
-			/>
+				alt=""
+				fill
+				sizes="100vw"
+				style={{
+					objectFit: "cover",
+					objectPosition: "top"
+				}} />
 		</Col>
 	);
 
 	const WithLink = (
-		<Link href={link} passHref>
+		<Link href={link} passHref legacyBehavior>
 			{Content}
 		</Link>
 	);
@@ -37,12 +39,12 @@ const BigCardsWithText = ({ title, description, cards, buttonLink, imageName, on
 	const isSingleCard = !cards || cards.length < 2;
 
 	return (
-		<div id="big-cards-text" className="big-cards-text">
+		(<div id="big-cards-text" className="big-cards-text">
 			<div className="card-text d-flex align-items-center" data-single-card={isSingleCard}>
 				<p className="lead font-weight-bolder text-center">{title}</p>
 				<p>{description}</p>
 				{!onClick && buttonLink ? (
-					<Link href={buttonLink} passHref>
+					<Link href={buttonLink} passHref legacyBehavior>
 						<Button color="primary" outline>{t('see_more')}</Button>
 					</Link>
 				) : null}
@@ -56,7 +58,7 @@ const BigCardsWithText = ({ title, description, cards, buttonLink, imageName, on
 					<BigImage key={label} label={label} link={link} index={index} />
 				))}
 			</div>
-		</div>
+		</div>)
 	);
 };
 

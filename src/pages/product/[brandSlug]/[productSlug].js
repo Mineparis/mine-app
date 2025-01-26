@@ -1,21 +1,19 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import dynamic from "next/dynamic";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
 
-import DetailMain from '../../../components/DetailMain';
-import DetailSimilar from '../../../components/DetailSimilar';
+import DetailMain from '@components/DetailMain';
+import DetailSimilar from '@components/DetailSimilar';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
 import { getCommentsAverageRating } from '../../../utils/comments';
-
-const Accordeon = dynamic(() => import('../../../components/Accordeon'));
-const Reviews = dynamic(() => import('../../../components/Reviews'));
-const SwiperGallery = dynamic(() => import('../../../components/SwiperGallery'));
+import Accordeon from '@components/Accordeon';
+import Reviews from '@components/Reviews';
+import SwiperGallery from '@components/SwiperGallery';
 
 export const getStaticPaths = async () => {
 	const products = await fetchAPI('/products?_locale=fr&_locale=en');

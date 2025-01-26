@@ -37,115 +37,114 @@ const Event = ({ data }) => {
 	const secondSectionImage = secondSection.image ? getStrapiMedia(secondSection.image) : secondSection.imageURL;
 	const thirdSectionImage = thirdSection.image ? getStrapiMedia(thirdSection.image) : thirdSection.imageURL;
 
-	return (
-		<>
-			<Head>
-				<title>Mine: {data.title}</title>
-			</Head>
-			<section className="mh-full-screen dark-overlay py-7 d-flex align-items-center justify-content-center">
-				<Image
-					className="bg-image"
-					src={jumbotronImage}
-					alt={jumbotron.subtitle}
-					layout="fill"
-					objectFit="cover"
-					objectPosition="top"
-					priority
-				/>
-				<div className="overlay-content w-100">
-					<Container>
-						<Row>
-							<Col xl="6" className="text-white">
-								<h6 className="text-uppercase text-white letter-spacing-5 mb-3">
-									{jumbotron.subtitle}
-								</h6>
-								<h1 className="display-3 font-weight-bold text-shadow mb-5">
-									{jumbotron.title}
-								</h1>
-								<p className="text-lg">
-									{jumbotron.description}
-								</p>
-							</Col>
-						</Row>
-					</Container>
-				</div>
-			</section>
-
-			<section className="py-6">
-				<Container className="d-flex justify-content-center text-center">
-					<Col lg="6">
-						<h2 className="mb-5">
-							{firstSection.title}
-						</h2>
-						<p className="text-lg text-muted mb-4">
-							{firstSection.description}
-						</p>
-						<Link href={firstSection.button.link}>
-							<Button color="primary">{firstSection.button.label}</Button>
-						</Link>
+	return (<>
+		<Head>
+			<title>Mine: {data.title}</title>
+		</Head>
+		<section className="mh-full-screen dark-overlay py-7 d-flex align-items-center justify-content-center">
+			<Image
+				className="bg-image"
+				src={jumbotronImage}
+				alt={jumbotron.subtitle}
+				priority
+				fill
+				sizes="100vw"
+				objectFit="cover"
+				objectPosition="top"
+			/>
+			<div className="overlay-content w-100">
+				<Container>
+					<Row>
+						<Col xl="6" className="text-white">
+							<h6 className="text-uppercase text-white letter-spacing-5 mb-3">
+								{jumbotron.subtitle}
+							</h6>
+							<h1 className="display-3 font-weight-bold text-shadow mb-5">
+								{jumbotron.title}
+							</h1>
+							<p className="text-lg">
+								{jumbotron.description}
+							</p>
+						</Col>
+					</Row>
+				</Container>
+			</div>
+		</section>
+		<section className="py-6">
+			<Container className="d-flex justify-content-center text-center">
+				<Col lg="6">
+					<h2 className="mb-5">
+						{firstSection.title}
+					</h2>
+					<p className="text-lg text-muted mb-4">
+						{firstSection.description}
+					</p>
+					<Link href={firstSection.button.link} legacyBehavior>
+						<Button color="primary">{firstSection.button.label}</Button>
+					</Link>
+				</Col>
+			</Container>
+		</section>
+		<section>
+			<Container fluid>
+				<Row>
+					<Col lg="6" className="p-lg-0 about-image-column">
+						<Image
+							className="bg-image"
+							src={secondSectionImage}
+							alt={secondSection.subtitle}
+							fill
+							sizes="100vw"
+							objectFit="cover"
+							objectPosition="center"
+						/>
 					</Col>
-				</Container>
-			</section>
+					<Col lg="6" className="about-text-column bg-gray-100">
+						<div className="about-text">
+							<h6 className="text-uppercase text-muted letter-spacing-5 mb-1">
+								{secondSection.subtitle}
+							</h6>
+							<h2 className="mb-4">{secondSection.title}</h2>
+							<p className="text-lg text-muted mb-4">
+								{secondSection.description}
+							</p>
+							<Link href={secondSection.button.link} legacyBehavior>
+								<Button color="primary">{secondSection.button.label}</Button>
+							</Link>
+						</div>
+					</Col>
+				</Row>
 
-			<section>
-				<Container fluid>
-					<Row>
-						<Col lg="6" className="p-lg-0 about-image-column">
-							<Image
-								className="bg-image"
-								src={secondSectionImage}
-								alt={secondSection.subtitle}
-								layout="fill"
-								objectFit="cover"
-								objectPosition="center"
-							/>
-						</Col>
-						<Col lg="6" className="about-text-column bg-gray-100">
-							<div className="about-text">
-								<h6 className="text-uppercase text-muted letter-spacing-5 mb-1">
-									{secondSection.subtitle}
-								</h6>
-								<h2 className="mb-4">{secondSection.title}</h2>
-								<p className="text-lg text-muted mb-4">
-									{secondSection.description}
-								</p>
-								<Link href={secondSection.button.link}>
-									<Button color="primary">{secondSection.button.label}</Button>
-								</Link>
-							</div>
-						</Col>
-					</Row>
-
-					<Row>
-						<Col lg="6" className="p-lg-0 about-text-column">
-							<div className="about-text">
-								<h6 className="text-uppercase text-muted letter-spacing-5 mb-1">
-									{thirdSection.subtitle}
-								</h6>
-								<h2 className="mb-4">{thirdSection.title}</h2>
-								<p className="text-lg text-muted mb-4">
-									{thirdSection.description}
-								</p>
-								<Link href={thirdSection.button.link}>
-									<Button color="primary">{thirdSection.button.label}</Button>
-								</Link>
-							</div>
-						</Col>
-						<Col lg="6" className="p-lg-0 about-image-column order-lg-1">
-							<Image
-								className="bg-image"
-								src={thirdSectionImage}
-								alt={thirdSection.subtitle}
-								layout="fill"
-								objectFit="cover"
-								objectPosition="center"
-							/>
-						</Col>
-					</Row>
-				</Container>
-			</section>
-		</>
-	);
+				<Row>
+					<Col lg="6" className="p-lg-0 about-text-column">
+						<div className="about-text">
+							<h6 className="text-uppercase text-muted letter-spacing-5 mb-1">
+								{thirdSection.subtitle}
+							</h6>
+							<h2 className="mb-4">{thirdSection.title}</h2>
+							<p className="text-lg text-muted mb-4">
+								{thirdSection.description}
+							</p>
+							<Link href={thirdSection.button.link} legacyBehavior>
+								<Button color="primary">{thirdSection.button.label}</Button>
+							</Link>
+						</div>
+					</Col>
+					<Col lg="6" className="p-lg-0 about-image-column order-lg-1">
+						<Image
+							className="bg-image"
+							src={thirdSectionImage}
+							alt={thirdSection.subtitle}
+							fill
+							sizes="100vw"
+							objectFit="cover"
+							objectPosition="center"
+						/>
+					</Col>
+				</Row>
+			</Container>
+		</section>
+	</>);
 };
 
 export default Event;

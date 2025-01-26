@@ -1,29 +1,15 @@
-import React, { useRef } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { useTranslation } from "next-i18next";
-import ReactIdSwiper from "react-id-swiper";
+import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 
 import Post from "./Post";
 
-import "swiper/css/swiper.css";
-
 const SwiperMagazine = ({ posts, title, ...props }) => {
 	const { t } = useTranslation('common');
-
-	const swiperRef = useRef(null);
-
-	const goPrev = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slidePrev();
-		}
-	};
-
-	const goNext = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slideNext();
-		}
-	};
+	const [swiperInstance, setSwiperInstance] = useState();
 
 	const sliderParams = {
 		centeredSlides: false,
@@ -31,7 +17,6 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 		slidesPerView: 2,
 		spaceBetween: 20,
 		loop: false,
-		loopFillGroupWithBlank: true,
 		breakpoints: {
 			1024: { slidesPerView: 4 },
 		},
@@ -43,40 +28,46 @@ const SwiperMagazine = ({ posts, title, ...props }) => {
 					dynamicBullets: true,
 				}
 				: false,
+		onSwiper: setSwiperInstance,
 	};
 
 	if (!posts.length) return null;
 
+	const slidePrev = () => swiperInstance.slidePrev();
+	const slideNext = () => swiperInstance.slideNext();
+
 	return (
-		<Container>
-			<Row className="d-flex justify-content-between mx-1 mb-2">
-				<Col xs="12" md="10">
-					<h3 className="text-white">{title}</h3>
-				</Col>
-				{posts.length > 4 && (
-					<Col className="d-flex justify-content-end p-0">
-						<Button className="mr-1 rounded-circle bg-primary" onClick={goPrev}><i className="fas fa-arrow-left" /></Button>
-						<Button className="ml-1 rounded-circle bg-primary" onClick={goNext}><i className="fas fa-arrow-right" /></Button>
+		(
+			<Container>
+				<Row className="d-flex justify-content-between mx-1 mb-2">
+					<Col xs="12" md="10">
+						<h3 className="text-white">{title}</h3>
 					</Col>
-				)}
-			</Row>
-			<Row>
-				<ReactIdSwiper {...sliderParams} ref={swiperRef}>
-					{posts.map(({ slug, thumbnail, title }) => (
-						<div key={slug} style={{ width: "250px" }}>
-							<Post slug={slug} thumbnail={thumbnail} title={title} withoutSummary withoutDate />
-						</div>
-					))}
-				</ReactIdSwiper>
-			</Row>
-			<Row>
-				<Col className="d-flex justify-content-center my-4">
-					<Link href="/magazine">
-						<Button className="text-white border-white" outline>{t('see_more')}</Button>
-					</Link>
-				</Col>
-			</Row>
-		</Container>
+					{posts.length > 4 && (
+						<Col className="d-flex justify-content-end p-0">
+							<Button className="mr-1 rounded-circle bg-primary" onClick={slidePrev}><i className="fas fa-arrow-left" /></Button>
+							<Button className="ml-1 rounded-circle bg-primary" onClick={slideNext}><i className="fas fa-arrow-right" /></Button>
+						</Col>
+					)}
+				</Row>
+				<Row>
+					<Swiper modules={[Navigation, Pagination]} {...sliderParams}>
+						{posts.map(({ slug, thumbnail, title }) => (
+							<SwiperSlide key={slug}>
+								<Post slug={slug} thumbnail={thumbnail} title={title} withoutSummary withoutDate />
+							</SwiperSlide>
+						))}
+					</Swiper>
+				</Row>
+				<Row>
+					<Col className="d-flex justify-content-center my-4">
+						<Link href="/magazine" legacyBehavior>
+							<Button className="text-white border-white" outline>{t('see_more')}</Button>
+						</Link>
+					</Col>
+				</Row>
+			</Container>
+		)
 	);
 };
 

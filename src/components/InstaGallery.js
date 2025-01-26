@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import Image from "next/image";
 import { Container, Row } from 'reactstrap';
 import { useTranslation } from 'next-i18next';
 
@@ -29,28 +29,29 @@ const images = [
 const InstaGallery = () => {
 	const { t } = useTranslation('common');
 
-	return (
-		<>
-			<Container>
-				<Row className="d-flex justify-content-center">
-					<h4>{t('follow_us_on_instagram')}</h4>
-				</Row>
-			</Container>
-			<Row className='insta-gallery'>
-				{images.map(({ src, alt, postId }) => (
-					<a key={alt} className="insta-img" target="_blank" href={`https://www.instagram.com/p/${postId}`}>
-						<Image
-							src={src}
-							layout="responsive"
-							width={300}
-							height={300}
-							alt={alt}
-						/>
-					</a>
-				))}
-			</Row>
-		</>
-	);
+	return (<>
+        <Container>
+            <Row className="d-flex justify-content-center">
+                <h4>{t('follow_us_on_instagram')}</h4>
+            </Row>
+        </Container>
+        <Row className='insta-gallery'>
+            {images.map(({ src, alt, postId }) => (
+                <a key={alt} className="insta-img" target="_blank" href={`https://www.instagram.com/p/${postId}`}>
+                    <Image
+                        src={src}
+                        width={300}
+                        height={300}
+                        alt={alt}
+                        sizes="100vw"
+                        style={{
+                            width: "100%",
+                            height: "auto"
+                        }} />
+                </a>
+            ))}
+        </Row>
+    </>);
 };
 
 export default InstaGallery;

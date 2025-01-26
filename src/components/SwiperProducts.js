@@ -1,26 +1,12 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-
-import ReactIdSwiper from "react-id-swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 
 import Product from "./Product";
 
-import "swiper/css/swiper.css";
-
 const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
-	const swiperRef = useRef(null);
-
-	const goPrev = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slidePrev();
-		}
-	};
-
-	const goNext = () => {
-		if (swiperRef.current && swiperRef.current.swiper) {
-			swiperRef.current.swiper.slideNext();
-		}
-	};
+	const [swiperInstance, setSwiperInstance] = useState();
 
 	const sliderParams = {
 		centeredSlides: false,
@@ -28,7 +14,6 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 		slidesPerView: 2,
 		spaceBetween: 20,
 		loop: false,
-		loopFillGroupWithBlank: true,
 		breakpoints: {
 			1200: { slidesPerView: 5, spaceBetween: 50 },
 			1024: { slidesPerView: 4, spaceBetween: 40 },
@@ -43,9 +28,13 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 					dynamicBullets: true,
 				}
 				: false,
+		onSwiper: setSwiperInstance,
 	};
 
 	if (!products.length) return null;
+
+	const slidePrev = () => swiperInstance.slidePrev();
+	const slideNext = () => swiperInstance.slideNext();
 
 	return (
 		<Container>
@@ -55,19 +44,19 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 				</Col>
 				{products.length > 5 && (
 					<Col className="d-flex justify-content-end p-0">
-						<Button className="mr-1 rounded-circle bg-primary" onClick={goPrev}><i className="fas fa-arrow-left" /></Button>
-						<Button className="ml-1 rounded-circle bg-primary" onClick={goNext}><i className="fas fa-arrow-right" /></Button>
+						<Button className="mr-1 rounded-circle bg-primary" onClick={slidePrev}><i className="fas fa-arrow-left" /></Button>
+						<Button className="ml-1 rounded-circle bg-primary" onClick={slideNext}><i className="fas fa-arrow-right" /></Button>
 					</Col>
 				)}
 			</Row>
 			<Row>
-				<ReactIdSwiper {...sliderParams} ref={swiperRef} style={{ paddingLeft: "30px" }}>
+				<Swiper modules={[Navigation, Pagination]} {...sliderParams} style={{ paddingLeft: "30px" }}>
 					{products.map((product, index) => (
-						<div key={index}>
+						<SwiperSlide key={index}>
 							<Product data={product} />
-						</div>
+						</SwiperSlide>
 					))}
-				</ReactIdSwiper>
+				</Swiper>
 			</Row>
 		</Container>
 	);
