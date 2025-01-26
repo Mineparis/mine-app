@@ -1,0 +1,4 @@
+# _redirects
+/en/*    /en/:splat  200
+/fr/*    /fr/:splat  200
+/*       /fr/:splat  200  # Par défaut, redirige vers /fr
