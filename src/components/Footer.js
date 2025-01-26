@@ -60,10 +60,6 @@ const Footer = () => {
 				{ href: '/terms-of-use', label: t('terms_of_use') },
 				{ href: '/legal-notice', label: t('legal_notice') },
 			]
-		},
-		{
-			sectionName: t('Events'),
-			links: [{ href: '/event/makeup-masterclass-2024', label: 'Make-up masterclass' }]
 		}
 	], [t]);
 
