@@ -11,6 +11,7 @@ import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
 
 import ShopHeader from '@components/ShopHeader';
 import ShopPagination from '@components/ShopPagination';
+import usePagination from '@hooks/UsePagination';
 
 const PAGE_LIMIT = 12;
 
@@ -46,10 +47,10 @@ const sortQueryMapping = {
 };
 
 const Brand = ({ slugRequested, nbProducts, locale }) => {
-	const [page, setPage] = useState(1);
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
+	const [page, setPage] = usePagination();
 
-	const start = page === 1 ? 0 : (page - 1) * PAGE_LIMIT;
+	const start = (page - 1) * PAGE_LIMIT;
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const sortQuery = sortQueryMapping[sortOptionSelected];
 	const URL = `/products?brandSlug=${slugRequested}&_limit=${PAGE_LIMIT}&_start=${start}&_sort=${sortQuery}&_locale=${locale}`;
