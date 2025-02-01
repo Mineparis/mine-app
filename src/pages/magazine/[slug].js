@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Head from 'next/head';
 
 import Hero from "../../components/Hero";
 import { dateFormat } from "../../utils/date";
@@ -28,16 +29,51 @@ export const getStaticProps = async ({ params, locale }) => {
 			title,
 			content,
 			created_at,
+			slug: params.slug,
 		},
 		revalidate: REVALIDATE_PAGE_SECONDS
 	};
 };
 
-const MagazinePost = ({ title, content, created_at }) => {
+const MagazinePost = ({ title, content, created_at, slug }) => {
+	const postUrl = `https://mineparis.com/magazine/${slug}`;
+	const titleLabel = `${title} - Mine Paris Magazine`;
+	const descriptionLabel = `${title}. Découvrez des informations et des conseils beauté sur Mine Paris Magazine.`;
+	const ogImage = '/img/slider/mine-carousel.jpg';
+
+	const seoMeta = {
+		title: titleLabel,
+		description: descriptionLabel,
+		url: postUrl,
+		image: ogImage,
+	};
+
 	const breadcrumbs = [{ name: 'Magazine', link: '/magazine' }];
 
 	return (
 		<>
+			<Head>
+				<title>{seoMeta.title}</title>
+				<meta name="description" content={seoMeta.description} />
+				<meta name="robots" content="index, follow" />
+
+				{/* Open Graph Meta Tags */}
+				<meta property="og:title" content={seoMeta.title} />
+				<meta property="og:description" content={seoMeta.description} />
+				<meta property="og:image" content={seoMeta.image} />
+				<meta property="og:url" content={seoMeta.url} />
+				<meta property="og:type" content="article" />
+
+				{/* Twitter Cards Meta Tags */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={seoMeta.title} />
+				<meta name="twitter:description" content={seoMeta.description} />
+				<meta name="twitter:image" content={seoMeta.image} />
+
+				{/* Canonical URL */}
+				<link rel="canonical" href={seoMeta.url} />
+			</Head>
+
 			<Hero
 				className="hero-content text-center"
 				title={title}

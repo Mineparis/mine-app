@@ -44,7 +44,7 @@ export const getStaticProps = async ({ locale }) => {
 const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], survey }) => {
 	const { t, i18n } = useTranslation('common');
 	const [isSurveyOpen, setIsSurveyOpen] = useState(false);
-	const [isClient, setIsClient] = useState(false); // Permet de savoir si on est côté client
+	const [isClient, setIsClient] = useState(false);
 
 	const {
 		carousel,
@@ -74,12 +74,35 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 
 	if (!isClient) return null;
 
+	const metaDescription = 'Mine Paris - Transformez votre routine beauté avec les meilleurs soins corporels et capillaires naturels, dans une box personnalisée chaque mois.';
+
 	return (
 		<>
 			<Head>
-				<title>Mine</title>
-				<meta property="og:title" content="Mine" />
+				<title>Mine Paris - Routine beauté naturelle</title>
+				<meta name="description" content={metaDescription} />
+				<meta property="og:title" content="Mine Paris - Routine beauté naturelle" />
+				<meta property="og:description" content={metaDescription} />
 				<meta property="og:url" content="https://mineparis.com" />
+				<meta name="language" content="fr" />
+				<meta httpEquiv="Content-Language" content="fr" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+				{/* Hreflang pour les versions multilingues */}
+				<link rel="alternate" hreflang="fr" href="https://mineparis.com" />
+				<link rel="alternate" hreflang="en" href="https://mineparis.com/en" />
+
+				{/* Données structurées (JSON-LD) */}
+				<script type="application/ld+json">
+					{{
+						"@context": "https://schema.org",
+						"@type": "Organization",
+						"name": "Mine Paris",
+						"url": "https://mineparis.com",
+						"logo": '/img/slider/mine-carousel.jpg',
+						"sameAs": ["https://www.instagram.com/_mineparis", "https://www.tiktok.com/@mineparis_"]
+					}}
+				</script>
 			</Head>
 
 			<Swiper

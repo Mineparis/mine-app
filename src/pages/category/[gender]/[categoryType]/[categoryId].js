@@ -69,7 +69,7 @@ const Category = ({ category, locale }) => {
 	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
 	const genderLabel = t(gender);
 	const parentLabel = t(parent);
-	const titleLabel = `Mine: ${genderLabel} · ${parentLabel} · ${categoryNameLabel}`;
+	const titleLabel = `${parentLabel} ${categoryNameLabel} pour ${genderLabel} - Mine Paris`;
 	const breadcrumbs = [
 		{
 			name: genderLabel,
@@ -80,14 +80,34 @@ const Category = ({ category, locale }) => {
 		},
 	];
 
+	// SEO: Balise Head Optimisée
+	const canonicalUrl = `https://mineparis.com/category/${gender}/${parent}/${name}`;
+	const ogImage = '/img/slider/mine-carousel.jpg';
+
 	return (
 		<>
 			<Head>
 				<title>{titleLabel}</title>
-				<meta name="description" content={titleLabel} />
-				<meta property="og:title" content="Mine" />
-				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/category/${gender}/${parent}/${name}`} />
+
+				{/* Description SEO */}
+				<meta name="description" content={description || titleLabel} />
+				<meta name="robots" content="index, follow" />
+
+				{/* Balises Open Graph */}
+				<meta property="og:title" content={titleLabel} />
+				<meta property="og:description" content={description || titleLabel} />
+				<meta property="og:url" content={canonicalUrl} />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={ogImage} />
+
+				{/* Balises Twitter Card */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={titleLabel} />
+				<meta name="twitter:description" content={description || titleLabel} />
+				<meta name="twitter:image" content={ogImage} />
+
+				{/* Canonical Link */}
+				<link rel="canonical" href={canonicalUrl} />
 			</Head>
 			<Hero
 				className="hero-content pb-5"

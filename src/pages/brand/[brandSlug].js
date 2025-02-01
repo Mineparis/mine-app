@@ -11,7 +11,7 @@ import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../utils/constants';
 
 import ShopHeader from '@components/ShopHeader';
 import ShopPagination from '@components/ShopPagination';
-import usePagination from '@hooks/UsePagination';
+import usePagination from '@hooks/UsePagination';  // Import du hook usePagination
 
 const PAGE_LIMIT = 12;
 
@@ -57,16 +57,38 @@ const Brand = ({ slugRequested, nbProducts, locale }) => {
 	const { data: products = [] } = useSWRImmutable(URL, fetchAPI);
 
 	const { brandSlug, brand: brandName } = products?.[0] ?? {};
-	const titleLabel = `Mine: ${brandName}`;
+
+	const titleLabel = `Mine: ${brandName} | Boutique en ligne`;
+	const descriptionLabel = `Découvrez la collection de ${brandName} sur Mine Paris. Transformez votre routine beauté avec les meilleurs soins corporels et capillaires naturels.`;
+	const ogImage = '/img/slider/mine-carousel.jpg';
+	const canonicalUrl = `https://mineparis.com/brand/${brandSlug}`;
+
+	// Variables des balises Open Graph et Twitter
+	const seoMeta = {
+		title: titleLabel,
+		description: descriptionLabel,
+		url: canonicalUrl,
+		image: ogImage,
+	};
 
 	return (
 		<>
 			<Head>
-				<title>{titleLabel}</title>
-				<meta name="description" content={titleLabel} />
-				<meta property="og:title" content="Mine" />
-				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/brand/${brandSlug}`} />
+				<title>{seoMeta.title}</title>
+				<meta name="description" content={seoMeta.description} />
+				<meta name="robots" content="index, follow" />
+				{/* Open Graph Meta Tags */}
+				<meta property="og:title" content={seoMeta.title} />
+				<meta property="og:description" content={seoMeta.description} />
+				<meta property="og:image" content={seoMeta.image} />
+				<meta property="og:url" content={seoMeta.url} />
+				{/* Twitter Cards Meta Tags */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={seoMeta.title} />
+				<meta name="twitter:description" content={seoMeta.description} />
+				<meta name="twitter:image" content={seoMeta.image} />
+				{/* Canonical URL */}
+				<link rel="canonical" href={seoMeta.url} />
 			</Head>
 			<Hero className="hero-content pb-5" title={brandName} />
 			<Container>

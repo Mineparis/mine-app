@@ -145,6 +145,17 @@ const Footer = () => {
 								<li>
 									<a
 										className="text-hover-gray-600"
+										href="https://www.tiktok.com/@mineparis_"
+										target="_blank"
+										rel="noopener noreferrer"
+										title="Tiktok"
+									>
+										Tiktok
+									</a>
+								</li>
+								<li>
+									<a
+										className="text-hover-gray-600"
 										href="https://www.pinterest.fr/mine_paris"
 										target="_blank"
 										rel="noopener noreferrer"

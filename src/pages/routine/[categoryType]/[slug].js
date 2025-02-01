@@ -51,7 +51,6 @@ export const getServerSideProps = async ({ params, locale, res }) => {
 	};
 };
 
-
 const sortQueryMapping = {
 	popularity: 'sold:desc',
 	newest: 'published_at:desc',
@@ -86,7 +85,12 @@ const Routine = ({ routine, subCategories, locale }) => {
 	const totalPages = Math.ceil(totalProducts / PAGE_LIMIT);
 	const routineNameLabel = t(slug);
 	const parentLabel = t(parent);
-	const titleLabel = `Mine: ${parentLabel} · ${routineNameLabel}`;
+
+	// Optimisation du titre SEO
+	const titleLabel = `Mine Paris: Routine ${parentLabel} ${routineNameLabel}`;
+	const descriptionContent = description || `Explorez notre sélection de produits pour une routine beauté ${parentLabel.toLowerCase()} ${routineNameLabel.toLowerCase()}.`;
+	const canonicalUrl = `https://mineparis.com/routine/${parent}/${slug}`;
+	const ogImage = carousel?.[0]?.image || '/img/slider/mine-carousel.jpg';
 
 	const noTypesSelected = !typesSelected.length ? '-selected' : '';
 
@@ -94,15 +98,35 @@ const Routine = ({ routine, subCategories, locale }) => {
 		<>
 			<Head>
 				<title>{titleLabel}</title>
-				<meta name="description" content={titleLabel} />
-				<meta property="og:title" content="Mine" />
-				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/routine/${parent}/${slug}`} />
+
+				{/* Description SEO optimisée */}
+				<meta name="description" content={descriptionContent} />
+				<meta name="robots" content="index, follow" />
+
+				{/* Balises Open Graph optimisées */}
+				<meta property="og:title" content={titleLabel} />
+				<meta property="og:description" content={descriptionContent} />
+				<meta property="og:url" content={canonicalUrl} />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={ogImage} />
+
+				{/* Balises Twitter Card optimisées */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={titleLabel} />
+				<meta name="twitter:description" content={descriptionContent} />
+				<meta name="twitter:image" content={ogImage} />
+
+				{/* URL Canonique */}
+				<link rel="canonical" href={canonicalUrl} />
 			</Head>
 
+			{/* Section Carousel */}
 			<Swiper style={{ height: "70vh" }} data={carousel} />
+
+			{/* Section Hero avec la description */}
 			<Hero className="hero-content mt-4 mb-2" colSize={12} content={description} />
 
+			{/* Section produits */}
 			<Container>
 				<Row>
 					<Col xs="12" className="products-grid sidebar-none">
@@ -138,6 +162,7 @@ const Routine = ({ routine, subCategories, locale }) => {
 							</Row>
 						</Col>
 
+						{/* Affichage des produits */}
 						{!products.length ? (
 							<div className="d-flex justify-content-center align-items-center py-7 my-6">
 								<Spinner color="dark" role="status" />
@@ -152,6 +177,7 @@ const Routine = ({ routine, subCategories, locale }) => {
 									))}
 								</Row>
 
+								{/* Pagination */}
 								<ShopPagination
 									page={page}
 									totalItems={totalProducts}
