@@ -12,6 +12,7 @@ import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../../utils/constan
 
 import ShopHeader from '@components/ShopHeader';
 import ShopPagination from '@components/ShopPagination';
+import usePagination from '@hooks/UsePagination';
 
 const PAGE_LIMIT = 12;
 
@@ -53,7 +54,7 @@ const sortQueryMapping = {
 const Category = ({ category, locale }) => {
 	const { gender, parent, name, description, categoryId } = category;
 	const { t } = useTranslation('common');
-	const [page, setPage] = useState(1);
+	const [page, setPage] = usePagination();
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
 	const categoryNameLabel = t(name);

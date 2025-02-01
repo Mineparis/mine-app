@@ -24,7 +24,7 @@ import {
 import useScrollPosition from "@react-hook/window-scroll";
 import useSize from "@react-hook/size";
 
-import UseWindowSize from "../hooks/UseWindowSize";
+import UseWindowSize from "@hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 
 const PROMO_CODE = '';

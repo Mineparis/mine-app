@@ -46,7 +46,7 @@ const ShopPagination = ({ page, totalItems, totalPages, handleChangePage }) => {
 	const handleClick = (pageIndex) => (event) => {
 		event.preventDefault();
 		goToPage(pageIndex);
-		window.scrollTo(0, 300);
+		window.scrollTo(0, 300); // Optionnel, pour faire défiler vers le haut lors du changement de page
 	};
 
 	const handleMove = (direction) => (event) => {

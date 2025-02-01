@@ -9,7 +9,8 @@ import Product from '@components/Product';
 import Hero from '@components/Hero';
 import { fetchAPI } from '../../../../lib/api';
 import { DEFAULT_LANG } from '../../../../utils/constants';
-import useFilter from '../../../../hooks/UseFilter';
+import useFilter from '@hooks/UseFilter';
+import usePagination from '@hooks/UsePagination';
 
 import ShopHeader from '@components/ShopHeader';
 import ShopPagination from '@components/ShopPagination';
@@ -50,9 +51,9 @@ const sortQueryMapping = {
 
 const Category = ({ category, subCategories, locale }) => {
 	const { gender, parent, description } = category;
-	const { t } = useTranslation('common');
 
-	const [page, setPage] = useState(1);
+	const { t } = useTranslation('common');
+	const [page, setPage] = usePagination();
 	const [sortOptionSelected, setSortOptionSelected] = useState('popularity');
 
 	const start = (page - 1) * PAGE_LIMIT; // Calcul du début pour la pagination
