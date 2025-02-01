@@ -34,12 +34,16 @@ const BoxConcept = ({ title, description }) => {
 			<Container>
 				<Row>
 					<Col className="d-flex justify-content-center mb-4">
-						<h3>{title}</h3>
+						<h2>{title}</h2>
 					</Col>
 				</Row>
 				<Row className="d-flex justify-content-center">
 					<Col md="8" xl="8" className="d-flex justify-content-center">
-						<div className="ck-content" dangerouslySetInnerHTML={{ __html: description }} />
+						<div
+							className="ck-content"
+							dangerouslySetInnerHTML={{ __html: description }}
+							aria-label={title}
+						/>
 					</Col>
 				</Row>
 			</Container>
@@ -52,7 +56,7 @@ const BoxHowTo = ({ title, steps }) => (
 		<Container>
 			<Row>
 				<Col className="d-flex justify-content-center mb-4 text-muted lead">
-					<h3>{title}</h3>
+					<h2>{title}</h2>
 				</Col>
 			</Row>
 			<Row className="d-flex justify-content-center">
@@ -78,9 +82,13 @@ const Box = ({ data, magazinePosts }) => {
 	return (
 		<>
 			<Head>
-				<title>Mine - Box</title>
-				<meta property="og:title" content="Mine" />
+				<title>La Box Mine : Votre routine beauté optimale avec des produits naturels de qualité supérieure</title>
+				<meta name="description" content="Découvrez la box Mine pour des soins naturels de qualité." />
+				<meta property="og:title" content="Mine - Box Concept" />
+				<meta property="og:description" content="Votre routine beauté optimale avec des produits naturels de qualité supérieure." />
 				<meta property="og:url" content="https://mineparis.com/box" />
+				<meta property="og:image" content="/img/slider/mine-carousel.jpg" />
+				<meta name="robots" content="index, follow" />
 			</Head>
 
 			<Swiper
@@ -89,6 +97,7 @@ const Box = ({ data, magazinePosts }) => {
 				spaceBetween={0}
 				style={{ height: "47vh", minHeight: "470px" }}
 				handleClickOnButton={handleClickOnButton}
+				aria-label="Carrousel de produits"
 			/>
 
 			<BoxConcept {...boxConceptSection} />

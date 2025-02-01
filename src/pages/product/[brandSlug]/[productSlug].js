@@ -58,7 +58,11 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 
-	const titleLabel = `Mine: ${product.brand} · ${product.name}`;
+	// Optimisation SEO
+	const titleLabel = `${product.name} de ${product.brand} - Mine Paris`;
+	const description = `Découvrez ${product.name} de ${product.brand}. Commandez dès maintenant sur Mine Paris.`;
+	const canonicalUrl = `https://mineparis.com/product/${product.brandSlug}/${product.productSlug}`;
+	const ogImage = product.images?.[0]?.url || '/img/slider/mine-carousel.jpg';
 
 	if (router.isFallback) {
 		return (
@@ -77,12 +81,31 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 	return (
 		<>
 			<Head>
+				{/* SEO: Titre optimisé */}
 				<title>{titleLabel}</title>
-				<meta name="description" content={titleLabel} />
-				<meta property="og:title" content="Mine" />
-				<meta property="og:description" content={titleLabel} />
-				<meta property="og:url" content={`https://mineparis.com/product/${product.brandSlug}/${product.productSlug}`} />
+
+				{/* SEO: Description optimisée */}
+				<meta name="description" content={description} />
+				<meta name="robots" content="index, follow" />
+
+				{/* Open Graph Meta Tags */}
+				<meta property="og:title" content={titleLabel} />
+				<meta property="og:description" content={description} />
+				<meta property="og:url" content={canonicalUrl} />
+				<meta property="og:type" content="product" />
+				<meta property="og:image" content={ogImage} />
+
+				{/* Twitter Card Meta Tags */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={titleLabel} />
+				<meta name="twitter:description" content={description} />
+				<meta name="twitter:image" content={ogImage} />
+
+				{/* Canonical Link */}
+				<link rel="canonical" href={canonicalUrl} />
 			</Head>
+
+			{/* Détails du produit */}
 			<section className="product-details">
 				<Container fluid>
 					<Row className="justify-content-around">
@@ -106,10 +129,12 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				</Container>
 			</section>
 
+			{/* Produits similaires */}
 			<section>
 				<DetailSimilar products={similarProducts} />
 			</section>
 
+			{/* Avis clients */}
 			{product.comments.length > 0 && <Reviews comments={product.comments} averageRating={averageRating} />}
 		</>
 	);

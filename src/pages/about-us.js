@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import { Container, Row, Col } from 'reactstrap';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Image from 'next/image'; // Utilisation de next/image pour l'optimisation des images
+import Image from 'next/image';
 import { fetchAPI } from '../lib/api';
 import { getStrapiMedia } from '../lib/media';
 import { REVALIDATE_PAGE_SECONDS } from '../utils/constants';
@@ -19,7 +19,6 @@ export const getStaticProps = async ({ locale }) => {
 	};
 };
 
-// Sous-composant pour rendre une section avec image et texte
 const SectionWithImage = ({ section, reverseOrder = false }) => {
 	const imageUrl = section.image ? getStrapiMedia(section.image) : section.imageURL;
 
@@ -36,7 +35,7 @@ const SectionWithImage = ({ section, reverseOrder = false }) => {
 				<Image
 					className="bg-image"
 					src={imageUrl}
-					alt={section.subtitle}
+					alt={section.subtitle || section.title}
 					fill
 					objectFit="cover"
 					objectPosition="top"
@@ -56,10 +55,29 @@ const AboutUs = ({ data }) => {
 	const thirdSection = data?.section?.[3];
 	const lastSection = data?.lastSection;
 
+	const pageTitle = 'À propos de nous | Mine Paris';
+	const metaDescription = "Apprenez-en plus sur le concept de Mine et notre engagement à offrir des produits de qualité.";
+
 	return (
 		<>
 			<Head>
-				<title>Mine: {t('about_us')}</title>
+				{/* Balises Meta pour SEO */}
+				<title>{pageTitle}</title>
+				<meta name="description" content={metaDescription} />
+				<meta name="robots" content="index, follow" />
+
+				{/* Open Graph Tags */}
+				<meta property="og:title" content={pageTitle} />
+				<meta property="og:description" content={metaDescription} />
+				<meta property="og:url" content="https://www.mineparis.com/about-us" />
+				<meta property="og:type" content="website" />
+				<meta property="og:image" content={jumbotronImage} />
+
+				{/* Twitter Card Tags */}
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={pageTitle} />
+				<meta name="twitter:description" content={metaDescription} />
+				<meta name="twitter:image" content={jumbotronImage} />
 			</Head>
 
 			{/* Jumbotron Section */}
