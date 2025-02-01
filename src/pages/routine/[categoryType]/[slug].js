@@ -11,7 +11,7 @@ import Hero from '@components/Hero';
 import Swiper from '@components/Swiper';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG } from '../../../utils/constants';
-import useFilter from '../../../hooks/UseFilter';
+import useFilter from '@hooks/UseFilter';
 import ShopHeader from '@components/ShopHeader';
 import ShopPagination from '@components/ShopPagination';
 

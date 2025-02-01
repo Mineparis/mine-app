@@ -10,7 +10,7 @@ import NextNProgress from '@components/NextNProgress';
 import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
-import useSnipcartServices from '../hooks/UseSnipcartServices';
+import useSnipcartServices from '@hooks/UseSnipcartServices';
 
 import Header from './Header';
 import Footer from './Footer';
