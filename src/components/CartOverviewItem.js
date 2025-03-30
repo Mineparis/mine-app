@@ -1,44 +1,53 @@
+import { useCart } from "@shopify/hydrogen-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 
-const CartOverviewItem = (props) => {
-	const item = props.item;
+const CartOverviewItem = ({ item, hideCart }) => {
+	const { merchandise, quantity, cost } = item;
+	const { t } = useTranslation('common');
+	const { lines, linesRemove } = useCart();
+
+	const handleRemoveFromCart = () => {
+		if (lines.length === 1) hideCart();
+		linesRemove([item.id]);
+	};
 
 	return (
-        (<div className="navbar-cart-product">
-            <div className="d-flex align-items-center">
-				<Link href={item.link}>
-
+		<div className="navbar-cart-product">
+			<div className="d-flex align-items-center">
+				<div className="position-relative p-5">
 					<Image
-                        className="img-fluid navbar-cart-product-image"
-                        src={item.img}
-                        alt="..."
-                        fill
-                        sizes="100vw" />
+						className="img-fluid navbar-cart-product-image"
+						src={merchandise.image.url}
+						alt={merchandise.product.title}
+						fill
+						sizes="100vw"
+						style={{ objectFit: "contain" }}
+					/>
+				</div>
 
-				</Link>
-				<div className="w-100">
-					<a className="close text-sm mr-2" href="#">
-						<i className="fa fa-times"> </i>
-					</a>
+				<div>
+					<div className="close text-sm mr-2" onClick={handleRemoveFromCart}>
+						<i className="fa fa-times" />
+					</div>
 					<div className="pl-3">
 						<Link
-							href={item.link}
+							href={'/'}
 							className="navbar-cart-product-link"
-							onClick={() => props.hideCart()}>
-
-							{item.name}
-
+						// onClick={hideCart}
+						>
+							{merchandise.product.title}
 						</Link>
-						<small className="d-block text-muted">Quantity: {item.items}</small>
+						<small className="d-block text-muted">{t('quantity')}: {quantity}</small>
 						<strong className="d-block text-sm">
-							${item.total.toFixed(2)}
+							{cost.totalAmount.amount} €
 						</strong>
 					</div>
 				</div>
 			</div>
-        </div>)
-    );
+		</div>
+	);
 };
 
 export default CartOverviewItem;

@@ -5,14 +5,14 @@
  */
 
 // functions.scss - Bootstrap functions
-@import "bootstrap/functions"; 
+@import "bootstrap/functions";
 
 // your variables + overrides of Bootstrap variables 
-@import "user/user-variables"; 
+@import "user/user-variables";
 
 // custom variables + overrides of Bootstrap variables for this theme
-@import "theme/variables"; 
-@import "theme/variables-3rd-party"; 
+@import "theme/variables";
+@import "theme/variables-3rd-party";
 
 // bootstrap main
 @import "bootstrap/bootstrap";
@@ -21,5 +21,4 @@
 @import "theme/theme";
 
 // your components
-@import "user/user"; 
-
+@import "user/user";

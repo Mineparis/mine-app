@@ -1,31 +1,23 @@
-import { Row, Col, Form, Button, Input } from 'reactstrap';
-import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 
 import { getCurrentPrice } from '../utils/price';
-import { getStrapiMedia } from '../lib/media';
+import AddToCart from "./AddToCart";
 import Stars from "./Stars";
 
 const DetailMain = ({ product, averageRating }) => {
-	const { t } = useTranslation('common');
 	const { asPath } = useRouter();
 
 	const {
-		id,
 		name,
 		brand,
 		originalPrice,
 		salePricePercent,
 		descriptions,
-		thumbnail,
-		stock,
-		shippingInfo,
+		stock = 3,
+		shopifyProductId = '55222955311478',
 	} = product;
 
-	const { weight = 0, width = 0, len = 0, height = 0 } = shippingInfo || {};
 	const currentPrice = getCurrentPrice(originalPrice, salePricePercent);
-	const imageURL = getStrapiMedia(thumbnail?.formats.small);
-	const soldOut = stock < 1;
 	const isBox = asPath.split('/').includes('box');
 	const nbComments = product?.comments?.length ?? 0;
 
@@ -59,48 +51,7 @@ const DetailMain = ({ product, averageRating }) => {
 			</div>
 			{!isBox && <p className="mb-4 text-muted">{descriptions.short}</p>}
 
-			<Form>
-				<Row className="d-flex list-inline mb-5 align-items-center col-12">
-					{soldOut ? (
-						<Button className="w-10 mb-1" disabled>
-							{t('sold_out')}
-						</Button>
-					) : (
-						<>
-							<Col className="detail-option col-3">
-								<Input
-									className="form-control detail-quantity data-item-quantity"
-									name="items"
-									type="number"
-									defaultValue={1}
-									min={1}
-									max={stock}
-									onChange={number => number <= 0 ? 1 : number}
-								/>
-								<div hidden className="data-item-max-quantity">{stock}</div>
-							</Col>
-							<Col className="detail-option">
-								<Button
-									color="dark"
-									className="w-10 mb-1 snipcart-add-item"
-									type="submit"
-									data-item-id={id}
-									data-item-price={currentPrice}
-									data-item-description={descriptions.short}
-									data-item-image={imageURL}
-									data-item-name={name}
-									data-item-weight={weight} // poid en gramme (pas de decimale)
-									data-item-length={len} // longueur en cm (pas de decimale)
-									data-item-width={width} // largeur en cm (pas de decimale)
-									data-item-height={height}
-								>
-									{t('add_to_cart')}
-								</Button>
-							</Col>
-						</>
-					)}
-				</Row>
-			</Form>
+			<AddToCart shopifyProductId={shopifyProductId} stockMax={stock} />
 		</>
 	);
 };

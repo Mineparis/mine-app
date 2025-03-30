@@ -27,6 +27,7 @@ import useSize from "@react-hook/size";
 import UseWindowSize from "@hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 import Searchbar from "./Searchbar";
+import CartDropdown from "./CartDropdown";
 
 const PROMO_CODE = 'MAMAN30';
 
@@ -134,6 +135,21 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 		});
 	};
 
+	useEffect(highlightDropdownParent, []);
+
+	useEffect(() => {
+		if (!Snip) return;
+		const initialState = Snip.store.getState();
+		setItemsCount(initialState.cart.items.count);
+
+		const unsubscribe = Snip.store.subscribe(() => {
+			const newState = Snip.store.getState();
+			setItemsCount(newState.cart.items.count);
+		});
+
+		return () => unsubscribe();
+	}, [Snip]);
+
 	const CartOverviewWithLogo = () => {
 		if (collapsed) return null;
 		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
@@ -142,9 +158,7 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 		return (
 			<>
 				<Link className="mx-auto" href="/" passHref>
-
 					<img src="/svg/logo.svg" alt="" style={logoStyle} />
-
 				</Link>
 				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
 					<div
@@ -159,10 +173,7 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 							<i className="bi bi-person-circle" />
 						</div>
 					)}
-					<div className="navbar-icon-link snipcart-checkout">
-						<i className="bi bi-cart" />
-						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
-					</div>
+					<CartDropdown />
 				</div>
 			</>
 		);

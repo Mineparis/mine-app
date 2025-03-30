@@ -5,10 +5,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import qs from 'qs';
 import { useTranslation } from 'next-i18next';
+import { ProductProvider } from '@shopify/hydrogen-react';
 
 import DetailMain from '@components/DetailMain';
 import DetailSimilar from '@components/DetailSimilar';
 import { fetchAPI } from '../../../lib/api';
+import { getShopifyProduct } from '../../../lib/shopify/requests/product';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
 import { getCommentsAverageRating } from '../../../utils/comments';
 import Accordeon from '@components/Accordeon';
@@ -43,10 +45,13 @@ export const getStaticProps = async ({ params, locale }) => {
 
 	const similarProducts = await fetchAPI(`/products?${query}`);
 
+	// const shopifyProduct = await getShopifyProduct(product.shopifyProductId);
+
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			product,
+			// shopifyProduct,
 			similarProducts,
 			averageRating,
 		},
@@ -54,8 +59,8 @@ export const getStaticProps = async ({ params, locale }) => {
 	};
 };
 
-const ProductDetail = ({ product, similarProducts, averageRating }) => {
-	const { t } = useTranslation('common');
+const ProductDetail = ({ product, similarProducts, averageRating, shopifyProduct = {} }) => {
+	const { t } = useTranslation();
 	const router = useRouter();
 
 	// Optimisation SEO
@@ -105,37 +110,41 @@ const ProductDetail = ({ product, similarProducts, averageRating }) => {
 				<link rel="canonical" href={canonicalUrl} />
 			</Head>
 
-			{/* Détails du produit */}
-			<section className="product-details">
-				<Container fluid>
-					<Row className="justify-content-around">
-						<Col
-							xs={{ size: 12, order: 1 }}
-							lg={{ size: 6, order: 1 }}
-							className="py-3"
-						>
-							<SwiperGallery images={product.images} vertical={true} />
-						</Col>
-						<Col
-							xs={{ size: 12, order: 1 }}
-							lg={{ size: 6, order: 2 }}
-							xl="5"
-							className="py-4 pl-lg-5"
-						>
-							<DetailMain product={product} averageRating={averageRating} />
-							<Accordeon options={tabOptions} />
-						</Col>
-					</Row>
-				</Container>
-			</section>
+			<ProductProvider data={shopifyProduct}>
+				<>
+					{/* Détails du produit */}
+					<section className="product-details">
+						<Container fluid>
+							<Row className="justify-content-around">
+								<Col
+									xs={{ size: 12, order: 1 }}
+									lg={{ size: 6, order: 1 }}
+									className="py-3"
+								>
+									<SwiperGallery images={product.images} vertical={true} />
+								</Col>
+								<Col
+									xs={{ size: 12, order: 1 }}
+									lg={{ size: 6, order: 2 }}
+									xl="5"
+									className="py-4 pl-lg-5"
+								>
+									<DetailMain product={product} averageRating={averageRating} />
+									<Accordeon options={tabOptions} />
+								</Col>
+							</Row>
+						</Container>
+					</section>
 
-			{/* Produits similaires */}
-			<section>
-				<DetailSimilar products={similarProducts} />
-			</section>
+					{/* Produits similaires */}
+					<section>
+						<DetailSimilar products={similarProducts} />
+					</section>
 
-			{/* Avis clients */}
-			{product.comments.length > 0 && <Reviews comments={product.comments} averageRating={averageRating} />}
+					{/* Avis clients */}
+					{product.comments.length > 0 && <Reviews comments={product.comments} averageRating={averageRating} />}
+				</>
+			</ProductProvider>
 		</>
 	);
 };

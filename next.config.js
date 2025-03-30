@@ -18,7 +18,12 @@ const nextConfig = {
 		{
 			protocol: 'https',
 			hostname: 'res.cloudinary.com',
-		}],
+		},
+		{
+			protocol: 'https',
+			hostname: 'cdn.shopify.com',
+		},
+		],
 		formats: ['image/webp'],
 		// loader: "imgix", // Uncomment this line for STATIC EXPORT
 		// path: "", // Uncomment this line for STATIC EXPORT
