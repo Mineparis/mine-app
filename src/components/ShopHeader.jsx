@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 
-const ShopHeader = ({ nbProducts, sortOptionSelected, setSortOptionSelected }) => {
+const ShopHeader = ({ nbProducts = 0, sortOptionSelected, setSortOptionSelected }) => {
 	const { t } = useTranslation('common');
 
 	const sortOptions = ['popularity', 'newest', 'ascending_price', 'descending_price'];

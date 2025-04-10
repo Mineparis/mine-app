@@ -31,14 +31,14 @@
 // Used for navbar w/ transparent background
 .bg-hover-white {
 	&:hover {
-		background: $white  !important;
+		background: $white !important;
 	}
 }
 
 // Used for navbar w/ transparent background, when it gets
 // fixed, it gets also a white background
 .navbar.fixed-top.bg-fixed-white {
-	background: $white  !important;
+	background: $white !important;
 }
 
 .navbar.fixed-top {
@@ -421,7 +421,7 @@
 
 		&:hover,
 		&:focus {
-			color: $navbar-dark-active-color  !important;
+			color: $navbar-dark-active-color !important;
 		}
 	}
 }
@@ -451,19 +451,13 @@
 }
 
 .search-area {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	background: $white;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 9999;
-
-	.search-area-form {
-		width: 100%;
-		max-width: 700px;
-		margin: 20px;
-	}
 
 	.search-area-input {
 		width: 100%;
