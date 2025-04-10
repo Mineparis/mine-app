@@ -51,7 +51,7 @@ const SwiperJumbotron = ({
 	const navigation = props.data.length > 1 ? {
 		nextEl: `.swiper-button-next.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`,
 		prevEl: `.swiper-button-prev.swiper-button-${navigationColor}.swiper-nav.d-none.d-lg-block`,
-	} : {};
+	} : false;
 
 	const breakpoints = getBreakpoints({ sm, md, lg, xl, xxl, xxxl });
 
@@ -72,9 +72,9 @@ const SwiperJumbotron = ({
 			}
 			: false,
 		pagination:
-			props.pagination !== false
+			props.pagination
 				? {
-					el: `.swiper-pagination.swiper-pagination-black`,
+					el: '.swiper-pagination.swiper-pagination-black',
 					clickable: true,
 					dynamicBullets: true,
 				}

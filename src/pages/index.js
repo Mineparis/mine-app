@@ -114,6 +114,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 				autoplay
 				loop
 				centeredSlides
+				pagination={!!carousel.length}
 				style={{ height: "80vh", minHeight: "600px" }}
 			/>
 
