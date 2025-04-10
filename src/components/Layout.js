@@ -69,7 +69,8 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		'/magazine',
 		'/brand',
 		'/box',
-		'/routine'
+		'/routine',
+		'/search',
 	];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
@@ -84,10 +85,12 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 			sticky: true,
 		},
 		menu,
+		shouldDisplayWhiteLogo: isWhitePage,
 		loggedUser,
 		headerAbsolute: !isWhitePage,
 		hideTopbar,
 		setPaddingTop: (event) => setPaddingTop(event),
+		locale: lang,
 	};
 
 	return (

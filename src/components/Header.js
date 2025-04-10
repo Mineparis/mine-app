@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 import Link from "next/link";
 import Router from "next/router";
@@ -26,15 +26,20 @@ import useSize from "@react-hook/size";
 
 import UseWindowSize from "@hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
+import Searchbar from "./Searchbar";
 
 const PROMO_CODE = '';
 
-const Header = ({ menu, ...props }) => {
+const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	const { t } = useTranslation('common');
 	const [collapsed, setCollapsed] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState({});
+	const [searchToggle, setSearchToggle] = useState(false);
 	const [parentName, setParentName] = useState(false);
 	const [additionalNavClasses, setAdditionalNavClasses] = useState("");
+	const [searchResults, setSearchResults] = useState([]);
+	const [searchTimeout, setSearchTimeout] = useState(null);
+	const [isSearchLoading, setIsSearchLoading] = useState(false);
 
 	const size = UseWindowSize();
 	const scrollY = useScrollPosition();
@@ -42,11 +47,11 @@ const Header = ({ menu, ...props }) => {
 
 	const navbarRef = useRef(null);
 	const topbarRef = useRef(null);
-	const [topbarWidth, topbarHeight] = useSize(topbarRef);
-	const [navbarWidth, navbarHeight] = useSize(navbarRef);
+	const [, topbarHeight] = useSize(topbarRef);
+	const [, navbarHeight] = useSize(navbarRef);
 
 	const Snip = typeof window !== 'undefined' && window?.Snipcart;
-	const isSmallScreen = size.width < 991;
+	const isSmallScreen = size.width < 500;
 	const hasDropdown = Object.values(dropdownOpen).some((dropdown) => dropdown);
 
 	const toggleDropdown = (name) => {
@@ -78,9 +83,34 @@ const Header = ({ menu, ...props }) => {
 		}
 	};
 
-	useEffect(() => {
-		makeNavbarSticky();
-	}, [scrollY, topbarHeight]);
+	const handleSearch = useCallback((term) => {
+		if (searchTimeout) clearTimeout(searchTimeout);
+
+		if (!term.trim()) {
+			setSearchResults([]);
+			setIsSearchLoading(false);
+			return;
+		}
+
+		setIsSearchLoading(true);
+
+		const timeout = setTimeout(async () => {
+			try {
+				const response = await fetch(
+					`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/products/search?keyword=${encodeURIComponent(term)}&_locale=${locale}`
+				);
+				const { data } = await response.json();
+				setSearchResults(data);
+			} catch (error) {
+				setSearchResults([]);
+				throw new Error('Search error:', error);
+			} finally {
+				setIsSearchLoading(false);
+			}
+		}, 500);
+
+		setSearchTimeout(timeout);
+	}, [searchTimeout]);
 
 	// highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
 	const highlightDropdownParent = () => {
@@ -104,6 +134,50 @@ const Header = ({ menu, ...props }) => {
 		});
 	};
 
+	const CartOverviewWithLogo = () => {
+		if (collapsed) return null;
+		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
+		const logoStyle = { filter: additionalNavClasses || shouldDisplayWhiteLogo ? undefined : 'invert(1)' };
+
+		return (
+			<>
+				<Link className="mx-auto" href="/" passHref>
+
+					<img src="/svg/logo.svg" alt="" style={logoStyle} />
+
+				</Link>
+				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
+					<div
+						className="navbar-icon-link"
+						data-toggle="search"
+						onClick={() => setSearchToggle(!searchToggle)}
+					>
+						<i className="bi bi-search" />
+					</div>
+					{!isSmallScreen && (
+						<div className="navbar-icon-link snipcart-customer-signin">
+							<i className="bi bi-person-circle" />
+						</div>
+					)}
+					<div className="navbar-icon-link snipcart-checkout">
+						<i className="bi bi-cart" />
+						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
+					</div>
+				</div>
+			</>
+		);
+	};
+
+	useEffect(() => {
+		return () => {
+			if (searchTimeout) clearTimeout(searchTimeout);
+		};
+	}, [searchTimeout]);
+
+	useEffect(() => {
+		makeNavbarSticky();
+	}, [scrollY, topbarHeight]);
+
 	useEffect(highlightDropdownParent, []);
 
 	useEffect(() => {
@@ -119,34 +193,8 @@ const Header = ({ menu, ...props }) => {
 		return () => unsubscribe();
 	}, [Snip]);
 
-	const CartOverviewWithLogo = ({ shouldDisplay }) => {
-		if (!shouldDisplay) return null;
-
-		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
-		const logoStyle = { filter: additionalNavClasses ? undefined : 'invert(1)' };
-
-		return (
-			<>
-				<Link className="mx-auto" href="/" passHref>
-
-					<img src="/svg/logo.svg" alt="" style={logoStyle} />
-
-				</Link>
-				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
-					<div className="navbar-icon-link snipcart-customer-signin">
-						<i className="bi bi-person-circle" />
-					</div>
-					<div className="navbar-icon-link snipcart-checkout">
-						<i className="bi bi-cart" />
-						<div className="navbar-icon-link-badge snipcart-items-count">{itemsCount}</div>
-					</div>
-				</div>
-			</>
-		);
-	};
-
 	return (
-		(<header
+		<header
 			className={`header ${props.headerClasses ? props.headerClasses : ""} ${props.headerAbsolute ? "header-absolute" : ""
 				}`}
 		>
@@ -349,13 +397,20 @@ const Header = ({ menu, ...props }) => {
 									)
 								)}
 							</Nav>
-							<CartOverviewWithLogo shouldDisplay={!isSmallScreen} />
 						</Collapse>
-						<CartOverviewWithLogo shouldDisplay={isSmallScreen && !collapsed} />
+						<CartOverviewWithLogo />
 					</Container>
 				</Navbar>
 			</div>
-		</header>)
+
+			<Searchbar
+				searchToggle={searchToggle}
+				setSearchToggle={setSearchToggle}
+				searchResults={searchResults}
+				onSearch={handleSearch}
+				isLoading={isSearchLoading}
+			/>
+		</header>
 	);
 };
 

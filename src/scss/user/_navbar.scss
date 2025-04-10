@@ -9,6 +9,7 @@
 @media (min-width: 992px) {
 	.navbar-expand-lg .navbar-collapse {
 		justify-content: space-between;
+		flex-grow: 0;
 	}
 }
 

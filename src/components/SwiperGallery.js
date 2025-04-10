@@ -32,12 +32,12 @@ const SwiperGallery = ({ images, vertical }) => {
 		navigation: hasMultipleImage ? {
 			nextEl: ".swiper-button-next.swiper-button-black.swiper-nav.d-none.d-lg-block",
 			prevEl: ".swiper-button-prev.swiper-button-black.swiper-nav.d-none.d-lg-block",
-		} : {},
+		} : false,
 		pagination: hasMultipleImage ? {
 			el: ".swiper-pagination.swiper-pagination-black",
 			clickable: true,
 			dynamicBullets: true,
-		} : {},
+		} : false,
 		slidesPerView: 1,
 		spaceBetween: 0,
 		onSwiper: setSwiperInstance,

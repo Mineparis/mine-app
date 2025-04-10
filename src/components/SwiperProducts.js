@@ -21,7 +21,7 @@ const SwiperProducts = ({ products, title, withNewFlag = false, ...props }) => {
 			320: { slidesPerView: 2, spaceBetween: 20 },
 		},
 		pagination:
-			props.pagination !== false && products.length > 5
+			props.pagination && products.length > 5
 				? {
 					el: `.swiper-pagination.swiper-pagination-black.swiper-button-black`,
 					clickable: true,

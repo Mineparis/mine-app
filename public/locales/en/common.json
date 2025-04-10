@@ -73,5 +73,10 @@
 	"do_survey": "Take the quiz",
 	"section_survey_title": "Find the right beauty products you need",
 	"section_survey_description": "Answer a few questions and let us guide you to the perfect beauty products for you.",
-	"Events": "Events"
+	"Events": "Events",
+	"search_placeholder": "What are you looking for?",
+	"no_results_found": "No results found",
+	"searching": "Searching...",
+	"see_more_results": "See more results",
+	"result_for": "Résults for "
 }
