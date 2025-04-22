@@ -29,7 +29,10 @@ const MyApp = ({ Component, pageProps }) => {
 	}, []);
 
 	useEffect(() => {
-		const handleRouteChange = url => hasSetConsent !== false && ReactGA.send({ hitType: "pageview", page: url });
+		const handleRouteChange = (url) => {
+			window.scrollTo(0, 0);
+			if (hasSetConsent !== false) ReactGA.send({ hitType: "pageview", page: url });
+		};
 
 		events.on('routeChangeComplete', handleRouteChange);
 

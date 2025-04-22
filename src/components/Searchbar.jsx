@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Form, Input, ListGroup, ListGroupItem, Spinner, Row, Col, Button } from 'reactstrap';
 import { getStrapiMedia } from '../lib/media';
 
-const NB_PRODUCTS_RESULTS_MAX = 5;
+const NB_PRODUCTS_RESULTS_MAX = 4;
 
 const SearchResultItem = ({ data, onClose }) => {
 	const router = useRouter();
