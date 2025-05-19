@@ -28,7 +28,7 @@ import UseWindowSize from "@hooks/UseWindowSize";
 import ActiveLink from "./ActiveLink";
 import Searchbar from "./Searchbar";
 
-const PROMO_CODE = '';
+const PROMO_CODE = 'MAMAN30';
 
 const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	const { t } = useTranslation('common');
