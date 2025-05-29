@@ -41,17 +41,16 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchTimeout, setSearchTimeout] = useState(null);
 	const [isSearchLoading, setIsSearchLoading] = useState(false);
+	const [itemsCount, setItemsCount] = useState(0);
 
 	const size = UseWindowSize();
 	const scrollY = useScrollPosition();
-	const [itemsCount, setItemsCount] = useState(0);
 
 	const navbarRef = useRef(null);
 	const topbarRef = useRef(null);
 	const [, topbarHeight] = useSize(topbarRef);
 	const [, navbarHeight] = useSize(navbarRef);
 
-	const Snip = typeof window !== 'undefined' && window?.Snipcart;
 	const isSmallScreen = size.width < 500;
 	const hasDropdown = Object.values(dropdownOpen).some((dropdown) => dropdown);
 
@@ -137,22 +136,9 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 
 	useEffect(highlightDropdownParent, []);
 
-	useEffect(() => {
-		if (!Snip) return;
-		const initialState = Snip.store.getState();
-		setItemsCount(initialState.cart.items.count);
-
-		const unsubscribe = Snip.store.subscribe(() => {
-			const newState = Snip.store.getState();
-			setItemsCount(newState.cart.items.count);
-		});
-
-		return () => unsubscribe();
-	}, [Snip]);
-
 	const CartOverviewWithLogo = () => {
 		if (collapsed) return null;
-		const colSizeSnipcart = isSmallScreen ? 'col-1' : 'col-3';
+		const colSize = isSmallScreen ? 'col-1' : 'col-3';
 		const logoStyle = { filter: additionalNavClasses || shouldDisplayWhiteLogo ? undefined : 'invert(1)' };
 
 		return (
@@ -160,7 +146,7 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 				<Link className="mx-auto" href="/" passHref>
 					<img src="/svg/logo.svg" alt="" style={logoStyle} />
 				</Link>
-				<div className={`d-flex justify-content-end snipcart-summary ${colSizeSnipcart}`} >
+				<div className={`d-flex justify-content-end ${colSize}`} >
 					<div
 						className="navbar-icon-link"
 						data-toggle="search"
@@ -169,9 +155,12 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 						<i className="bi bi-search" />
 					</div>
 					{!isSmallScreen && (
-						<div className="navbar-icon-link snipcart-customer-signin">
+						<Link
+							className="navbar-icon-link flex items-center gap-2 hover:text-gray-800"
+							href={`https://${process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}/account`}
+						>
 							<i className="bi bi-person-circle" />
-						</div>
+						</Link>
 					)}
 					<CartDropdown />
 				</div>
@@ -190,19 +179,6 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	}, [scrollY, topbarHeight]);
 
 	useEffect(highlightDropdownParent, []);
-
-	useEffect(() => {
-		if (!Snip) return;
-		const initialState = Snip.store.getState();
-		setItemsCount(initialState.cart.items.count);
-
-		const unsubscribe = Snip.store.subscribe(() => {
-			const newState = Snip.store.getState();
-			setItemsCount(newState.cart.items.count);
-		});
-
-		return () => unsubscribe();
-	}, [Snip]);
 
 	return (
 		<header

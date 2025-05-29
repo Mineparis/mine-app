@@ -18,7 +18,7 @@ const DetailSimilar = ({ products = [] }) => {
 			<Row className="justify-content-start">
 				{products.map((data, index) => (
 					<Col xl="3" lg="3" md="4" xs="6" key={index}>
-						<Product data={data} loading="lazy" />
+						<Product data={data} />
 					</Col>
 				))}
 			</Row>

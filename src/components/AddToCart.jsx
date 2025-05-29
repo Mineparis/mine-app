@@ -8,12 +8,10 @@ const PrimaryBtn = (props) => (
 	<Button {...props} color="primary" />
 );
 
-const AddToCart = ({ shopifyProductId, stockMax }) => {
+const AddToCart = ({ shopifyVariantId, availableForSale }) => {
 	const { t } = useTranslation('common');
 	const { toggleCart } = useCartDropdown();
 	const [quantity, setQuantity] = useState(1);
-
-	const soldOut = stockMax < 1;
 
 	const handleChangeQuantity = (number) => setQuantity(number);
 
@@ -21,7 +19,7 @@ const AddToCart = ({ shopifyProductId, stockMax }) => {
 
 	return (
 		<Row className="d-flex list-inline mb-5 align-items-center col-12">
-			{soldOut ? (
+			{!availableForSale ? (
 				<Button className="w-10 mb-1" disabled>
 					{t('sold_out')}
 				</Button>
@@ -34,13 +32,12 @@ const AddToCart = ({ shopifyProductId, stockMax }) => {
 							type="number"
 							defaultValue={1}
 							min={1}
-							max={stockMax}
 							onChange={handleChangeQuantity}
 						/>
 					</Col>
 					<Col className="detail-option">
 						<AddToCartButton
-							variantId={`gid://shopify/ProductVariant/${shopifyProductId}`}
+							variantId={`gid://shopify/ProductVariant/${shopifyVariantId}`}
 							quantity={quantity}
 							onClick={handleAddToCart}
 							accessibleAddingToCartLabel={t('add_to_cart')}

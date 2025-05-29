@@ -8,6 +8,8 @@ export const getStrapiURL = (path = '') => {
 };
 
 export const fetchAPI = async (path, method = 'GET', body) => {
+	if (!path) return null;
+
 	const requestURL = getStrapiURL(path);
 
 	try {

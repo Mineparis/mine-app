@@ -86,5 +86,8 @@
 	"quantity": "Quantité",
 	"view_cart": "Voir panier",
 	"continue_shopping": "Continue Shopping",
-	"item": "Article"
+	"item": "Article",
+	"cart": "Panier",
+	"order_summary": "Récapitulatif",
+	"item_removed": "L'article a été supprimé du panier"
 }

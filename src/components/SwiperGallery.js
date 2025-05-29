@@ -6,6 +6,38 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import { getStrapiMedia } from '../lib/media';
 
+const getStrapiImg = (images) => {
+	return images.map((img) => (
+		<SwiperSlide key={img.hash} className="detail-full-item bg-cover">
+			<Image
+				src={getStrapiMedia(img)}
+				priority
+				fill
+				sizes="100vw"
+				objectFit="contain"
+				objectPosition="center"
+				alt={img.alternativeText || ''}
+			/>
+		</SwiperSlide>
+	));
+};
+
+const getShopifyImg = (images) => {
+	return images.map(({ src, alt }) => (
+		<SwiperSlide key={alt} className="detail-full-item bg-cover">
+			<Image
+				src={src}
+				priority
+				fill
+				sizes="100vw"
+				objectFit="contain"
+				objectPosition="center"
+				alt={alt}
+			/>
+		</SwiperSlide>
+	));
+};
+
 const SwiperGallery = ({ images, vertical }) => {
 	const [activeSlide, setActiveSlide] = useState(0);
 	const [swiperInstance, setSwiperInstance] = useState();
@@ -13,6 +45,8 @@ const SwiperGallery = ({ images, vertical }) => {
 	const galleryStyle = { top: '10rem' };
 
 	const hasMultipleImage = images?.length > 1;
+	const isShopifyImg = images.some(({ src }) => !!src);
+	const GalleryImages = isShopifyImg ? getShopifyImg(images) : getStrapiImg(images);
 
 	let sliderColumns = { xs: 12 },
 		sliderClass = "detail-carousel",
@@ -54,40 +88,30 @@ const SwiperGallery = ({ images, vertical }) => {
 		<Row style={galleryStyle}>
 			<Col className={sliderClass} {...sliderColumns}>
 				<Swiper modules={[Navigation, Pagination, Autoplay]} {...sliderParams} onSlideChange={handleSlideChange}>
-					{images.map((img) => (
-						<SwiperSlide key={img.hash} className="detail-full-item bg-cover">
-							<Image
-								src={getStrapiMedia(img)}
-								priority
-								fill
-								sizes="100vw"
-								objectFit="contain"
-								objectPosition="center"
-								alt={img.alternativeText || ''}
-							/>
-						</SwiperSlide>
-					))}
+					{GalleryImages}
 				</Swiper>
 			</Col>
-			<Col className={thumbsClass} {...thumbsColumns}>
-				{images.map(({ formats, hash, alternativeText }, index) => (
-					<button
-						key={hash}
-						onClick={() => handleClickImg(index)}
-						className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""}`}
-					>
-						<Image
-							layout="responsive"
-							width={400}
-							height={400}
-							objectFit="contain"
-							objectPosition="center"
-							src={getStrapiMedia(formats.thumbnail)}
-							alt={alternativeText || ''}
-						/>
-					</button>
-				))}
-			</Col>
+			{hasMultipleImage && !isShopifyImg && (
+				<Col className={thumbsClass} {...thumbsColumns}>
+					{images.map(({ formats, hash, alternativeText }, index) => (
+						<button
+							key={hash}
+							onClick={() => handleClickImg(index)}
+							className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""}`}
+						>
+							<Image
+								layout="responsive"
+								width={400}
+								height={400}
+								objectFit="contain"
+								objectPosition="center"
+								src={getStrapiMedia(formats.thumbnail)}
+								alt={alternativeText || ''}
+							/>
+						</button>
+					))}
+				</Col>
+			)}
 		</Row>
 	);
 };

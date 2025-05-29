@@ -1,5 +1,6 @@
 import React from 'react';
 import { Collapse } from 'reactstrap';
+import { RichText } from '@shopify/hydrogen-react';
 
 const Accordeon = ({ options }) => {
 	const [collapse, setCollapse] = React.useState({ 0: true });
@@ -11,7 +12,7 @@ const Accordeon = ({ options }) => {
 
 	return (
 		<div role="tablist">
-			{options.map(({ title, text }, index) => {
+			{options.map(({ title, text, isRichText = false }, index) => {
 				const isCurrentCollapseOpen = collapse[index];
 
 				return (
@@ -28,7 +29,10 @@ const Accordeon = ({ options }) => {
 						</a>
 						<Collapse isOpen={isCurrentCollapseOpen}>
 							<div className="p-3">
-								<div className="mb-0 ck-content" dangerouslySetInnerHTML={{ __html: text }} />
+								{isRichText
+									? <RichText data={text} />
+									: <div className="mb-0 ck-content" dangerouslySetInnerHTML={{ __html: text }} />
+								}
 							</div>
 						</Collapse>
 					</div>

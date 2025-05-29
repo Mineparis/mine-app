@@ -85,5 +85,8 @@
 	"quantity": "Quantity",
 	"view_cart": "View cart",
 	"continue_shopping": "Continue Shopping",
-	"item": "Item"
+	"item": "Item",
+	"cart": "Cart",
+	"order_summary": "Order summary",
+	"item_removed": "The item has been removed from the cart"
 }

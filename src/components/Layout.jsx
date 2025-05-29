@@ -9,8 +9,6 @@ import NextNProgress from '@components/NextNProgress';
 import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
-import useSnipcartServices from '@hooks/UseSnipcartServices';
-import { useCartDropdown } from '@contexts/CartDropdownContext';
 
 import Header from './Header.js';
 import Footer from './Footer';
@@ -18,7 +16,6 @@ import Footer from './Footer';
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
 	const { locale, asPath } = useRouter();
-	const { isCartOpen } = useCartDropdown();
 
 	const lang = locale || DEFAULT_LANG;
 	const { data: menuByGender } = useSWRImmutable(`/categories/menu?_locale=${lang}`, fetchAPI);
@@ -54,8 +51,6 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	useEffect(() => {
 		window.__localeId__ = lang;
 	}, []);
-
-	useSnipcartServices({ setHideHeader, lang });
 
 	const whitePages = [
 		'/category',

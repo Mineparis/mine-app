@@ -22,14 +22,14 @@ export default function CartDropdown() {
 			isOpen={isCartOpen}
 			toggle={handleToggleCart}
 		>
-			<DropdownToggle className="navbar-icon-link" nav>
+			<DropdownToggle className="p-0" nav>
 				<div className="navbar-icon-link" onClick={() => toggleCart(!isCartOpen)}>
 					<i className="bi bi-cart" />
 					<div className="navbar-icon-link-badge">{totalQuantity ?? 0}</div>
 				</div>
 			</DropdownToggle>
 
-			<DropdownMenu right className="p-4">
+			<DropdownMenu className="p-4">
 				{!lines?.length
 					? (
 						<div className="d-flex justify-content-center">
@@ -54,7 +54,7 @@ export default function CartDropdown() {
 							</div>
 
 							<div className="d-flex justify-content-between">
-								<Link href="/cart" className="btn btn-link text-dark mr-3">
+								<Link href="/cart" className="btn btn-link text-dark mr-3" onClick={handleToggleCart}>
 									<p>{t('view_cart')} <i className="fa-arrow-right fa" /></p>
 								</Link>
 								<CartCheckoutButton

@@ -1,25 +1,39 @@
 import { client } from "../api";
+import { extractProductInfo } from "../utils";
 
 const GRAPHQL_GET_PRODUCT = `
 query getProduct($id: ID!) {
-	product(id: $id) {
-		title
-		descriptionHtml
-		priceRange {
-			minVariantPrice {
-				amount
-				currencyCode
-			}
-		}
-		images(first: 2) {
-			edges {
-				node {
-					src
-					altText
-				}
-			}
-		}
-	}
+  product(id: $id) {
+    title
+    descriptionHtml
+    vendor
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    images(first: 3) {
+      edges {
+        node {
+          src
+          altText
+        }
+      }
+    }
+    instructions: metafield(namespace: "custom", key: "instructions") {
+      value
+    }
+    composition: metafield(namespace: "custom", key: "composition") {
+      value
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
+      }
+    }
+  }
 }
 `;
 
@@ -46,8 +60,8 @@ export const getShopifyProduct = async (id) => {
 
 		if (!body.data.product) throw Error(`The product ${id} doesn't exist.`);
 
-		return body.data.product;
+		return extractProductInfo(body.data.product);
 	} catch (error) {
-		throw { error, query };
+		throw error;
 	}
 };

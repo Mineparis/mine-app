@@ -54,7 +54,7 @@ const SurveyModal = ({ survey, isOpen = false, onToggleModal }) => {
 
 			setTimeout(() => {
 				router.push(redirectionLink);
-			}, 2000);
+			}, 1500);
 
 			return (
 				<Col className="d-flex flex-column justify-content-center h-100">
