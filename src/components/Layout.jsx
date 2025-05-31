@@ -10,7 +10,8 @@ import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
 
-import Header from './Header.js';
+import { FormProvider } from './FormContext';
+import Header from './Header';
 import Footer from './Footer';
 
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
