@@ -23,7 +23,6 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params, locale }) => {
 	const { productSlug } = params;
 	const lang = locale || DEFAULT_LANG;
-
 	const products = await fetchAPI(`/products?productSlug=${productSlug}&_locale=${lang}`);
 	const product = products?.[0];
 
@@ -43,22 +42,26 @@ export const getStaticProps = async ({ params, locale }) => {
 		_locale: lang,
 	});
 
-	const { products: similarProducts } = await getEnrichedProducts({
-		dataURL: `/products?${query}`
-	});
+	try {
+		const { products: similarProducts } = await getEnrichedProducts({
+			dataURL: `/products?${query}`
+		});
 
-	const shopifyProduct = await getShopifyProduct(product.shopifyProductId);
+		const shopifyProduct = await getShopifyProduct(product.shopifyProductId);
 
-	return {
-		props: {
-			...(await serverSideTranslations(lang, 'common')),
-			product,
-			shopifyProduct,
-			similarProducts,
-			averageRating,
-		},
-		revalidate: REVALIDATE_PAGE_SECONDS,
-	};
+		return {
+			props: {
+				...(await serverSideTranslations(lang, 'common')),
+				product,
+				shopifyProduct,
+				similarProducts,
+				averageRating,
+			},
+			revalidate: REVALIDATE_PAGE_SECONDS,
+		};
+	} catch (err) {
+		return { notFound: true };
+	}
 };
 
 export default function ProductSlugPage(props) {

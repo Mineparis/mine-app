@@ -180,9 +180,9 @@ const Footer = () => {
 							</p>
 						</div>
 
-						{/* Language Selector */}
 						<div className="d-flex justify-content-end col-md-6 align-items-center">
-							<div className="d-flex justify-content-between align-items-center col-md-4">
+							{/* Language Selector */}
+							{/* <div className="d-flex justify-content-between align-items-center col-md-4">
 								<label htmlFor="language" className="mx-1 my-0">{t('language')}</label>
 								<select
 									id="language"
@@ -193,7 +193,7 @@ const Footer = () => {
 										<option key={value} value={value}>{label}</option>
 									))}
 								</select>
-							</div>
+							</div> */}
 
 							{/* Payment Methods */}
 							<div className="col-md-6">
