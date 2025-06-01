@@ -5,14 +5,12 @@ import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-cons
 import { useTranslation } from 'next-i18next';
 import useSWRImmutable from 'swr/immutable';
 
-import { FormProvider } from './FormContext';
 import NextNProgress from '@components/NextNProgress';
 import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
 import { fetchAPI } from '../lib/api';
-import useSnipcartServices from '@hooks/UseSnipcartServices';
 
-import Header from './Header.js';
+import Header from './Header';
 import Footer from './Footer';
 
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
@@ -27,12 +25,11 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const menu = useMemo(() => formatMenu(menuByGender), [menuByGender]);
 
 	const loggedUser = false;
-	const hideTopbar = false;
+	const hideTopbar = true;
 	const hideFooter = false;
 	const className = null;
-
+	const hideHeader = false;
 	const [paddingTop, setPaddingTop] = useState(0);
-	const [hideHeader, setHideHeader] = useState(false);
 
 	const handleAgreeCookieConsent = () => {
 		setHasSetConsent(true);
@@ -54,8 +51,6 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		window.__localeId__ = lang;
 	}, []);
 
-	useSnipcartServices({ setHideHeader, lang });
-
 	const whitePages = [
 		'/category',
 		'/product',
@@ -71,6 +66,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		'/box',
 		'/routine',
 		'/search',
+		'/cart'
 	];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
@@ -94,33 +90,31 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	};
 
 	return (
-		<div style={ { paddingTop } } className={ className }>
+		<div style={{ paddingTop }} className={className}>
 			<Head>
-				<title>{ title }</title>
+				<title>{title}</title>
 			</Head>
-			<NextNProgress options={ { showSpinner: false } } />
+			<NextNProgress options={{ showSpinner: false }} />
 
-			{ !hideHeader && <Header { ...headerProps } /> }
+			{!hideHeader && <Header {...headerProps} />}
 
-			<FormProvider>
-				<main>{ children }</main>
-			</FormProvider>
+			<main>{children}</main>
 
-			{ !hideFooter && <Footer /> }
+			{!hideFooter && <Footer />}
 			<CookieConsent
-				style={ { background: '#343a40', display: 'flex', alignItems: 'center' } }
-				buttonStyle={ { background: '#fff', color: '#343a40' } }
+				style={{ background: '#343a40', display: 'flex', alignItems: 'center' }}
+				buttonStyle={{ background: '#fff', color: '#343a40' }}
 				buttonWrapperClasses="d-flex flex-row"
-				declineButtonStyle={ { background: 'transparent' } }
-				declineButtonText={ t('cookie_consent_decline') }
-				buttonText={ t('cookie_consent_agree') }
+				declineButtonStyle={{ background: 'transparent' }}
+				declineButtonText={t('cookie_consent_decline')}
+				buttonText={t('cookie_consent_agree')}
 				location="bottom"
-				expires={ 365 }
+				expires={365}
 				enableDeclineButton
-				onAccept={ handleAgreeCookieConsent }
-				onDecline={ handleDeclineCookieConsent }
+				onAccept={handleAgreeCookieConsent}
+				onDecline={handleDeclineCookieConsent}
 			>
-				{ t('cookie_consent_text') }
+				{t('cookie_consent_text')}
 			</CookieConsent>
 		</div >
 	);

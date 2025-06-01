@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import { useTranslation } from 'next-i18next';
 
-import DetailMain from '@components/DetailMain';
+import ProductDetail from '@components/ProductDetail';
 import Product from '@components/Product';
 import { fetchAPI } from '../../../lib/api';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '../../../utils/constants';
@@ -91,7 +91,7 @@ const MonthlyBox = ({ box, averageRating }) => {
 							<SwiperGallery images={images} vertical />
 						</Col>
 						<Col xs={{ size: 12, order: 1 }} lg={{ size: 6, order: 2 }} xl="5" className="py-4 pl-lg-5">
-							<DetailMain product={box} averageRating={averageRating} />
+							<ProductDetail product={box} averageRating={averageRating} />
 							<Accordeon options={tabOptions} />
 						</Col>
 					</Row>

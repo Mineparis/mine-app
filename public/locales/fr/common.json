@@ -26,6 +26,7 @@
 	"sort_by": "Trier par",
 	"popularity": "Popularité",
 	"newest": "Récent",
+	"price": "Prix",
 	"ascending_price": "Prix croissant",
 	"descending_price": "Prix décroissant",
 	"newsletter_label": "Newsletter",
@@ -79,5 +80,14 @@
 	"no_results_found": "Aucun résultat trouvé",
 	"searching": "Recherche en cours...",
 	"see_more_results": "Voir plus de résultats",
-	"result_for": "Résultats pour "
+	"result_for": "Résultats pour ",
+	"finalized_order": "Commander",
+	"empty_cart": "Votre panier est vide.",
+	"quantity": "Quantité",
+	"view_cart": "Voir panier",
+	"continue_shopping": "Continue Shopping",
+	"item": "Article",
+	"cart": "Panier",
+	"order_summary": "Récapitulatif",
+	"item_removed": "L'article a été supprimé du panier"
 }

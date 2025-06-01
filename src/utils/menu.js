@@ -2,10 +2,6 @@ export const formatMenu = (menusRaw) => {
 	if (!menusRaw) {
 		return [
 			{
-				title: 'Box',
-				link: '/box'
-			},
-			{
 				title: 'women',
 				megamenu: [],
 				position: 'static',
@@ -32,11 +28,6 @@ export const formatMenu = (menusRaw) => {
 		megamenu: menu,
 	}));
 
-	const box = {
-		title: 'box',
-		link: '/box'
-	};
-
 	const defaultMenu = [
 		{
 			title: 'Magazine',
@@ -48,5 +39,5 @@ export const formatMenu = (menusRaw) => {
 		},
 	];
 
-	return [box, ...menuByGender, ...defaultMenu];
+	return [...menuByGender, ...defaultMenu];
 };

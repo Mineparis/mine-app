@@ -4,7 +4,7 @@ import { Container, Row, Col } from "reactstrap";
 import Breadcrumbs from "./Breadcrumbs";
 
 const Hero = ({
-	children,
+	children = null,
 	className = 'hero-content pb-5 text-center',
 	breadcrumbs,
 	title,

@@ -14,6 +14,8 @@ import BigCardsWithText from '@components/BigCardsWithText';
 import SwiperMagazine from '@components/SwiperMagazine';
 import { fetchAPI } from "../lib/api";
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from "../utils/constants";
+import { getMultipleShopifyProducts } from '../lib/shopify/requests/multipleProducts';
+import { extractShopifyProductIds, mergeProductsData } from '../lib/shopify/utils';
 
 const SWIPE_ITEMS_LIMIT = 10;
 
@@ -28,12 +30,15 @@ export const getStaticProps = async ({ locale }) => {
 		fetchAPI(`/surveys?&_locale=${lang}`),
 	]);
 
+	const allProductIds = extractShopifyProductIds([bestSellersProducts, newProducts]);
+	const shopifyProducts = await getMultipleShopifyProducts(allProductIds);
+
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
 			homeData,
-			bestSellersProducts,
-			newProducts,
+			bestSellersProducts: mergeProductsData(bestSellersProducts, shopifyProducts),
+			newProducts: mergeProductsData(newProducts, shopifyProducts),
 			magazinePosts,
 			survey: surveys?.[0] ?? null,
 		},
@@ -74,7 +79,7 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 
 	if (!isClient) return null;
 
-	const metaDescription = 'Mine Paris - Transformez votre routine beauté avec les meilleurs soins corporels et capillaires naturels, dans une box personnalisée chaque mois.';
+	const metaDescription = 'Mine Paris - Transformez votre routine beauté avec les meilleurs soins corporels et capillaires naturels.';
 
 	return (
 		<>

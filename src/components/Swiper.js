@@ -99,11 +99,10 @@ const SwiperJumbotron = ({
 				return (
 					<SwiperSlide key={index} className={`${bgCover} ${darkOverlay}`} style={props.style}>
 						<Image
-							objectFit="cover"
-							objectPosition="top"
 							src={image}
 							alt={title}
 							fill
+							style={{ objectFit: 'cover', objectPosition: 'center' }}
 							priority
 						/>
 						<Container
