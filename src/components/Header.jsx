@@ -29,7 +29,7 @@ import ActiveLink from "./ActiveLink";
 import Searchbar from "./Searchbar";
 import CartDropdown from "./CartDropdown";
 
-const PROMO_CODE = 'MAMAN30';
+const PROMO_CODE = '';
 
 const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	const { t } = useTranslation('common');
@@ -41,7 +41,6 @@ const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchTimeout, setSearchTimeout] = useState(null);
 	const [isSearchLoading, setIsSearchLoading] = useState(false);
-	const [itemsCount, setItemsCount] = useState(0);
 
 	const size = UseWindowSize();
 	const scrollY = useScrollPosition();
