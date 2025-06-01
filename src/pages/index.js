@@ -70,10 +70,8 @@ const Home = ({ homeData, bestSellersProducts, newProducts, magazinePosts = [], 
 		setIsClient(true);
 
 		const userLang = navigator.language || navigator.userLanguage;
-		if (userLang.startsWith('fr') && i18n.language !== 'fr') {
+		if (userLang.startsWith('en') && i18n.language !== 'en') {
 			i18n.changeLanguage('fr');
-		} else if (userLang.startsWith('en') && i18n.language !== 'en') {
-			i18n.changeLanguage('en');
 		}
 	}, [i18n]);
 

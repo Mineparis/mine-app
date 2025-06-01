@@ -9,11 +9,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const getStaticPaths = async () => {
-	const posts = await fetchAPI('/events');
+	const posts = await fetchAPI('/events?_locale=fr');
 
 	return {
 		paths: posts.map(({ slug }) => ({ params: { slug } })),
-		fallback: false,
+		fallback: 'blocking',
 	};
 };
 

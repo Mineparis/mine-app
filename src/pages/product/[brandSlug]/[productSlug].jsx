@@ -9,7 +9,7 @@ import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '@utils/constants';
 import ProductPage from '@components/pages/ProductPage';
 
 export const getStaticPaths = async () => {
-	const products = await fetchAPI('/products?_locale=fr&_locale=en');
+	const products = await fetchAPI('/products?_locale=fr');
 
 	return {
 		paths: products.map(({ brandSlug, productSlug, locale }) => ({
