@@ -91,11 +91,11 @@ const SwiperGallery = ({ images, vertical }) => {
 					{GalleryImages}
 				</Swiper>
 			</Col>
-			{hasMultipleImage && !isShopifyImg && (
+			{hasMultipleImage && isShopifyImg && (
 				<Col className={thumbsClass} {...thumbsColumns}>
-					{images.map(({ formats, hash, alternativeText }, index) => (
+					{images.map(({ src, alt }, index) => (
 						<button
-							key={hash}
+							key={`thumbnail-${index}`}
 							onClick={() => handleClickImg(index)}
 							className={`detail-thumb-item mb-3 ${activeSlide === index ? "active" : ""}`}
 						>
@@ -105,8 +105,8 @@ const SwiperGallery = ({ images, vertical }) => {
 								height={400}
 								objectFit="contain"
 								objectPosition="center"
-								src={getStrapiMedia(formats.thumbnail)}
-								alt={alternativeText || ''}
+								src={src}
+								alt={alt || ''}
 							/>
 						</button>
 					))}
