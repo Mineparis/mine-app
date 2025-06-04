@@ -18,7 +18,6 @@ export const getServerSideProps = async ({ locale, params, query, res }) => {
 
 	const commonParams = [
 		`routines.slug=${routine.slug}`,
-		`categories.categoryId=${type}`,
 		`_locale=${lang}`,
 	];
 
