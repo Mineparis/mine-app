@@ -35,8 +35,6 @@ export const getServerSideProps = async ({ locale, params, query, res }) => {
 	const totalProducts = await fetchAPI(allProductsURL);
 	const nbProducts = totalProducts.length;
 
-	res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate');
-
 	return {
 		props: {
 			...(await serverSideTranslations(lang, ['common'])),
