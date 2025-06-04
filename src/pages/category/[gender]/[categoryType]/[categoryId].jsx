@@ -38,8 +38,6 @@ export const getServerSideProps = async ({ locale, params, query, res }) => {
 
 	const { products, nbProducts } = await getEnrichedProducts({ dataURL, countURL });
 
-	res.setHeader('Cache-Control', `s-maxage=600, stale-while-revalidate`);
-
 	return {
 		props: {
 			...(await serverSideTranslations(lang, 'common')),
