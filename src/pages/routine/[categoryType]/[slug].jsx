@@ -7,7 +7,7 @@ import { DEFAULT_LANG, PAGE_LIMIT, sortQueryMapping } from '@utils/constants';
 export const getServerSideProps = async ({ locale, params, query, res }) => {
 	const lang = locale || DEFAULT_LANG;
 	const { slug } = params;
-	const { sort = 'newest', page = 1, type = '' } = query;
+	const { sort = 'newest', page = 1, types = '' } = query;
 
 	const currentPage = Number(page) || 1;
 	const start = (currentPage - 1) * PAGE_LIMIT;
@@ -18,6 +18,7 @@ export const getServerSideProps = async ({ locale, params, query, res }) => {
 
 	const commonParams = [
 		`routines.slug=${routine.slug}`,
+		`categories.categoryId=${types}`,
 		`_locale=${lang}`,
 	];
 
@@ -42,7 +43,7 @@ export const getServerSideProps = async ({ locale, params, query, res }) => {
 			nbProducts,
 			page: currentPage,
 			sortOptionSelected: sort,
-			typeSelected: type,
+			typeSelected: types,
 		},
 	};
 };

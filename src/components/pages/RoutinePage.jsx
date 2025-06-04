@@ -31,7 +31,7 @@ const RoutinePage = ({
 				...router.query,
 				page: newPage,
 				sort: sortOptionSelected,
-				type: typeSelected,
+				types: typeSelected,
 			},
 		});
 	};
