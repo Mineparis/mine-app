@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 const ShopHeader = ({ nbProducts = 0, sortOptionSelected, setSortOptionSelected }) => {
 	const { t } = useTranslation('common');
 
-	const sortOptions = ['newest', 'ascending_price', 'descending_price', 'popularity'];
+	const sortOptions = ['newest', 'ascending_price', 'descending_price'];
 
 	const handleChangeOption = (event) => {
 		setSortOptionSelected(event.target.value);

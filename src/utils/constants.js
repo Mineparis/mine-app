@@ -10,3 +10,9 @@ export const sortQueryMapping = {
 	ascending_price: 'originalPrice:asc,salePricePercent:asc',
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
+
+export const SORT_OPTIONS = [
+	{ value: 'newest', label: 'newest' },
+	{ value: 'price-asc', label: 'price_asc' },
+	{ value: 'price-desc', label: 'price_desc' },
+];

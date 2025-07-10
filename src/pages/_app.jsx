@@ -9,9 +9,9 @@ import Layout from '@components/Layout';
 import { CartDropdownProvider } from '@contexts/CartDropdownContext';
 
 import '../../public/fonts/hkgrotesk/stylesheet.css';
+import '../styles/tailwind.css';
 import '../scss/style.default.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import "bootstrap-icons/font/bootstrap-icons.css";
 import 'swiper/css/bundle';
 
 const MyApp = ({ Component, pageProps }) => {

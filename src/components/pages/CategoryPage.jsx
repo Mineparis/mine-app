@@ -20,7 +20,7 @@ const CategoryPage = ({
 	typesSelected,
 }) => {
 	const { t } = useTranslation('common');
-	const { gender, parent, description } = category;
+	const { category, description } = category;
 	const router = useRouter();
 	const [selectedFilters, setSelectedFilters] = useState(typesSelected);
 
@@ -51,9 +51,9 @@ const CategoryPage = ({
 	const handleSortChange = (newSort) => updateQuery({ sort: newSort, page: 1 });
 	const handleChangePage = (newPage) => updateQuery({ page: newPage });
 
-	const genderLabel = t(gender);
-	const parentLabel = t(parent);
-	const titleLabel = `${parentLabel} pour ${genderLabel} - Mine Paris | Beauté et Cosmétiques`;
+	const subCategoryLabel = t(subCategoryName);
+	const categoryLabel = t(categoryName);
+	const titleLabel = `${categoryLabel}: ${subCategoryLabel} - Mine Paris | Beauté et Cosmétiques`;
 	const canonicalUrl = `https://mineparis.com${router.asPath}`;
 	const ogImage = '/img/slider/mine-carousel.jpg';
 
@@ -68,8 +68,8 @@ const CategoryPage = ({
 
 			<Hero
 				className="hero-content pb-5"
-				title={parentLabel}
-				breadcrumbs={[{ name: genderLabel, active: true }]}
+				title={categoryLabel}
+				breadcrumbs={[{ name: subCategoryLabel, active: true }]}
 				content={description}
 			/>
 

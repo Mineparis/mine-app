@@ -1,14 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import { useTranslation } from 'next-i18next';
-import useSWRImmutable from 'swr/immutable';
 
 import NextNProgress from '@components/NextNProgress';
-import { formatMenu } from '../utils/menu';
 import { DEFAULT_LANG } from '../utils/constants';
-import { fetchAPI } from '../lib/api';
+import { MENU } from '../utils/menu';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -16,18 +14,12 @@ import Footer from './Footer';
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
 	const { locale, asPath } = useRouter();
-
 	const lang = locale || DEFAULT_LANG;
-	const { data: menuByGender } = useSWRImmutable(`/categories/menu?_locale=${lang}`, fetchAPI);
-
 	const isConsent = getCookieConsentValue();
-
-	const menu = useMemo(() => formatMenu(menuByGender), [menuByGender]);
-
 	const loggedUser = false;
 	const hideTopbar = true;
 	const hideFooter = false;
-	const className = null;
+	const className = '';
 	const hideHeader = false;
 	const [paddingTop, setPaddingTop] = useState(0);
 
@@ -51,7 +43,9 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		window.__localeId__ = lang;
 	}, []);
 
+	const menuParentCategories = MENU.map(({ title }) => `/${title.toLowerCase()}`);
 	const whitePages = [
+		...menuParentCategories,
 		'/category',
 		'/product',
 		'/login',
@@ -73,14 +67,13 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const title = 'Mine';
 	const headerProps = {
 		nav: {
-			classes: "bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light",
+			classes: '',
 			color: "transparent",
 			dark: !isWhitePage,
 			fixed: false,
 			light: false,
 			sticky: true,
 		},
-		menu,
 		shouldDisplayWhiteLogo: isWhitePage,
 		loggedUser,
 		headerAbsolute: !isWhitePage,
@@ -90,22 +83,20 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	};
 
 	return (
-		<div style={{ paddingTop }} className={className}>
+		<div style={{ paddingTop }} className={`min-h-screen flex flex-col bg-neutral-50 ${className}`}>
 			<Head>
 				<title>{title}</title>
 			</Head>
 			<NextNProgress options={{ showSpinner: false }} />
-
 			{!hideHeader && <Header {...headerProps} />}
-
 			<main>{children}</main>
-
 			{!hideFooter && <Footer />}
 			<CookieConsent
-				style={{ background: '#343a40', display: 'flex', alignItems: 'center' }}
-				buttonStyle={{ background: '#fff', color: '#343a40' }}
-				buttonWrapperClasses="d-flex flex-row"
-				declineButtonStyle={{ background: 'transparent' }}
+				containerClasses="fixed bottom-0 left-0 w-full z-50"
+				style={{ background: 'rgba(52, 58, 64, 0.98)', display: 'flex', alignItems: 'center', borderRadius: '0.5rem', margin: '0.5rem', maxWidth: '600px', left: '50%', transform: 'translateX(-50%)' }}
+				buttonStyle={{ background: '#fff', color: '#343a40', borderRadius: '0.375rem', fontWeight: 600, padding: '0.5rem 1.5rem', marginLeft: '1rem' }}
+				buttonWrapperClasses="flex flex-row gap-2"
+				declineButtonStyle={{ background: 'transparent', color: '#fff', border: '1px solid #fff', borderRadius: '0.375rem', fontWeight: 600, padding: '0.5rem 1.5rem' }}
 				declineButtonText={t('cookie_consent_decline')}
 				buttonText={t('cookie_consent_agree')}
 				location="bottom"
@@ -116,7 +107,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 			>
 				{t('cookie_consent_text')}
 			</CookieConsent>
-		</div >
+		</div>
 	);
 };
 

@@ -2,13 +2,15 @@ import React from "react";
 import Link from "next/link";
 import { Dropdown, DropdownToggle, DropdownMenu, Button } from "reactstrap";
 import { useCart, CartCheckoutButton } from "@shopify/hydrogen-react";
-import { useCartDropdown } from '@contexts/CartDropdownContext';
 import CartOverviewItem from "./CartOverviewItem";
 import { useTranslation } from "next-i18next";
+import { BsCart } from "react-icons/bs";
+
+import { useCartDropdown } from '@contexts/CartDropdownContext';
 
 const BtnDarkOutline = (props) => <Button {...props} outline />;
 
-export default function CartDropdown() {
+export default function CartDropdown({ textColorClassName }) {
 	const { t } = useTranslation('common');
 	const { isCartOpen, toggleCart } = useCartDropdown();
 	const { lines, totalQuantity, cost } = useCart();
@@ -23,9 +25,11 @@ export default function CartDropdown() {
 			toggle={handleToggleCart}
 		>
 			<DropdownToggle className="p-0" nav>
-				<div className="navbar-icon-link" onClick={() => toggleCart(!isCartOpen)}>
-					<i className="bi bi-cart" />
-					<div className="navbar-icon-link-badge">{totalQuantity ?? 0}</div>
+				<div className={`navbar-icon-link ${textColorClassName}`} onClick={() => toggleCart(!isCartOpen)}>
+					<BsCart />
+					<div className="navbar-icon-link-badge">
+						{totalQuantity ?? 0}
+					</div>
 				</div>
 			</DropdownToggle>
 
