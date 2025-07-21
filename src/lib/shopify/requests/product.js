@@ -1,5 +1,5 @@
-import { client } from "../api";
-import { extractProductInfo } from "../utils";
+import { shopifyRequest } from "../api";
+import { extractProductInfo } from "../utils/shopifyProduct";
 
 const GRAPHQL_GET_PRODUCT = `
 query getProduct($id: ID!) {
@@ -38,30 +38,20 @@ query getProduct($id: ID!) {
 `;
 
 export const getShopifyProduct = async (id) => {
-	if (!id) return;
+  if (!id) return;
 
-	try {
-		const response = await fetch(client.getStorefrontApiUrl(), {
-			body: JSON.stringify({
-				query: GRAPHQL_GET_PRODUCT,
-				variables: {
-					id: `gid://shopify/Product/${id}`,
-				},
-			}),
-			headers: client.getPrivateTokenHeaders(),
-			method: 'POST',
-		});
+  try {
+    const body = await shopifyRequest({
+      query: GRAPHQL_GET_PRODUCT,
+      variables: {
+        id: `gid://shopify/Product/${id}`,
+      },
+    })
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
-		}
+    if (!body.data.product) throw Error(`The product ${id} doesn't exist.`);
 
-		const body = await response.json();
-
-		if (!body.data.product) throw Error(`The product ${id} doesn't exist.`);
-
-		return extractProductInfo(body.data.product);
-	} catch (error) {
-		throw error;
-	}
+    return extractProductInfo(body.data.product);
+  } catch (error) {
+    throw error;
+  }
 };

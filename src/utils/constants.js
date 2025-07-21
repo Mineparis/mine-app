@@ -1,8 +1,8 @@
 export const DEFAULT_LANG = 'fr';
 
-export const REVALIDATE_PAGE_SECONDS = 120;
+export const REVALIDATE_PAGE_SECONDS = 3600; // 1 hour
 
-export const PAGE_LIMIT = 12;
+export const PAGE_LIMIT = 20;
 
 export const sortQueryMapping = {
 	popularity: 'sold:desc',

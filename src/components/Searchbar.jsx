@@ -1,69 +1,31 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import React from 'react';
 import Image from 'next/image';
-import { Form, Input, ListGroup, ListGroupItem, Spinner, Row, Col, Button } from 'reactstrap';
-import { getStrapiMedia } from '../lib/media';
+import { XMarkIcon, MagnifyingGlassIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 const NB_PRODUCTS_RESULTS_MAX = 4;
 
-const SearchResultItem = ({ data, onClose }) => {
-	const router = useRouter();
-	const { brand, name, brandSlug, productSlug, thumbnail } = data;
-
-	const handleRedirect = () => {
-		router.push(`/product/${brandSlug}/${productSlug}`);
-		onClose();
-	};
-
-	return (
-		<ListGroupItem
-			className="p-3 border-0 cursor-pointer"
-			tag="a"
-			action
-			onClick={handleRedirect}
-		>
-			<Row className="align-items-center">
-				<Col xs="auto" className="pe-0">
-					<div style={{ width: 64, height: 64, position: 'relative' }} className="border rounded">
-						{thumbnail && (
-							<Image
-								src={getStrapiMedia(thumbnail)}
-								alt={name}
-								fill
-								className="rounded"
-								style={{ objectFit: 'cover' }}
-								sizes="64px"
-								quality={80}
-							/>
-						)}
-					</div>
-				</Col>
-				<Col>
-					<div className="text-truncate fw-semibold">{name}</div>
-					<small className="text-muted">{brand}</small>
-				</Col>
-			</Row>
-		</ListGroupItem>
-	);
-};
-
-const Searchbar = ({ searchToggle, setSearchToggle, searchResults, onSearch, isLoading }) => {
+const Searchbar = ({
+	searchToggle,
+	setSearchToggle,
+	searchTerm,
+	setSearchTerm,
+	searchResults = [],
+	isLoading = false,
+}) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
-	const [searchTerm, setSearchTerm] = useState('');
 
 	if (!searchToggle) return null;
 
 	const handleToggleSearch = () => {
-		setSearchToggle(!searchToggle);
+		setSearchToggle(false);
 		setSearchTerm('');
 	};
 
 	const handleInputChange = (e) => {
-		const value = e.target.value;
-		setSearchTerm(value);
-		onSearch(value);
+		setSearchTerm(e.target.value);
 	};
 
 	const handleSeeMore = () => {
@@ -71,67 +33,114 @@ const Searchbar = ({ searchToggle, setSearchToggle, searchResults, onSearch, isL
 		setSearchToggle(false);
 	};
 
-	const displayedResults = searchResults?.slice(0, NB_PRODUCTS_RESULTS_MAX);
+	const displayedResults = searchResults?.slice(0, NB_PRODUCTS_RESULTS_MAX) || [];
 
 	return (
-		<div className="search-area-wrapper" style={{ display: "block" }}>
-			<div className="search-area d-flex align-items-center justify-content-center flex-column">
-				<div className="close-btn" onClick={handleToggleSearch}>
-					<svg className="svg-icon svg-icon-light w-3rem h-3rem">
-						<use xlinkHref="/icons/orion-svg-sprite.svg#close-1"> </use>
-					</svg>
+		<div
+			className="fixed inset-0 z-50 bg-black/70 flex flex-col items-center transition-all duration-300"
+			aria-modal="true"
+			role="dialog"
+			tabIndex={-1}
+		>
+			{/* Overlay click to close */}
+			<div
+				className="absolute inset-0 cursor-pointer"
+				aria-label={t('close')}
+				tabIndex={-1}
+				onClick={handleToggleSearch}
+			/>
+			<div
+				className={`relative w-full max-w-lg mx-auto flex flex-col z-10 ${displayedResults.length || isLoading ? 'mt-8 md:mt-16 items-start' : 'items-center justify-center h-[60vh] md:h-[70vh]'}`}
+				style={{ top: displayedResults.length || isLoading ? '3.5rem' : '0', position: 'relative' }}
+			>
+				{/* Search bar container */}
+				<div className="relative w-full flex items-center justify-center">
+					<span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-400 pointer-events-none">
+						<MagnifyingGlassIcon className="w-5 h-5" aria-hidden="true" />
+					</span>
+					<input
+						className="w-full pl-12 pr-10 py-3 text-lg md:text-xl font-semibold rounded-full bg-white shadow-xl border-0 focus:ring-2 focus:ring-primary-400 focus:outline-none placeholder-gray-400 transition-all duration-300 tracking-[.01em]"
+						type="search"
+						name="search"
+						id="search"
+						value={searchTerm}
+						onChange={handleInputChange}
+						autoFocus
+						placeholder={t('search_placeholder')}
+						aria-label={t('search_placeholder')}
+					/>
+					<button
+						className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600 focus:outline-none rounded-full p-2 transition"
+						onClick={handleToggleSearch}
+						aria-label={t('close') || 'Fermer'}
+						tabIndex={0}
+					>
+						<XMarkIcon className="w-5 h-5" aria-hidden="true" />
+					</button>
 				</div>
-
-				<div className="w-75">
-					<Form className="p-4" onSubmit={(e) => e.preventDefault()}>
-						<Input
-							className="search-area-input"
-							type="search"
-							name="search"
-							id="search"
-							value={searchTerm}
-							onChange={handleInputChange}
-							autoFocus
-							placeholder={t('search_placeholder')}
-						/>
-					</Form>
-
-					<div className="container-fluid">
-						<ListGroup>
-							{isLoading
-								? (
-									<ListGroupItem className="d-flex justify-content-center align-items-center py-5 border-0">
-										<Spinner className="mx-2" size="sm" color="primary" />
-										<span>{t('searching')}</span>
-									</ListGroupItem>
-								)
-								: displayedResults?.length
-									? displayedResults.map((data) => (
-										<SearchResultItem
-											key={data.id}
-											data={data}
-											onClose={handleToggleSearch}
-										/>
-									))
-									: searchTerm && !isLoading && (
-										<ListGroupItem className="d-flex justify-content-center align-items-center" disabled>
-											<i className="bi bi-search text-muted mx-2" />
-											<p className="m-0">{t('no_results_found')}</p>
-										</ListGroupItem>
-									)}
-						</ListGroup>
-					</div>
-
-					<div className="d-flex justify-content-center">
-						{displayedResults.length > NB_PRODUCTS_RESULTS_MAX - 1 && (
-							<Button
-								className="text-center my-4"
-								color="secondary"
-								onClick={handleSeeMore}
-							>
-								{t('see_more_results')} ({searchResults.length - NB_PRODUCTS_RESULTS_MAX}+)
-							</Button>
-						)}
+				{/* Results dropdown */}
+				<div className="relative w-full max-w-lg">
+					<div className="absolute left-0 right-0 mt-2">
+						{isLoading ? (
+							<div className="flex flex-col justify-center items-center py-8 bg-white rounded-2xl shadow-xl animate-pulse">
+								<svg className="animate-spin h-7 w-7 text-primary-500 mb-3" fill="none" viewBox="0 0 24 24">
+									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+								</svg>
+								<span className="text-primary-600 font-medium text-base">{t('searching')}</span>
+							</div>
+						) : displayedResults.length ? (
+							<>
+								<ul className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden divide-y divide-gray-100">
+									{displayedResults.map(({ id, handle, images, brand, name }) => (
+										<li key={id} className="py-3 px-4 flex items-center gap-4 cursor-pointer hover:bg-primary-50/60 transition group" onClick={() => {
+											router.push(`/products/${handle}`);
+											handleToggleSearch();
+										}}>
+											<div className="w-10 h-10 flex-shrink-0 overflow-hidden relative group-hover:scale-105 group-hover:shadow-lg group-hover:rounded-xl transition">
+												{images && images.length > 0 ? (
+													<Image
+														src={images[0].src}
+														alt={images[0].alt || 'image du produit'}
+														width={40}
+														height={40}
+														className="object-cover rounded-xl"
+														style={{ objectFit: 'cover' }}
+														priority={true}
+													/>
+												) : null}
+											</div>
+											<div className="flex-1 min-w-0">
+												<div className="font-semibold text-base text-gray-900 truncate group-hover:text-primary-700 transition">{name}</div>
+												<div className="text-xs text-gray-500 truncate mt-1">{brand}</div>
+											</div>
+										</li>
+									))}
+								</ul>
+								{/* See more button just below results */}
+								{displayedResults.length > NB_PRODUCTS_RESULTS_MAX - 1 && (
+									<div className="w-full flex justify-center mt-4">
+										<button
+											className="pointer-events-auto block w-full max-w-md mx-auto py-2 md:py-2.5 rounded-full bg-white text-black font-semibold text-base md:text-lg shadow-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:ring-2 focus:ring-primary-400 transition-all duration-200"
+											style={{ boxShadow: '0 4px 16px 0 rgba(0,0,0,0.08)' }}
+											onClick={handleSeeMore}
+											aria-label={t('see_more_results')}
+										>
+											<span className="inline-flex items-center gap-2">
+												<ArrowRightIcon className="w-5 h-5 text-primary-600" aria-hidden="true" />
+												<span className="tracking-wide">{t('see_more_results')}</span>
+												<span className="ml-1 font-bold">({searchResults.length - NB_PRODUCTS_RESULTS_MAX}+)</span>
+											</span>
+										</button>
+									</div>
+								)}
+							</>
+						) : searchTerm && !isLoading ? (
+							<div className="flex flex-col items-center justify-center py-8 bg-white rounded-2xl shadow-xl text-gray-400">
+								<MagnifyingGlassIcon className="w-8 h-8 mb-3" aria-hidden="true" />
+								<p className="text-base font-medium">{t('no_results_found')}</p>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

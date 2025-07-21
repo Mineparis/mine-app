@@ -1,37 +1,25 @@
-import { client } from '../api';
-import { mapShopifyProductNode } from '../utils/shopifyProduct';
+import { fetchProducts } from './shared';
+import { belongsToSubCategory } from './utils';
 
-const PRODUCTS_BY_SUBCATEGORY_QUERY = `
-  query ProductsBySubCategory($query: String!, $first: Int = 24) {
-    products(first: $first, query: $query) {
-      edges {
-        node {
-          id
-          title
-          descriptionHtml
-          vendor
-          metafield(namespace: "custom", key: "sous-categorie") { value }
-          priceRange { minVariantPrice { amount currencyCode } }
-          images(first: 3) { edges { node { src altText } } }
-          variants(first: 1) { nodes { id availableForSale } }
-        }
-      }
-    }
+/**
+ * Fetches products filtered by category and subcategory
+ * @param {string} category - Category slug (e.g., 'cheveux', 'peau', 'barbe')
+ * @param {string} subCategorySlug - Subcategory slug to filter by
+ * @param {number} first - Maximum number of products to fetch
+ * @returns {Promise<Object[]>} - Array of filtered products
+ */
+export async function getProductsBySubCategory(category, subCategorySlug, first = 100) {
+  try {
+    // Fetch products from the specific category collection
+    const allProducts = await fetchProducts(`collection:${category}`, first);
+    
+    // Filter products that belong to the requested subcategory
+    return allProducts.filter(product => 
+      belongsToSubCategory(product, subCategorySlug)
+    );
+    
+  } catch (error) {
+    console.error('Error fetching products by subcategory:', error);
+    return [];
   }
-`;
-
-export async function getProductsBySubCategory(category, subCategory, first = 24) {
-	const query = `collection:${category}`;
-	const response = await fetch(client.getStorefrontApiUrl(), {
-		method: 'POST',
-		headers: client.getPrivateTokenHeaders(),
-		body: JSON.stringify({
-			query: PRODUCTS_BY_SUBCATEGORY_QUERY,
-			variables: { query, first },
-		}),
-	});
-	if (!response.ok) throw new Error('Shopify API error');
-	const body = await response.json();
-	console.log({ body: JSON.stringify(body, null, 2) });
-	return (body.data?.products?.edges || []).map(e => mapShopifyProductNode(e.node));
 }

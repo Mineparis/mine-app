@@ -1,42 +1,92 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getProductsBySubCategory } from '@lib/shopify/requests/productsBySubCategory';
-import CategoryPageShopify from '@components/pages/CategoryPageShopify';
-import { DEFAULT_LANG, PAGE_LIMIT, SORT_OPTIONS } from '@utils/constants';
-import { MENU } from '@utils/menu';
+import CategoryPage from '@components/pages/CategoryPage';
+import { DEFAULT_LANG, SORT_OPTIONS, REVALIDATE_PAGE_SECONDS } from '@utils/constants';
+import { MENU } from '@data/menu';
+import { useProductSortingAndPagination } from '@hooks/useProductSortingAndPagination';
 
-export const getServerSideProps = async ({ locale, params, query }) => {
-	const { category, subCategory } = params;
-	const { sort = 'newest', page = 1 } = query;
-	const lang = locale || DEFAULT_LANG;
-	const pageNum = Number(page);
-	const start = (pageNum - 1) * PAGE_LIMIT;
+function SubCategoryPage({ allProducts, ...props }) {
+	const {
+		products,
+		nbProducts,
+		page,
+		totalPages,
+		sortOptionSelected,
+		handleSortChange,
+		handlePageChange,
+	} = useProductSortingAndPagination(allProducts);
 
-	const menuCategory = MENU.find((m) => m.title.toLowerCase() === category.toLowerCase());
-	const subCategories = menuCategory?.sousCategories?.map((sc) => sc.title) || [];
+	return (
+		<CategoryPage 
+			{...props}
+			products={products}
+			nbProducts={nbProducts}
+			page={page}
+			totalPages={totalPages}
+			sortOptionSelected={sortOptionSelected}
+			handleSortChange={handleSortChange}
+			handlePageChange={handlePageChange}
+		/>
+	);
+}
 
-	const productsAll = await getProductsBySubCategory(category.toLowerCase(), subCategory);
-	let products = productsAll;
-	if (sort === 'price-asc') products = [...products].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-	if (sort === 'price-desc') products = [...products].sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-	if (sort === 'newest') products = products; // TODO: améliorer si possible
-	const nbProducts = products.length;
-	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
-	const paginatedProducts = products.slice(start, start + PAGE_LIMIT);
+export async function getStaticPaths() {
+	const paths = [];
+	
+	MENU.forEach((menuItem) => {
+		menuItem.subCategories?.forEach((subCategory) => {
+			paths.push({
+				params: { 
+					category: menuItem.title,
+					subCategory: subCategory.slug 
+				},
+			});
+		});
+	});
 
 	return {
-		props: {
-			...(await serverSideTranslations(lang, 'common')),
-			categoryName: category,
-			subCategoryName: subCategory,
-			products: paginatedProducts,
-			subCategories,
-			nbProducts,
-			page: pageNum,
-			totalPages,
-			sortOptionSelected: sort,
-			sortOptions: SORT_OPTIONS,
-		},
+		paths,
+		fallback: 'blocking'
 	};
-};
+}
 
-export default CategoryPageShopify;
+export async function getStaticProps({ locale, params }) {
+	const { category, subCategory } = params;
+	const lang = locale || DEFAULT_LANG;
+
+	try {
+		const menuCategory = MENU.find((m) => m.title === category);
+		
+		if (!menuCategory) {
+			return { notFound: true };
+		}
+
+		const subCategories = menuCategory.subCategories || [];
+		const currentSubCategory = subCategories.find(sc => sc.slug === subCategory);
+		
+		if (!currentSubCategory) {
+			return { notFound: true };
+		}
+
+		const subCategoryTitle = currentSubCategory.title || subCategory;
+		const allProducts = await getProductsBySubCategory(category, subCategory);
+
+		return {
+			props: {
+				...(await serverSideTranslations(lang, 'common')),
+				categoryName: category,
+				subCategoryName: subCategory,
+				subCategoryTitle,
+				allProducts,
+				subCategories,
+				sortOptions: SORT_OPTIONS,
+			},
+			revalidate: REVALIDATE_PAGE_SECONDS,
+		};
+	} catch (error) {
+		console.error('Error fetching subcategory products:', error);
+		return { notFound: true };
+	}
+}
+
+export default SubCategoryPage;

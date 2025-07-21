@@ -1,132 +1,196 @@
+
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { Container, Row, Col } from 'reactstrap';
-
-import Hero from '@components/Hero';
-import Product from '@components/Product';
 import ShopHeader from '@components/ShopHeader';
-import ShopPagination from '@components/ShopPagination';
-import { PAGE_LIMIT } from '@utils/constants';
+import ProductGrid from '@components/ProductGrid';
+import Pagination from '@components/Pagination';
+import EmptyState from '@components/EmptyState';
 
-const CategoryPage = ({
-	category,
-	subCategories,
+export default function CategoryPage({
+	categoryName,
+	subCategoryName,
+	subCategoryTitle,
 	products,
 	nbProducts,
 	page,
+	totalPages,
 	sortOptionSelected,
-	typesSelected,
-}) => {
+	sortOptions,
+	isAllCategory = false,
+	isPreoccupationPage = false,
+	collectionInfo = null,
+	handleSortChange,
+	handlePageChange,
+}) {
 	const { t } = useTranslation('common');
-	const { category, description } = category;
 	const router = useRouter();
-	const [selectedFilters, setSelectedFilters] = useState(typesSelected);
+
+	const [selectedSubCategory, setSelectedSubCategory] = useState(subCategoryName);
 
 	useEffect(() => {
-		const { types } = router.query;
-		if (types) setSelectedFilters(types.split(','));
-	}, [router.query.types]);
+		setSelectedSubCategory(subCategoryName);
+	}, [subCategoryName]);
 
-	const totalPages = Math.ceil(nbProducts / PAGE_LIMIT);
-
-	const updateQuery = (newQuery) => {
-		router.push({ pathname: router.pathname, query: { ...router.query, ...newQuery } });
+	const handleSubCategoryChange = (subCatSlug) => {
+		setSelectedSubCategory(subCatSlug);
+		router.push({ pathname: `/${categoryName}/${subCatSlug}` });
 	};
 
-	const handleChangeType = (categoryId) => {
-		const newFilters = selectedFilters.includes(categoryId)
-			? selectedFilters.filter((id) => id !== categoryId)
-			: [...selectedFilters, categoryId];
-		setSelectedFilters(newFilters);
-		updateQuery({ types: newFilters.join(','), page: 1 });
+	const handleAllCategoryClick = () => {
+		router.push({ pathname: `/${categoryName}` });
 	};
 
-	const handleResetType = () => {
-		setSelectedFilters([]);
-		updateQuery({ types: '', page: 1 });
-	};
+	// Use passed handlers or fallback to default behavior
+	const onSortChange = handleSortChange || ((newSort) => {
+		const currentPath = router.asPath.split('?')[0];
+		router.push({
+			pathname: currentPath,
+			query: { sort: newSort, page: 1 },
+		});
+	});
 
-	const handleSortChange = (newSort) => updateQuery({ sort: newSort, page: 1 });
-	const handleChangePage = (newPage) => updateQuery({ page: newPage });
+	const onPageChange = handlePageChange || ((newPage) => {
+		const currentPath = router.asPath.split('?')[0];
+		const queryParams = { page: newPage };
+		if (router.query.sort) {
+			queryParams.sort = router.query.sort;
+		}
+		router.push({
+			pathname: currentPath,
+			query: queryParams,
+		});
+	});
 
-	const subCategoryLabel = t(subCategoryName);
-	const categoryLabel = t(categoryName);
-	const titleLabel = `${categoryLabel}: ${subCategoryLabel} - Mine Paris | Beauté et Cosmétiques`;
-	const canonicalUrl = `https://mineparis.com${router.asPath}`;
+	const titleLabel = isAllCategory 
+		? t('seo_category_title', { category: (t(categoryName) || categoryName).charAt(0).toUpperCase() + (t(categoryName) || categoryName).slice(1) })
+		: t('seo_subcategory_title', { 
+			category: (t(categoryName) || categoryName).charAt(0).toUpperCase() + (t(categoryName) || categoryName).slice(1), 
+			subcategory: (t(subCategoryTitle || subCategoryName) || subCategoryTitle || subCategoryName).charAt(0).toUpperCase() + (t(subCategoryTitle || subCategoryName) || subCategoryTitle || subCategoryName).slice(1) 
+		});
+	
+	const descriptionLabel = isAllCategory 
+		? t('seo_category_description', { category: (t(categoryName) || categoryName).charAt(0).toUpperCase() + (t(categoryName) || categoryName).slice(1) })
+		: t('seo_subcategory_description', { 
+			category: (t(categoryName) || categoryName).charAt(0).toUpperCase() + (t(categoryName) || categoryName).slice(1), 
+			subcategory: (t(subCategoryTitle || subCategoryName) || subCategoryTitle || subCategoryName).charAt(0).toUpperCase() + (t(subCategoryTitle || subCategoryName) || subCategoryTitle || subCategoryName).slice(1) 
+		});
+
+	const displayTitle = isAllCategory ? t(categoryName) : t(subCategoryTitle || subCategoryName);
+	
+	const canonicalUrl = isAllCategory 
+		? `https://mineparis.com/${categoryName}`
+		: `https://mineparis.com/${categoryName}/${subCategoryName}`;
+	
 	const ogImage = '/img/slider/mine-carousel.jpg';
+	const structuredData = {
+		"@context": "https://schema.org",
+		"@type": "CollectionPage",
+		"name": displayTitle,
+		"description": descriptionLabel,
+		"url": canonicalUrl,
+		"mainEntity": {
+			"@type": "ItemList",
+			"numberOfItems": nbProducts,
+			"itemListElement": products.slice(0, 10).map((product, index) => ({
+				"@type": "Product",
+				"position": index + 1,
+				"name": product.name,
+				"url": `https://mineparis.com/product/${product.brandSlug}/${product.productSlug}`,
+				"image": product.images?.[0]?.url
+			}))
+		}
+	};
 
 	return (
-		<>
+		<div className="min-h-screen bg-white text-neutral-900">
 			<Head>
 				<title>{titleLabel}</title>
-				<meta name="description" content={description || titleLabel} />
+				<meta name="description" content={descriptionLabel} />
 				<link rel="canonical" href={canonicalUrl} />
+				<meta property="og:title" content={titleLabel} />
+				<meta property="og:description" content={descriptionLabel} />
+				<meta property="og:url" content={canonicalUrl} />
+				<meta property="og:type" content="website" />
 				<meta property="og:image" content={ogImage} />
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content={titleLabel} />
+				<meta name="twitter:description" content={descriptionLabel} />
+				<meta name="twitter:image" content={ogImage} />
+				<script 
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+				/>
 			</Head>
+			
+			{/* Skip to main content link for screen readers */}
+			<a 
+				href="#main-content" 
+				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded"
+			>
+				{t('skip_to_main_content')}
+			</a>
 
-			<Hero
-				className="hero-content pb-5"
-				title={categoryLabel}
-				breadcrumbs={[{ name: subCategoryLabel, active: true }]}
-				content={description}
-			/>
+			<main id="main-content">
+				<section className="w-full max-w-7xl mx-auto px-4 py-12" aria-labelledby="category-heading">
+					<ShopHeader
+						title={displayTitle}
+						categoryName={categoryName}
+						subCategoryName={isAllCategory ? null : (subCategoryTitle || subCategoryName)}
+						selectedSubCategory={selectedSubCategory}
+						onSubCategoryChange={handleSubCategoryChange}
+						onAllCategoryClick={handleAllCategoryClick}
+						sortOptions={sortOptions}
+						selectedSort={sortOptionSelected}
+						onSortChange={onSortChange}
+						nbProducts={nbProducts}
+						isAllCategory={isAllCategory}
+						isPreoccupationPage={isPreoccupationPage}
+						selectedPreoccupation={isPreoccupationPage ? subCategoryTitle?.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') : null}
+						collectionInfo={collectionInfo}
+					/>
 
-			<Container>
-				<Row>
-					<Col xs="12" className="products-grid sidebar-none">
-						<ShopHeader
-							nbProducts={nbProducts}
-							sortOptionSelected={sortOptionSelected}
-							setSortOptionSelected={handleSortChange}
-						/>
-						{subCategories && (
-							<Col>
-								<Row className="mb-4">
-									<button
-										type="button"
-										className={`btn subcategory-nav-item${!selectedFilters.length ? '-selected' : ''}`}
-										onClick={handleResetType}
-									>
-										{t('all')}
-									</button>
-									{subCategories.map(({ name, categoryId }) => {
-										const selected = selectedFilters.includes(categoryId) ? '-selected' : '';
-										return (
-											<button
-												key={categoryId}
-												type="button"
-												className={`btn subcategory-nav-item${selected}`}
-												onClick={() => handleChangeType(categoryId)}
-											>
-												{name}
-											</button>
-										);
-									})}
-								</Row>
-							</Col>
+					{/* Hidden heading for screen readers */}
+					<h2 id="category-heading" className="sr-only">
+						{`${displayTitle} products`}
+					</h2>
+
+					{/* Products section with proper ARIA labels */}
+					<section aria-labelledby="products-heading" aria-live="polite">
+						<h2 id="products-heading" className="sr-only">
+							{products.length > 0 ? t('products_found', { count: nbProducts }) : t('no_products_found_status')}
+						</h2>
+						
+						{/* Products grid */}
+						{products.length > 0 ? (
+							<div 
+								className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8"
+								role="grid"
+								aria-label={`${displayTitle} grille de produits`}
+								aria-rowcount={Math.ceil(products.length / 4)}
+							>
+								<ProductGrid products={products} />
+							</div>
+						) : (
+							<div role="status" aria-live="polite">
+								<EmptyState categoryName={categoryName} />
+							</div>
 						)}
+					</section>
 
-						<Row>
-							{products.map((productData) => (
-								<Col key={productData.id} xs="6" sm="4" md="4" lg="3" xl="3">
-									<Product data={productData} />
-								</Col>
-							))}
-						</Row>
-
-						<ShopPagination
-							page={page}
-							totalItems={nbProducts}
-							totalPages={totalPages}
-							handleChangePage={handleChangePage}
-						/>
-					</Col>
-				</Row>
-			</Container>
-		</>
+					{/* Pagination with proper ARIA labels */}
+					{products.length > 0 && (
+						<nav aria-label="Products pagination" className="mt-8">
+							<Pagination 
+								page={page} 
+								totalPages={totalPages} 
+								onPageChange={onPageChange} 
+							/>
+						</nav>
+					)}
+				</section>
+			</main>
+		</div>
 	);
-};
-
-export default CategoryPage;
+}

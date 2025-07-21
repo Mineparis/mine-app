@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { appWithTranslation } from 'next-i18next';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import ReactGA from "react-ga4";
 import { useRouter } from 'next/router';
 import { ShopifyProvider, CartProvider } from '@shopify/hydrogen-react';
@@ -11,8 +11,7 @@ import { CartDropdownProvider } from '@contexts/CartDropdownContext';
 import '../../public/fonts/hkgrotesk/stylesheet.css';
 import '../styles/tailwind.css';
 import '../scss/style.default.scss';
-import 'react-toastify/dist/ReactToastify.css';
-import 'swiper/css/bundle';
+import '../styles/shopify-rich-text.css';
 
 const MyApp = ({ Component, pageProps }) => {
 	const { events } = useRouter();
@@ -48,7 +47,7 @@ const MyApp = ({ Component, pageProps }) => {
 		<ShopifyProvider
 			storeDomain={process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}
 			storefrontToken={process.env.NEXT_PUBLIC_PUBLIC_STOREFRONT_API_TOKEN}
-			storefrontApiVersion="2025-01"
+			storefrontApiVersion="2025-04"
 			countryIsoCode="FR"
 			languageIsoCode="FR"
 		>
@@ -56,17 +55,7 @@ const MyApp = ({ Component, pageProps }) => {
 				<CartDropdownProvider>
 					<Layout setHasSetConsent={setHasSetConsent} hasSetConsent={hasSetConsent}>
 						<Component {...pageProps} />
-						<ToastContainer
-							position="top-right"
-							autoClose={5000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
+						<Toaster position="bottom-center" />
 					</Layout>
 				</CartDropdownProvider>
 			</CartProvider>

@@ -6,6 +6,19 @@ const { i18n } = require('./next-i18next.config');
 
 // next.js configuration
 const nextConfig = {
+	webpack: (config) => {
+		config.resolve.alias = {
+			...config.resolve.alias,
+			'@components': path.resolve(__dirname, 'src/components'),
+			'@hooks': path.resolve(__dirname, 'src/hooks'),
+			'@contexts': path.resolve(__dirname, 'src/contexts'),
+			'@utils': path.resolve(__dirname, 'src/utils'),
+			'@lib': path.resolve(__dirname, 'src/lib'),
+			'@data': path.resolve(__dirname, 'src/data'),
+			'@styles': path.resolve(__dirname, 'src/styles'),
+		};
+		return config;
+	},
 	images: {
 		remotePatterns: [{
 			protocol: 'http',

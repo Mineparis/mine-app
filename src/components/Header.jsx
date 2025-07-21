@@ -1,351 +1,341 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import Router from "next/router";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import useScrollPosition from "@react-hook/window-scroll";
 import useSize from "@react-hook/size";
-import { IoIosSearch, IoIosArrowDown } from "react-icons/io";
-import { FaUserCircle, FaBars } from "react-icons/fa";
+import { MagnifyingGlassIcon, UserIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-import UseWindowSize from "@hooks/UseWindowSize";
-import { MENU } from "@utils/menu";
+import { MENU } from "@data/menu";
+import { useIsMobile } from "@hooks/useIsMobile";
+import { useSearchbar } from "@hooks/useSearchbar";
+
 import Searchbar from "./Searchbar";
 import CartDropdown from "./CartDropdown";
+import DesktopMenu from "./Header/DesktopMenu";
+import MobileMenu from "./Header/MobileMenu";
 
 const PROMO_CODE = '';
 const MOBILE_BREAKPOINT = 500;
 
-const Header = ({ shouldDisplayWhiteLogo, locale, ...props }) => {
+const Header = (props) => {
+  const { shouldDisplayWhiteLogo, headerAbsolute, hideTopbar, setPaddingTop } = props;
 	const { t } = useTranslation('common');
 
 	const [collapsed, setCollapsed] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState({});
+	const [dropdownTimeouts, setDropdownTimeouts] = useState({});
 	const [searchToggle, setSearchToggle] = useState(false);
 	const [additionalNavClasses, setAdditionalNavClasses] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const [searchTimeout, setSearchTimeout] = useState(null);
-	const [isSearchLoading, setIsSearchLoading] = useState(false);
+	const {
+		searchTerm,
+		setSearchTerm,
+		searchResults,
+		isSearchLoading
+	} = useSearchbar(searchToggle);
 	const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
 
-	const size = UseWindowSize();
+	const isSmallScreen = useIsMobile(MOBILE_BREAKPOINT);
 	const scrollY = useScrollPosition();
 	const navbarRef = useRef(null);
 	const topbarRef = useRef(null);
 	const [, topbarHeight] = useSize(topbarRef);
 	const [, navbarHeight] = useSize(navbarRef);
-	const isSmallScreen = size.width < MOBILE_BREAKPOINT;
 	const textColor = shouldDisplayWhiteLogo || additionalNavClasses ? 'text-primary-700' : 'text-white';
 
-	// Dropdown logic
-	const toggleDropdown = (name) => {
-		setDropdownOpen({ ...dropdownOpen, [name]: !dropdownOpen[name] });
-	};
+	const toggleDropdown = useCallback((name) => {
+		setDropdownOpen(prev => ({ ...prev, [name]: !prev[name] }));
+	}, []);
 
-	const onLinkClick = (url) => {
-		if (url) Router.push(url);
-		if (isSmallScreen) setCollapsed(!collapsed);
-	};
+	const closeAllMenus = useCallback(() => {
+		setDropdownOpen({});
+		setMobileDropdownOpen({});
+		// Clear all dropdown timeouts
+		Object.values(dropdownTimeouts).forEach(timeout => {
+			if (timeout) clearTimeout(timeout);
+		});
+		setDropdownTimeouts({});
+		if (isSmallScreen) setCollapsed(false);
+	}, [isSmallScreen, dropdownTimeouts]);
 
-	// Sticky logic
-	const makeNavbarSticky = () => {
-		if (!props.nav.sticky) {
-			if (additionalNavClasses) {
-				setAdditionalNavClasses("");
-				props.setPaddingTop(0);
-			}
-			return;
-		}
-		if (scrollY > topbarHeight) {
-			setAdditionalNavClasses("fixed top-0 left-0 w-full z-50 shadow-lg bg-white");
-			if (navbarHeight > 0 && !props.headerAbsolute) {
-				props.setPaddingTop(navbarHeight);
-			}
-		} else {
-			setAdditionalNavClasses("");
-			props.setPaddingTop(0);
-		}
-	};
+	const handleMobileToggle = useCallback(() => {
+		setCollapsed(prev => !prev);
+	}, []);
+
+	const handleSearchToggle = useCallback(() => {
+		setSearchToggle(prev => !prev);
+	}, []);
+
+const makeNavbarSticky = useCallback(() => {
+	const shouldBeSticky = scrollY > topbarHeight;
+	const newClasses = shouldBeSticky
+		? "fixed top-0 left-0 w-full z-50 shadow-lg bg-white"
+		: "";
+
+	setAdditionalNavClasses(newClasses);
+
+	if (shouldBeSticky && navbarHeight > 0 && !headerAbsolute) {
+		setPaddingTop?.(navbarHeight);
+	} else {
+		setPaddingTop?.(0);
+	}
+}, [scrollY, topbarHeight, navbarHeight, additionalNavClasses, headerAbsolute, setPaddingTop]);
 
 	useEffect(() => {
 		makeNavbarSticky();
-	}, [scrollY, topbarHeight]);
+	}, [makeNavbarSticky]);
 
-	// Search logic
-	const handleSearch = useCallback((term) => {
-		if (searchTimeout) clearTimeout(searchTimeout);
-		if (!term.trim()) {
-			setSearchResults([]);
-			setIsSearchLoading(false);
-			return;
-		}
-		setIsSearchLoading(true);
-		const timeout = setTimeout(async () => {
-			try {
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/products/search?keyword=${encodeURIComponent(term)}&_locale=${locale}`
-				);
-				const { data } = await response.json();
-				setSearchResults(data);
-			} catch (error) {
-				setSearchResults([]);
-			} finally {
-				setIsSearchLoading(false);
-			}
-		}, 500);
-		setSearchTimeout(timeout);
-	}, [searchTimeout, locale]);
-
+	// Accessibility focus management
 	useEffect(() => {
-		return () => {
-			if (searchTimeout) clearTimeout(searchTimeout);
+		const handleKeyDown = (e) => {
+			if (e.key === 'Escape') {
+				setDropdownOpen({});
+				setMobileDropdownOpen({});
+				setSearchToggle(false);
+				if (collapsed) setCollapsed(false);
+			}
 		};
-	}, [searchTimeout]);
 
-	// highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
-	const highlightDropdownParent = () => {
-		MENU.forEach((item) => {
-			item?.dropdown?.forEach((dropdownLink) => {
-				dropdownLink.link && dropdownLink.link === Router.route && setParentName(item.title);
-				dropdownLink?.links?.forEach((link) => link.link === Router.route && setParentName(item.title));
-			});
-			item?.megamenu?.forEach((megamenuColumn) =>
-				megamenuColumn.forEach((megamenuBlock) =>
-					megamenuBlock.links.forEach((dropdownLink) => {
-						if (dropdownLink.link === Router.route) {
-							dropdownLink.parent
-								? setParentName(dropdownLink.parent)
-								: setParentName(item.title);
-						}
-					})
-				)
-			);
-			item.link === Router.route && setParentName(item.title);
-		});
-	};
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	}, [collapsed]);
 
-	useEffect(highlightDropdownParent, []);
+	// Close menus when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (e) => {
+			if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+				setDropdownOpen({});
+				setMobileDropdownOpen({});
+				if (collapsed) setCollapsed(false);
+			}
+		};
 
-	// Cart + logo + icônes à droite
-	const CartOverviewWithLogo = () => {
-		const logoStyle = shouldDisplayWhiteLogo || additionalNavClasses ? { filter: undefined } : { filter: 'brightness(0) invert(1)' };
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, [collapsed]);
 
-		return (
-			<>
-				<Link href="/" passHref>
-					<Image
-						src="/svg/logo.svg"
-						alt="Logo"
-						style={logoStyle}
-						className="h-6 w-auto transition-all duration-300"
-						width={100}
-						height={100}
-					/>
-				</Link>
-				<div className="w-1/6 md:w-1/2 flex justify-end">
-					<div className="w-full md:w-1/2 flex justify-evenly">
-						<button
-							className={`text-xl ${textColor}`}
-							onClick={() => setSearchToggle(!searchToggle)}
-							aria-label="Recherche"
-						>
-							<IoIosSearch />
-						</button>
-						{!isSmallScreen && (
-							<Link
-								className={`text-xl ${textColor}`}
-								href={`https://${process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}/account`}
-							>
-								<FaUserCircle />
-							</Link>
-						)}
-						<CartDropdown textColorClassName={textColor} />
-					</div>
-				</div>
-			</>
-		);
-	};
-
-	const renderMenuItem = (item) => {
-		const shouldShowItem = !props.loggedUser || (props.loggedUser && !item.hideToLoggedUser);
-		if (!shouldShowItem) return null;
-		const isDropdown = item.sousCategories || item.preoccupations;
-		const baseLinkClass = `${textColor} px-3 py-2 font-semibold uppercase tracking-wider transition-colors duration-200 focus:outline-none`;
-		if (isDropdown) {
-			return (
-				<div key={item.title} className="relative group">
-					<button
-						className={`${baseLinkClass} flex items-center gap-1 hover:text-primary-700`}
-						onClick={() => toggleDropdown(item.title)}
-						onMouseEnter={() => setDropdownOpen(prev => ({ ...prev, [item.title]: true }))}
-						onMouseLeave={() => setDropdownOpen(prev => ({ ...prev, [item.title]: false }))}
-						aria-haspopup="true"
-						aria-expanded={dropdownOpen[item.title] || false}
-						type="button"
-					>
-						{t(item.title.toUpperCase())}
-						<IoIosArrowDown />
-					</button>
-					{/* Dropdown menu */}
-					<div
-						className={`absolute left-0 mt-2 w-max min-w-[320px] bg-white shadow-xl border border-gray-100 z-30 transition-all duration-200 origin-top scale-95 group-hover:scale-100 group-hover:opacity-100 ${dropdownOpen[item.title] ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-						onMouseEnter={() => setDropdownOpen(prev => ({ ...prev, [item.title]: true }))}
-						onMouseLeave={() => setDropdownOpen(prev => ({ ...prev, [item.title]: false }))}
-					>
-						<div className="flex flex-col md:flex-row gap-5 p-5">
-							{item.sousCategories && (
-								<div>
-									<div className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-500">{t('Sous-catégories')}</div>
-									<ul className="flex flex-col gap-1">
-										{item.sousCategories.map((cat) => (
-											<li key={cat.title}>
-												<Link
-													className="block px-3 py-2 rounded text-base text-primary-700 hover:bg-black hover:text-white transition-colors duration-150"
-													href={cat.url}
-													onClick={onLinkClick}
-												>
-													{t(cat.title)}
-												</Link>
-											</li>
-										))}
-									</ul>
-								</div>
-							)}
-							{item.preoccupations && (
-								<div>
-									<div className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-500">{t('Préoccupations')}</div>
-									<ul className="flex flex-col gap-1">
-										{item.preoccupations.map((cat) => (
-											<li key={cat.title}>
-												<Link
-													className="block px-3 py-2 rounded text-base text-primary-700 hover:bg-black hover:text-white transition-colors duration-150"
-													href={cat.url}
-													onClick={onLinkClick}
-												>
-													{t(cat.title)}
-												</Link>
-											</li>
-										))}
-									</ul>
-								</div>
-							)}
-						</div>
-					</div>
-				</div>
-			);
+	const handleDropdownEnter = useCallback((itemTitle) => {
+		// Clear any existing timeout for this dropdown
+		if (dropdownTimeouts[itemTitle]) {
+			clearTimeout(dropdownTimeouts[itemTitle]);
+			setDropdownTimeouts(prev => ({ ...prev, [itemTitle]: null }));
 		}
-	};
 
-	// Render menu item (dropdown or simple) - version mobile
-	const renderMobileMenuItem = (item) => {
-		const shouldShowItem = !props.loggedUser || (props.loggedUser && !item.hideToLoggedUser);
-		if (!shouldShowItem) return null;
-		const hasDropdown = item.sousCategories || item.preoccupations;
+		// Close all other dropdowns and clear their timeouts
+		setDropdownOpen(prev => {
+			const newState = {};
+			Object.keys(prev).forEach(key => {
+				if (key !== itemTitle) {
+					newState[key] = false;
+					// Clear timeout for closing dropdown
+					if (dropdownTimeouts[key]) {
+						clearTimeout(dropdownTimeouts[key]);
+					}
+				}
+			});
+			newState[itemTitle] = true;
+			return newState;
+		});
 
-		return (
-			<div key={item.title}>
-				<button
-					className={`w-full flex items-center justify-between py-3 text-base font-semibold tracking-wider focus:outline-none transition-colors duration-200 text-gray-900`}
-					onClick={() => hasDropdown ? setMobileDropdownOpen(prev => ({ ...prev, [item.title]: !prev[item.title] })) : onLinkClick(item.url)}
-					aria-expanded={!!mobileDropdownOpen[item.title]}
-					type="button"
-				>
-					<span>{t(item.title.toUpperCase())}</span>
-					{hasDropdown && (
-						<svg className={`w-5 h-5 ml-2 transform transition-transform ${mobileDropdownOpen[item.title] ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-						</svg>
-					)}
-				</button>
-				{hasDropdown && mobileDropdownOpen[item.title] && (
-					<div className="pl-4 pb-2">
-						{item.sousCategories && (
-							<div>
-								<div className="mb-2 text-xs uppercase tracking-widest text-gray-500">{t('Sous-catégories')}</div>
-								<ul className="space-y-1">
-									{item.sousCategories.map((cat) => (
-										<li key={cat.title}>
-											<Link
-												className="block text-sm font-normal hover:text-primary-600 transition-colors duration-200"
-												href={cat.url}
-												onClick={() => onLinkClick(item.title)}
-											>
-												{t(cat.title)}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-						)}
-						{item.preoccupations && (
-							<div className="mt-2">
-								<div className="mb-2 text-xs uppercase tracking-widest text-gray-500">{t('Préoccupations')}</div>
-								<ul className="space-y-1">
-									{item.preoccupations.map((cat) => (
-										<li key={cat.title}>
-											<Link
-												className="block text-sm font-normal hover:text-primary-600 transition-colors duration-200"
-												href={cat.url}
-												onClick={() => onLinkClick(item.title)}
-											>
-												{t(cat.title)}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</div>
-						)}
-					</div>
-				)}
-			</div>
-		);
-	};
+		// Clear timeouts for all other dropdowns
+		setDropdownTimeouts(prev => {
+			const newTimeouts = {};
+			Object.keys(prev).forEach(key => {
+				if (key !== itemTitle && prev[key]) {
+					clearTimeout(prev[key]);
+				}
+			});
+			return newTimeouts;
+		});
+	}, [dropdownTimeouts]);
+
+	const handleDropdownLeave = useCallback((itemTitle) => {
+		// Add a small delay to prevent dropdown from closing when moving between trigger and dropdown
+		const timeoutId = setTimeout(() => {
+			setDropdownOpen(prev => ({ ...prev, [itemTitle]: false }));
+		}, 150);
+
+		setDropdownTimeouts(prev => ({ ...prev, [itemTitle]: timeoutId }));
+	}, []);
+
 
 	return (
-		<header className={`container md:!max-w-none md:px-0 w-full ${props.headerClasses || ""} ${props.headerAbsolute ? "absolute top-0 left-0 w-full z-50" : ""}`}>
+		<header
+			className={`w-full ${props.headerClasses || ""} ${headerAbsolute ? "absolute top-0 left-0 w-full z-50" : ""}`}
+			itemScope
+			itemType="https://schema.org/SiteNavigationElement"
+		>
+			{/* Skip to main content */}
+			<a
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-primary-700 focus:text-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium outline-none"
+			>
+				{t('skip_to_main_content')}
+			</a>
+
 			{/* Topbar promo */}
-			{!props.hideTopbar && (
+			{!hideTopbar && (
 				<div ref={topbarRef} className="w-full bg-primary-700 text-white text-center py-2 text-sm font-medium tracking-wide">
 					{t('topbar_label')}
-					{PROMO_CODE && <b className="ml-2">{PROMO_CODE}</b>}
+					{PROMO_CODE && <strong className="ml-2">{PROMO_CODE}</strong>}
 				</div>
 			)}
-			{/* Navbar principale */}
+
+			{/* Main navigation bar */}
 			<nav
 				ref={navbarRef}
-				className={`px-2 lg:px-4 transition-all duration-300 ${additionalNavClasses}`}
+				className={`px-4 lg:px-4 transition-all duration-300 ${additionalNavClasses}`}
+				role="navigation"
+				aria-label={t('main_navigation')}
+				itemScope
+				itemType="https://schema.org/SiteNavigationElement"
 			>
-				<div className="flex items-center justify-between h-20">
-					{/* Burger menu mobile */}
+				<div className="flex items-center h-20 min-w-0">
+					{/* Mobile burger menu */}
 					<button
-						className={`md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary-400 ${textColor}`}
-						onClick={() => setCollapsed(!collapsed)}
-						aria-label="Ouvrir le menu"
+						className={`md:hidden p-2 rounded outline-none ${textColor} flex-shrink-0`}
+						onClick={handleMobileToggle}
+						aria-label={collapsed ? t('close_menu') : t('open_menu')}
+						aria-expanded={collapsed}
+						aria-controls="mobile-menu"
 					>
-						<FaBars className="text-2xl" />
+						{collapsed ? (
+							<XMarkIcon className="w-6 h-6" />
+						) : (
+							<Bars3Icon className="w-6 h-6" />
+						)}
 					</button>
-					{/* Menu principal desktop */}
-					<div className="md:w-1/2 hidden md:flex items-center h-full">
-						{MENU.map(renderMenuItem)}
-					</div>
-					{/* Logo + icônes */}
-					{CartOverviewWithLogo()}
-				</div>
-				{/* Menu mobile (accordion) */}
-				{collapsed && (
-					<div className="md:hidden bg-white border-t border-gray-100 shadow-lg absolute left-0 w-full z-40 animate-fade-in" style={{ maxHeight: '80vh', top: '5rem', overflowY: 'auto' }}>
-						<div className="flex flex-col gap-2 py-4 px-6">
-							{MENU.map(renderMobileMenuItem)}
+
+					{/* Desktop layout: 3 balanced columns */}
+					<div className="hidden md:flex w-full items-center">
+						{/* Main desktop menu - left column */}
+						<DesktopMenu
+							MENU={MENU}
+							t={t}
+							textColor={textColor}
+							dropdownOpen={dropdownOpen}
+							toggleDropdown={toggleDropdown}
+							handleDropdownEnter={handleDropdownEnter}
+							handleDropdownLeave={handleDropdownLeave}
+							closeAllMenus={closeAllMenus}
+						/>
+
+						{/* Centered logo - middle column */}
+						<div className="flex-1 flex justify-center">
+							<Link
+								href="/"
+								className="outline-none rounded"
+								itemProp="url"
+								aria-label={t('home')}
+							>
+								<Image
+									src="/svg/logo.svg"
+									alt={t('logo_alt')}
+									style={shouldDisplayWhiteLogo || additionalNavClasses ? { filter: undefined } : { filter: 'brightness(0) invert(1)' }}
+									className="h-6 w-auto transition-all duration-300"
+									width={100}
+									height={100}
+									priority
+									itemProp="logo"
+								/>
+							</Link>
 						</div>
+
+						{/* Right icons - right column */}
+						<div className="flex-1 flex justify-end">
+							<div className="flex items-center gap-4 flex-shrink-0">
+								<button
+									className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+									onClick={handleSearchToggle}
+									aria-label={t('search')}
+									aria-expanded={searchToggle}
+									type="button"
+								>
+									<MagnifyingGlassIcon className="w-6 h-6" />
+								</button>
+
+								<Link
+									className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+									href={`https://${process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}/account`}
+									aria-label={t('account')}
+									itemProp="url"
+								>
+									<UserIcon className="w-6 h-6" />
+								</Link>
+
+								<div className="flex-shrink-0">
+									<CartDropdown textColorClassName={textColor} />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Layout mobile: logo centré, icônes à droite */}
+					<div className="md:hidden flex-1 flex justify-center">
+						<Link
+							href="/"
+							className="outline-none rounded"
+							itemProp="url"
+							aria-label={t('home')}
+						>
+							<Image
+								src="/svg/logo.svg"
+								alt={t('logo_alt')}
+								style={shouldDisplayWhiteLogo || additionalNavClasses ? { filter: undefined } : { filter: 'brightness(0) invert(1)' }}
+								className="h-6 w-auto transition-all duration-300"
+								width={100}
+								height={100}
+								priority
+								itemProp="logo"
+							/>
+						</Link>
+					</div>
+
+					<div className="md:hidden flex items-center gap-3 flex-shrink-0">
+						<button
+							className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+							onClick={handleSearchToggle}
+							aria-label={t('search')}
+							aria-expanded={searchToggle}
+							type="button"
+						>
+							<MagnifyingGlassIcon className="w-6 h-6" />
+						</button>
+
+						<div className="flex-shrink-0">
+							<CartDropdown textColorClassName={textColor} />
+						</div>
+					</div>
+				</div>
+
+				{/* Mobile menu (accordion) */}
+				{collapsed && (
+					<div
+						id="mobile-menu"
+						className="md:hidden bg-white border-t border-gray-100 shadow-lg absolute left-0 w-full z-40 animate-fade-in"
+						style={{ maxHeight: '80vh', top: '5rem', overflowY: 'auto' }}
+						role="menu"
+						aria-label={t('mobile_menu')}
+						itemScope
+						itemType="https://schema.org/SiteNavigationElement"
+					>
+						<MobileMenu
+							MENU={MENU}
+							t={t}
+							mobileDropdownOpen={mobileDropdownOpen}
+							setMobileDropdownOpen={setMobileDropdownOpen}
+							closeAllMenus={closeAllMenus}
+						/>
 					</div>
 				)}
 			</nav>
-			{/* Barre de recherche */}
+
 			<Searchbar
 				searchToggle={searchToggle}
 				setSearchToggle={setSearchToggle}
+				searchTerm={searchTerm}
+				setSearchTerm={setSearchTerm}
 				searchResults={searchResults}
-				onSearch={handleSearch}
 				isLoading={isSearchLoading}
 			/>
 		</header>
