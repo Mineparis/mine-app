@@ -136,7 +136,7 @@ const ShoppingCart = () => {
 														<Link href={productUrl} className="flex-shrink-0 block outline-none rounded">
 															<div className="w-16 h-16 relative bg-neutral-50 overflow-hidden group-hover:scale-105 transition-transform duration-300">
 																<Image
-																	src={line.merchandise.image?.url || '/img/placeholder.jpg'}
+																	src={line.merchandise.image?.url}
 																	alt={line.merchandise.product.title}
 																	fill
 																	className="object-cover"

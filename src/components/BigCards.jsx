@@ -31,7 +31,7 @@ const BigCards = () => {
               </Link>
             </div>
             <Image
-              src={`/img/bigCards/${title}_categorie.jpg`}
+              src={`/img/bigCards/${title}_categorie.webp`}
               alt={cardName}
               fill
               sizes="100vw"

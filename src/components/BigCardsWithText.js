@@ -5,7 +5,7 @@ import { Button, Col } from "reactstrap";
 import { useTranslation } from 'next-i18next';
 
 const BigImage = ({ label, link, index, imageName }) => {
-	const src = imageName ? `/img/bigCards/${imageName}.jpg` : `/img/bigCards/subcategory${index}.jpg`;
+	const src = imageName ? `/img/bigCards/${imageName}.webp` : `/img/bigCards/subcategory${index}.webp`;
 
 	const Content = (
 		<Col key={label} className="big-card-text dark-overlay cursor-pointer">

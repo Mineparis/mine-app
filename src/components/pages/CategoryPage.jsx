@@ -83,7 +83,7 @@ export default function CategoryPage({
 		? `https://mineparis.com/${categoryName}`
 		: `https://mineparis.com/${categoryName}/${subCategoryName}`;
 	
-	const ogImage = '/img/slider/mine-carousel.jpg';
+	const ogImage = '/img/slider/mine-carousel.webp';
 	const structuredData = {
 		"@context": "https://schema.org",
 		"@type": "CollectionPage",

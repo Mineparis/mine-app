@@ -24,7 +24,7 @@ const SearchPage = ({
   const titleLabel = t('search_results_title', { keyword });
   const descriptionLabel = t('search_results_description', { keyword });
   const canonicalUrl = `https://mineparis.com/search?keyword=${encodeURIComponent(keyword)}`;
-  const ogImage = '/img/slider/mine-carousel.jpg';
+  const ogImage = '/img/slider/mine-carousel.webp';
 
   // Structured data for SEO
   const structuredData = {

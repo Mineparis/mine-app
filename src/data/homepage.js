@@ -1,18 +1,18 @@
 export const HOMEPAGE_JUMBOTRON = [
   {
-    image: '/img/slider/twins-black-women.jpg',
+    image: '/img/slider/twins-black-women.webp',
     title: 'jumbotron.slide1.title',
     subtitle: 'jumbotron.slide1.subtitle',
     cta: { label: 'jumbotron.slide1.cta', href: '/peau' },
   },
   {
-    image: '/img/slider/mine-carousel-curly-women.jpg',
+    image: '/img/slider/women_curly_smile.webp',
     title: 'jumbotron.slide2.title',
     subtitle: 'jumbotron.slide2.subtitle',
     cta: { label: 'jumbotron.slide2.cta', href: '/cheveux' },
   },
   {
-    image: '/img/slider/mine-carousel.jpg',
+    image: '/img/slider/mine-carousel.webp',
     title: 'jumbotron.slide3.title',
     subtitle: 'jumbotron.slide3.subtitle',
     cta: { label: 'jumbotron.slide3.cta', href: '/barbe' },

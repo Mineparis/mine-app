@@ -5,6 +5,7 @@ import { useCart } from '@shopify/hydrogen-react';
 import { useCartDropdown } from '@contexts/CartDropdownContext';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { createShopifyGid } from "@utils/shopifyIds";
+import Image from 'next/image';
 
 const StyledAddToCartButton = ({ disabled, ...props }) => {
 	const { t } = useTranslation('common');
@@ -88,14 +89,18 @@ const ProductGrid = ({ products = [] }) => {
 							{/* Image Container */}
 							<div className="relative w-full overflow-hidden mb-3" style={{ aspectRatio: '4/5' }}>
 								{images?.[0]?.src ? (
-									<img
+									<Image
 										src={images[0].src}
 										alt={images[0].altText || t('product_image', { productName: name })}
+										fill
+										sizes="(max-width: 768px) 100vw, 25vw"
 										className="object-contain w-full h-full group-hover:scale-110 transition-transform duration-700 ease-out"
 										onError={(e) => {
 											e.target.style.display = 'none';
 											e.target.nextSibling.style.display = 'flex';
 										}}
+										priority={!!id && id === products[0]?.id}
+										draggable={false}
 									/>
 								) : null}
 								<div 

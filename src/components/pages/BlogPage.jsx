@@ -14,7 +14,7 @@ const BlogPage = ({ blogArticles = [] }) => {
   const metaTitle = t('meta_title_magazine');
   const metaDescription = t('meta_description_magazine');
   const pageUrl = "https://mineparis.com/magazine";
-  const ogImage = mainPost?.image?.src || '/img/slider/mine-carousel.jpg';
+  const ogImage = mainPost?.image?.src || '/img/slider/mine-carousel.webp';
 
   return (
     <>
@@ -37,7 +37,7 @@ const BlogPage = ({ blogArticles = [] }) => {
       {/* Main featured article as Jumbotron */}
       <section className="relative w-full min-h-[320px] h-[320px] md:min-h-[520px] md:h-[520px] flex items-stretch mb-8 overflow-hidden">
         <Image
-          src={mainPost.image?.src || '/img/slider/mine-carousel.jpg'}
+          src={mainPost.image?.src || '/img/slider/mine-carousel.webp'}
           alt={mainPost.title}
           fill
           priority

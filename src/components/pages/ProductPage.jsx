@@ -26,7 +26,7 @@ const ProductPage = ({ product, averageRating, similarProducts }) => {
 		category: t(productCategory)
 	});
 	const canonicalUrl = `https://mineparis.com/product/${product.productSlug}`;
-	const ogImage = product.images?.[0]?.url || '/img/slider/mine-carousel.jpg';
+	const ogImage = product.images?.[0]?.url || '/img/slider/mine-carousel.webp';
 
 	const structuredData = {
 		"@context": "https://schema.org",

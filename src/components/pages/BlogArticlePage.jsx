@@ -18,7 +18,7 @@ const BlogArticlePage = ({ blogArticle }) => {
   } = blogArticle;
 
   const pageUrl = `https://mineparis.com/magazine/${handle}`;
-  const ogImage = image?.src || '/img/slider/mine-carousel.jpg';
+  const ogImage = image?.src || '/img/slider/mine-carousel.webp';
   const metaTitle = t('meta_title_magazine');
   const metaDescription = t('meta_description_magazine');
 

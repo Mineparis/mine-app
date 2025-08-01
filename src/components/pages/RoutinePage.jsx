@@ -57,7 +57,7 @@ const RoutinePage = ({
 		description ||
 		`Explorez notre sélection de produits pour une routine beauté ${parentLabel.toLowerCase()} ${routineNameLabel.toLowerCase()}.`;
 	const canonicalUrl = `https://mineparis.com/routine/${parent}/${slug}`;
-	const ogImage = carousel?.[0]?.image || '/img/slider/mine-carousel.jpg';
+	const ogImage = carousel?.[0]?.image || '/img/slider/mine-carousel.webp';
 
 	return (
 		<>

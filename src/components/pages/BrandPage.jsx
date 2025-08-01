@@ -42,7 +42,7 @@ export default function BrandPage({
 	const titleLabel = t('seo_brand_title', { brand: brandName });
 	const descriptionLabel = t('seo_brand_description', { brand: brandName });
 	const canonicalUrl = `https://mineparis.com/brands/${brandSlug}`;
-	const ogImage = '/img/slider/mine-carousel.jpg';
+	const ogImage = '/img/slider/mine-carousel.webp';
 
 	const structuredData = {
 		"@context": "https://schema.org",
