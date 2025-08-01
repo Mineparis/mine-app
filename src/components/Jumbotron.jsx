@@ -5,15 +5,19 @@ import { ChevronLeftIcon, ChevronRightIcon, PauseIcon, PlayIcon } from '@heroico
 import { useTranslation } from 'next-i18next';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
-
 import { HOMEPAGE_JUMBOTRON } from '@data/homepage';
 import Link from 'next/link';
-
 
 const Jumbotron = ({ data }) => {
   const { t } = useTranslation('jumbotron');
   const slides = useMemo(() => Array.isArray(data) ? data : HOMEPAGE_JUMBOTRON, [data]);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, skipSnaps: false });
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    skipSnaps: false,
+    dragFree: false,
+    align: 'start',
+  });
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const autoplayRef = useRef();
   const [isPaused, setIsPaused] = React.useState(false);
@@ -67,13 +71,11 @@ const Jumbotron = ({ data }) => {
   const handlePausePlay = useCallback(() => {
     setIsPaused((prev) => {
       if (prev) {
-        // Play
         if (autoplayRef.current) clearInterval(autoplayRef.current);
         autoplayRef.current = setInterval(() => {
           if (emblaApi) emblaApi.scrollNext();
         }, 10000);
       } else {
-        // Pause
         if (autoplayRef.current) clearInterval(autoplayRef.current);
       }
       return !prev;
@@ -94,53 +96,57 @@ const Jumbotron = ({ data }) => {
     >
       <div className="absolute inset-0 w-full h-full z-0">
         <div className="embla h-full w-full" ref={emblaRef}>
-          <div className="embla__container flex h-full transition-all duration-700">
-            {slides.map((slide, idx) => (
-              <div
-                className="embla__slide min-w-full h-full relative flex items-center justify-start"
-                key={idx}
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`Slide ${idx + 1} sur ${slides.length}`}
-                aria-hidden={selectedIndex !== idx}
-                tabIndex={selectedIndex === idx ? 0 : -1}
-              >
-                <div className="absolute inset-0 w-full h-full z-0">
-                  <Image
-                    src={slide.image}
-                    alt={slide.title}
-                    fill
-                    className="object-cover object-center"
-                    style={{ minHeight: 320 }}
-                    draggable={false}
-                    priority={idx === 0}
-                    sizes="100vw"
-                  />
+          <div className="embla__container flex h-full transition-all duration-700 will-change-transform">
+            {slides.map((slide, idx) => {
+              const isSelected = selectedIndex === idx;
+              return (
+                <div
+                  className="embla__slide min-w-full h-full relative flex items-center justify-start transition-transform duration-700 will-change-transform"
+                  key={idx}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`Slide ${idx + 1} sur ${slides.length}`}
+                  aria-hidden={!isSelected}
+                  tabIndex={isSelected ? 0 : -1}
+                >
+                  <div className="absolute inset-0 w-full h-full z-0">
+                    <Image
+                      src={slide.image}
+                      alt={slide.title}
+                      fill
+                      priority={idx === 0}
+                      fetchPriority={idx === 0 ? "high" : "auto"}
+                      sizes="100vw"
+                      className="object-cover object-center"
+                      style={{ minHeight: 320 }}
+                      draggable={false}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-black/40 z-10 transition-all" aria-hidden="true" />
+                  <div className="relative z-20 flex flex-col items-start justify-center h-full text-left pl-15 lg:pl-30 max-w-[90vw] md:max-w-2xl w-full">
+                    <h1 className="text-xl uppercase text-white mb-3 break-words max-w-full" style={{ textShadow: '0 2px 16px #000' }} id={`jumbotron-slide-title-${idx}`}>
+                      {t(slide.title)}
+                    </h1>
+                    {slide.subtitle && (
+                      <p className="text-xs xs:text-sm md:text-lg text-white mb-4 max-w-full md:max-w-xl drop-shadow break-words" style={{ textShadow: '0 2px 16px #000' }}>
+                        {t(slide.subtitle)}
+                      </p>
+                    )}
+                    {slide.cta && (
+                      <Link
+                        href={slide.cta.href}
+                        className="flex items-center justify-center px-2 py-8 bg-white text-black font-semibold rounded-full shadow hover:bg-gray-100 transition text-xs md:text-base hover:scale-95"
+                        style={{ textDecoration: 'none' }}
+                        tabIndex={isSelected ? 0 : -1}
+                        aria-labelledby={`jumbotron-slide-title-${idx}`}
+                      >
+                        <span className="px-2 text-center w-full">{t(slide.cta.label)}</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-black/40 z-10 transition-all duration-700" aria-hidden="true" />
-                <div className="relative z-20 flex flex-col items-start justify-center h-full text-left pl-8 lg:pl-30 max-w-[90vw] md:max-w-2xl w-full">
-                  <h1 className="text-xl uppercase text-white mb-3 break-words max-w-full" style={{textShadow:'0 2px 16px #000'}} id={`jumbotron-slide-title-${idx}`}>
-                    {t(slide.title)}
-                  </h1>
-                  {slide.subtitle && (
-                    <p className="text-xs xs:text-sm md:text-lg text-white mb-4 max-w-full md:max-w-xl drop-shadow break-words" style={{textShadow:'0 2px 16px #000'}}>
-                      {t(slide.subtitle)}
-                    </p>
-                  )}
-                  {slide.cta && (
-                    <Link
-                      href={slide.cta.href}
-                      className="flex items-center justify-center px-2 py-8 bg-white text-black font-semibold rounded-full shadow hover:bg-gray-100 transition text-xs md:text-base hover:scale-95"
-                      style={{ textDecoration: 'none' }}
-                      tabIndex={selectedIndex === idx ? 0 : -1}
-                      aria-labelledby={`jumbotron-slide-title-${idx}`}
-                    >
-                      <span className="px-2 text-center w-full">{t(slide.cta.label)}</span>
-                    </Link>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
