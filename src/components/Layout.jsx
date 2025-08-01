@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import { useTranslation } from 'next-i18next';
 
-import NextNProgress from '@components/NextNProgress';
+import ProgressBar from '@components/ProgressBar';
 import { DEFAULT_LANG } from '../utils/constants';
 import { MENU } from '../data/menu';
 import Header from './Header';
@@ -37,8 +37,6 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		window.__localeId__ = lang;
 	}, [lang]);
 
-
-	const menuParentCategories = MENU.map(({ title }) => `/${title.toLowerCase()}`);
 	const whitePages = [
 		...MENU.map(({ title }) => `/${title}`),
 		'/category', '/product', '/login', '/customer', '/legal-notice',
@@ -48,59 +46,61 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
 	return (
-		<div style={{ paddingTop }} className="min-h-screen flex flex-col">
+		<>
 			<Head>
-				<title>Mine Paris</title>
+				<title key="title">Mine Paris</title>
+				<meta key="charset" charSet="utf-8" />
+				<meta key="viewport" name="viewport" content="width=device-width,initial-scale=1" />
+				<meta key="theme-color" name="theme-color" content="#fff" />
+				<meta key="description" name="description" content={t('seo_description', 'Boutique beauté Mine Paris : soins, routines, box et conseils experts.')} />
+				<link rel="canonical" href={`https://mineparis.com${asPath}`} />
+				<html lang={lang} />
 			</Head>
-			<NextNProgress options={{ showSpinner: false }} />
-			<Header 
-				shouldDisplayWhiteLogo={isWhitePage}
-				headerAbsolute={!isWhitePage}
-				hideTopbar={true}
-				setPaddingTop={setPaddingTop}
-			/>
-			<main id="main-content">{children}</main>
-			<Footer />
-			<CookieConsent
-				containerClasses="fixed bottom-0 left-0 w-full z-50"
-				style={{ 
-					background: 'rgba(52, 58, 64, 0.98)', 
-					display: 'flex', 
-					alignItems: 'center', 
-					borderRadius: '0.5rem', 
-					margin: '0.5rem', 
-					maxWidth: '600px', 
-					left: '50%', 
-					transform: 'translateX(-50%)' 
-				}}
-				buttonStyle={{ 
-					background: '#fff', 
-					color: '#343a40', 
-					borderRadius: '0.375rem', 
-					fontWeight: 600, 
-					padding: '0.5rem 1.5rem', 
-					marginLeft: '1rem' 
-				}}
-				buttonWrapperClasses="flex flex-row gap-2"
-				declineButtonStyle={{ 
-					background: 'transparent', 
-					color: '#fff', 
-					border: '1px solid #fff', 
-					borderRadius: '0.375rem', 
-					fontWeight: 600, 
-					padding: '0.5rem 1.5rem' 
-				}}
-				declineButtonText={t('cookie_consent_decline')}
-				buttonText={t('cookie_consent_agree')}
-				location="bottom"
-				expires={365}
-				enableDeclineButton
-				onAccept={handleAgreeCookieConsent}
-				onDecline={handleDeclineCookieConsent}
-			>
-				{t('cookie_consent_text')}
-			</CookieConsent>
-		</div>
+			<div style={{ paddingTop }} className="min-h-screen flex flex-col">
+				<ProgressBar />
+				<Header
+					shouldDisplayWhiteLogo={isWhitePage}
+					headerAbsolute={!isWhitePage}
+					hideTopbar={true}
+					setPaddingTop={setPaddingTop}
+				/>
+				<main id="main-content" tabIndex={-1} role="main">
+					{children}
+				</main>
+				<Footer />
+				<CookieConsent
+					containerClasses="fixed bottom-0 left-0 w-full z-50 flex justify-center px-2"
+					style={undefined}
+					buttonStyle={undefined}
+					buttonWrapperClasses="flex flex-col w-full mt-1"
+					declineButtonStyle={undefined}
+					declineButtonClasses="hidden"
+					buttonClasses="w-auto min-w-[140px] bg-primary text-white font-semibold py-2 px-5 mx-auto hover:bg-primary-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-primary-200 text-base shadow-none mt-1"
+					declineButtonText={t('cookie_consent_decline')}
+					buttonText={t('cookie_consent_agree')}
+					location="bottom"
+					expires={180}
+					enableDeclineButton
+					onAccept={handleAgreeCookieConsent}
+					onDecline={handleDeclineCookieConsent}
+				>
+					<div className="w-full max-w-md mx-auto flex flex-col items-center px-3 py-2 sm:px-6">
+						<span className="block text-center text-white text-base font-medium leading-relaxed mb-1">
+							{t('cookie_consent_text')}
+						</span>
+						<span
+							tabIndex={0}
+							role="button"
+							className="mb-1 text-sm text-gray-600 underline underline-offset-2 hover:text-primary transition cursor-pointer"
+							onClick={handleDeclineCookieConsent}
+							aria-label={t('cookie_consent_decline')}
+						>
+							{t('cookie_consent_decline')}
+						</span>
+					</div>
+				</CookieConsent>
+			</div>
+		</>
 	);
 };
 
