@@ -14,9 +14,17 @@ class MyDocument extends Document {
 			<Html lang={locale}>
 				<Head>
 					<link
-						rel="stylesheet"
-						href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap"
+						rel="preload"
+						href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+						as="style"
+						onLoad="this.onload=null;this.rel='stylesheet'"
 					/>
+					<noscript>
+						<link
+							rel="stylesheet"
+							href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+						/>
+					</noscript>
 					<link rel="icon" href="/img/favicon.png" />
 					<meta property="og:type" content="website" />
 					<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
@@ -49,7 +57,7 @@ class MyDocument extends Document {
 						</>
 					)}
 				</Head>
-				<body>
+				<body style={{ fontFamily: "'Inter', sans-serif" }}>
 					<Main />
 					<NextScript />
 				</body>
