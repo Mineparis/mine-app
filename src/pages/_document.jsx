@@ -15,17 +15,18 @@ class MyDocument extends Document {
 				<Head>
 					<link
 						rel="preload"
-						href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+						href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700&display=swap"
 						as="style"
 						onLoad="this.onload=null;this.rel='stylesheet'"
 					/>
 					<noscript>
 						<link
 							rel="stylesheet"
-							href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+							href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700&display=swap"
 						/>
 					</noscript>
-					<link rel="icon" href="/img/favicon.png" />
+					<link rel="icon" href="/favicon.ico" />
+					<meta name="apple-mobile-web-app-title" content="Mine" />
 					<meta property="og:type" content="website" />
 					<meta name="google-site-verification" content="HomFVDjGLE7Fgz0LBnFFcDZouzvQmYB4Om_FyvTYh3s" />
 					{/* Hotjar & Mailchimp only in production */}
@@ -57,7 +58,7 @@ class MyDocument extends Document {
 						</>
 					)}
 				</Head>
-				<body style={{ fontFamily: "'Inter', sans-serif" }}>
+				<body className="font-sans">
 					<Main />
 					<NextScript />
 				</body>

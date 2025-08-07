@@ -8,8 +8,7 @@ import { ShopifyProvider, CartProvider } from '@shopify/hydrogen-react';
 import Layout from '@components/Layout';
 import { CartDropdownProvider } from '@contexts/CartDropdownContext';
 
-import '../styles/tailwind.css';
-import '../scss/style.default.scss';
+import '../styles/globals.css';
 import '../styles/shopify-rich-text.css';
 
 const MyApp = ({ Component, pageProps }) => {

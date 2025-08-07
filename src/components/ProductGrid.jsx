@@ -76,7 +76,7 @@ const ProductGrid = ({ products = [] }) => {
 
 				return (
 					<article
-						key={id}
+						key={`${id}-${handle}`}
 						className="group cursor-pointer transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]"
 						role="gridcell"
 					>

@@ -55,6 +55,42 @@ const Footer = () => {
     [t]
   );
 
+  const socialLinks = [
+    {
+      href: "https://www.instagram.com/_mineparis",
+      label: "Instagram",
+      title: "Instagram",
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="18" height="18" x="3" y="3" rx="5" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="17" cy="7" r="1" fill="currentColor" />
+        </svg>
+      ),
+    },
+    {
+      href: "https://www.tiktok.com/@mineparis_",
+      label: "Tiktok",
+      title: "Tiktok",
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M16.5 3v10.25a3.25 3.25 0 11-2-3V6.5h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ),
+    },
+    {
+      href: "https://www.pinterest.fr/mine_paris",
+      label: "Pinterest",
+      title: "Pinterest",
+      icon: (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"/>
+          <path d="M2.5 12h19M12 2.5v19M7 12c0 2.5 2 4.5 5 4.5s5-2 5-4.5" stroke="currentColor" strokeWidth="1.5"/>
+        </svg>
+      ),
+    },
+  ];
+
   if (!isMounted) return null;
 
   return (
@@ -94,7 +130,7 @@ const Footer = () => {
                 type="submit"
                 aria-label={t("submit_newsletter")}
                 disabled={isLoading}
-                className="rounded-lg bg-white text-primary font-semibold px-4 py-2 transition hover:bg-primary-100 hover:text-primary-800 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+                className="rounded-lg bg-white text-black font-semibold px-4 py-2 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 <span className="sr-only">{t("submit_newsletter")}</span>
                 <EnvelopeIcon className="w-5 h-5" aria-hidden="true" />
@@ -102,7 +138,6 @@ const Footer = () => {
             </form>
           </section>
 
-          {/* Informations et Social côte à côte */}
           <div className="flex flex-1 flex-col md:flex-row gap-8">
             {/* Informations */}
             {categories.map(({ sectionName, links }) => (
@@ -117,7 +152,7 @@ const Footer = () => {
                     <li key={label}>
                       <Link
                         href={href}
-                        className="flex items-center gap-2 hover:text-white text-gray-100 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-200"
+                        className="flex items-center gap-2 hover:text-white text-gray-100 no-underline"
                       >
                         {Icon && <Icon className="w-4 h-4" aria-hidden="true" />}
                         {label}
@@ -135,51 +170,20 @@ const Footer = () => {
             >
               <h2 className="uppercase tracking-widest font-semibold mb-3 text-lg">Social</h2>
               <ul className="space-y-2">
-                <li>
-                  <a
-                    className="flex items-center gap-2 hover:text-white text-gray-100 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-200"
-                    href="https://www.instagram.com/_mineparis"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Instagram"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
-                      <rect width="18" height="18" x="3" y="3" rx="5" stroke="currentColor" strokeWidth="1.5" />
-                      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
-                      <circle cx="17" cy="7" r="1" fill="currentColor" />
-                    </svg>
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="flex items-center gap-2 hover:text-white text-gray-100 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-200"
-                    href="https://www.tiktok.com/@mineparis_"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Tiktok"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M16.5 3v10.25a3.25 3.25 0 11-2-3V6.5h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Tiktok
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="flex items-center gap-2 hover:text-white text-gray-100 underline underline-offset-2 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-200"
-                    href="https://www.pinterest.fr/mine_paris"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Pinterest"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
-                      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"/>
-                      <path d="M2.5 12h19M12 2.5v19M7 12c0 2.5 2 4.5 5 4.5s5-2 5-4.5" stroke="currentColor" strokeWidth="1.5"/>
-                    </svg>
-                    Pinterest
-                  </a>
-                </li>
+                {socialLinks.map(({ href, label, title, icon }) => (
+                  <li key={label}>
+                    <a
+                      className="flex items-center gap-2 hover:text-white text-gray-100"
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={title}
+                    >
+                      {icon}
+                      {label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
