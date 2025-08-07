@@ -63,7 +63,7 @@ export async function getStaticProps({ locale, params }) {
 
 		const subCategories = menuCategory.subCategories || [];
 		const currentSubCategory = subCategories.find(sc => sc.slug === subCategory);
-		
+
 		if (!currentSubCategory) {
 			return { notFound: true };
 		}

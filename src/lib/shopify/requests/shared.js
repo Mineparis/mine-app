@@ -9,6 +9,13 @@ const PRODUCTS_QUERY = `
           id
           title
           handle
+          collections(first: 10) {
+            edges {
+              node {
+                handle
+              }
+            }
+          }
           descriptionHtml
           vendor
           createdAt

@@ -60,7 +60,7 @@ const ProductHero = ({ product }) => {
           {/* Image Gallery */}
           <div className="order-2 lg:order-1">
             {/* Main Image */}
-            <div className="aspect-square overflow-hidden mb-6 relative group">
+            <div className="aspect-square overflow-hidden mb-6 relative group w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full mx-auto">
               {hasDiscount && (
                 <div className="absolute top-6 left-6 z-10">
                   <span className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold">
@@ -68,7 +68,7 @@ const ProductHero = ({ product }) => {
                   </span>
                 </div>
               )}
-              
+
               {mainImage && (
                 <Image
                   src={mainImage.url || mainImage.src}
@@ -76,6 +76,7 @@ const ProductHero = ({ product }) => {
                   fill
                   className="object-contain group-hover:scale-105 transition-transform duration-700"
                   priority
+                  sizes="(max-width: 640px) 90vw, (max-width: 768px) 70vw, 40vw"
                 />
               )}
             </div>
@@ -124,7 +125,7 @@ const ProductHero = ({ product }) => {
             </div>
 
             {/* Product Title */}
-            <h1 className="text-xl font-light text-black leading-tight">
+            <h1 className="text-xl font-medium text-black leading-tight">
               {product.title}
             </h1>
 
@@ -162,11 +163,20 @@ const ProductHero = ({ product }) => {
               <button
                 onClick={handleAddToCart}
                 disabled={!product.availableForSale}
-                className={`w-full py-4 px-8 font-medium text-lg transition-all ${
-                  product.availableForSale
-                    ? 'bg-black text-white hover:bg-gray-800'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
+                className={`
+                  w-full
+                  py-3 px-4
+                  text-base
+                  font-medium
+                  transition-all
+                  rounded-lg
+                  ${
+                    product.availableForSale
+                      ? 'bg-black text-white hover:bg-gray-800'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }
+                  sm:py-4 sm:px-8 sm:text-lg
+                `}
               >
                 {product.availableForSale ? t('add_to_cart') : t('sold_out')}
               </button>

@@ -1,104 +1,46 @@
-/* Styles pour le rich text Shopify */
-.shopify-rich-text h1, .shopify-rich-text h2, .shopify-rich-text h3, .shopify-rich-text h4, .shopify-rich-text h5, .shopify-rich-text h6 {
-  color: #000;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
-  line-height: 1.4;
-}
-
-.shopify-rich-text h1 { font-size: 2rem; }
-.shopify-rich-text h2 { font-size: 1.75rem; }
-.shopify-rich-text h3 { font-size: 1.5rem; }
-.shopify-rich-text h4 { font-size: 1.25rem; }
-.shopify-rich-text h5 { font-size: 1.125rem; }
-.shopify-rich-text h6 { font-size: 1rem; }
+.shopify-rich-text h1 { color: #343434; font-weight: 600; font-size: 1.25rem; /* Tailwind: text-xl */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
+.shopify-rich-text h2 { color: #343434; font-weight: 600; font-size: 1.125rem; /* Tailwind: text-lg */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
+.shopify-rich-text h3 { color: #343434; font-weight: 600; font-size: 1rem;    /* Tailwind: text-base */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
+.shopify-rich-text h4 { color: #343434; font-weight: 600; font-size: 0.875rem;/* Tailwind: text-sm */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
+.shopify-rich-text h5 { color: #343434; font-weight: 600; font-size: 0.75rem; /* Tailwind: text-xs */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
+.shopify-rich-text h6 { color: #343434; font-weight: 600; font-size: 0.75rem; /* Tailwind: text-xs */ margin: 1.5rem 0 1rem 0; line-height: 1.4; }
 
 .shopify-rich-text p {
   color: #374151;
+  font-size: 0.95rem;
   line-height: 1.7;
   margin-bottom: 1rem;
 }
 
-.shopify-rich-text strong, .shopify-rich-text b {
-  color: #000;
+.shopify-rich-text strong,
+.shopify-rich-text b {
+  color: #343434;
   font-weight: 600;
-}
-
-.shopify-rich-text em, .shopify-rich-text i {
-  color: #6b7280;
-  font-style: italic;
-}
-
-.shopify-rich-text ul, .shopify-rich-text ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-  color: #374151;
-}
-
-.shopify-rich-text ul {
-  list-style-type: disc;
-}
-
-.shopify-rich-text ol {
-  list-style-type: decimal;
-}
-
-.shopify-rich-text li {
-  color: #374151;
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
-}
-
-.shopify-rich-text li strong, .shopify-rich-text li b {
-  color: #000;
-  font-weight: 600;
-}
-
-.shopify-rich-text li em, .shopify-rich-text li i {
-  color: #6b7280;
-  font-style: italic;
 }
 
 .shopify-rich-text a {
-  color: #000;
+  color: #343434;
   text-decoration: underline;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
+  font-size: 0.95rem;
 }
 
 .shopify-rich-text a:hover {
   color: #374151;
 }
 
-.shopify-rich-text blockquote {
-  border-left: 4px solid #000;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  color: #6b7280;
-  font-style: italic;
-}
-
-.shopify-rich-text table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-}
-
-.shopify-rich-text th, .shopify-rich-text td {
-  border: 1px solid #e5e7eb;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.shopify-rich-text th {
-  background-color: #f9fafb;
-  font-weight: 600;
-  color: #000;
-}
-
-.shopify-rich-text td {
+.shopify-rich-text ul,
+.shopify-rich-text ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
   color: #374151;
+  font-size: 0.95rem;
+}
+
+.shopify-rich-text li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
 }
 
 .shopify-rich-text img {

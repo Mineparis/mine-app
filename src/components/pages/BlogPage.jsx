@@ -63,13 +63,12 @@ const BlogPage = ({ blogArticles = [] }) => {
             <h1 className="text-white text-lg md:text-2xl font-bold drop-shadow-lg mb-3 leading-tight tracking-tight line-clamp-2">
               {mainPost.title}
             </h1>
-            <p className="text-gray-100 text-base md:text-lg mb-4 line-clamp-3 drop-shadow">
+            <p className="text-gray-100 text-xs md:text-md mb-4 line-clamp-3 drop-shadow">
               {mainPost.shortDescription}
             </p>
             <Link
               href={`/magazine/${mainPost.handle}`}
-              className="inline-block px-5 py-2 bg-white font-semibold rounded-xl transition shadow-lg"
-              style={{ textDecoration: 'none' }}
+              className="inline-block px-4 py-2 bg-white text-sm font-medium rounded-xl transition shadow-lg"
               aria-label={t('read_more', 'Lire l’article')}
             >
               {t('read_more', 'Lire l’article')}
@@ -108,7 +107,7 @@ const BlogPage = ({ blogArticles = [] }) => {
                   className="block hover:text-primary-700 transition-colors"
                   style={{ textDecoration: 'none' }}
                 >
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
+                  <h3 className="text-md font-bold text-gray-900 mb-3 line-clamp-2">
                     {article.title}
                   </h3>
                 </Link>
@@ -116,7 +115,7 @@ const BlogPage = ({ blogArticles = [] }) => {
                 <div className="mt-auto">
                   <Link
                     href={`/magazine/${article.handle}`}
-                    className="inline-block text-primary font-semibold transition hover:text-primary-700"
+                    className="inline-block text-md text-primary font-semibold transition hover:text-primary-700"
                     style={{ textDecoration: 'none' }}
                     aria-label={t('read_more', 'Lire l’article')}
                   >

@@ -75,7 +75,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 					buttonWrapperClasses="flex flex-col w-full mt-1"
 					declineButtonStyle={undefined}
 					declineButtonClasses="hidden"
-					buttonClasses="w-auto min-w-[140px] bg-primary text-white font-semibold py-2 px-5 mx-auto hover:bg-primary-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-primary-200 text-base shadow-none mt-1"
+					buttonClasses="w-auto min-w-[140px] bg-primary text-white font-semibold py-2 px-5 mx-auto hover:bg-primary-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-primary-200 text-xs shadow-none mt-1"
 					declineButtonText={t('cookie_consent_decline')}
 					buttonText={t('cookie_consent_agree')}
 					location="bottom"
@@ -85,7 +85,7 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 					onDecline={handleDeclineCookieConsent}
 				>
 					<div className="w-full max-w-md mx-auto flex flex-col items-center px-3 py-2 sm:px-6">
-						<span className="block text-center text-white text-base font-medium leading-relaxed mb-1">
+						<span className="block text-center text-white text-xs font-medium leading-relaxed mb-1">
 							{t('cookie_consent_text')}
 						</span>
 						<span

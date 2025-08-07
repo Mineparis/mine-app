@@ -41,7 +41,7 @@ const Header = (props) => {
 	const topbarRef = useRef(null);
 	const [, topbarHeight] = useSize(topbarRef);
 	const [, navbarHeight] = useSize(navbarRef);
-	const textColor = shouldDisplayWhiteLogo || additionalNavClasses ? 'text-primary-700' : 'text-white';
+	const textColor = shouldDisplayWhiteLogo || additionalNavClasses ? 'text-primary-900' : 'text-white';
 
 	const toggleDropdown = useCallback((name) => {
 		setDropdownOpen(prev => ({ ...prev, [name]: !prev[name] }));

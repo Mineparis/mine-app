@@ -110,7 +110,7 @@ const BlogsCarousel = ({ title, blogArticles = [] }) => {
 					className="inline-block"
 					style={{ textDecoration: 'none' }}
 				>
-					<span className="px-6 py-2 rounded-full border border-white text-white hover:bg-neutral-600 transition font-semibold">
+					<span className="px-6 py-2 rounded-full border border-white text-sm text-secondary hover:bg-secondary-600 transition font-semibold">
 						{t("see_more")}
 					</span>
 				</Link>

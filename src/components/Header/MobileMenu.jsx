@@ -19,7 +19,7 @@ export default function MobileMenu({ MENU, t, mobileDropdownOpen, setMobileDropd
             {hasDropdown ? (
               <button
                 id={`${itemId}-trigger`}
-                className="w-full flex items-center justify-between py-3 text-base font-semibold tracking-wider outline-none transition-colors duration-200 text-gray-900 hover:text-primary-700"
+                className="w-full flex items-center justify-between py-3 text-xs font-semibold tracking-wider outline-none transition-colors duration-200 text-gray-900 hover:text-primary-700"
                 onClick={handleMobileDropdownToggle}
                 aria-expanded={isExpanded}
                 aria-controls={isExpanded ? `${itemId}-content` : undefined}
@@ -31,7 +31,7 @@ export default function MobileMenu({ MENU, t, mobileDropdownOpen, setMobileDropd
             ) : (
               <Link
                 href={item.url}
-                className="w-full flex items-center justify-between py-3 text-base font-semibold tracking-wider outline-none transition-colors duration-200 text-gray-900 hover:text-primary-700"
+                className="w-full flex items-center justify-between py-3 text-xs font-semibold tracking-wider outline-none transition-colors duration-200 text-gray-900 hover:text-primary-700"
                 onClick={closeAllMenus}
                 itemProp="url"
               >

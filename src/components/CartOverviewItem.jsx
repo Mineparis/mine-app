@@ -15,6 +15,7 @@ const CartOverviewItem = ({ item, hideCart }) => {
 	};
 
 	const productUrl = `/products/${merchandise.product.handle}`;
+	const formattedPrice = parseFloat(cost.totalAmount.amount).toFixed(2);
 
 	return (
 		<div className="py-3 px-2">
@@ -30,10 +31,10 @@ const CartOverviewItem = ({ item, hideCart }) => {
 					/>
 				</div>
 				<div className="flex-1 min-w-0">
-					<div className="flex items-start justify-between">
+					<div className="flex items-center justify-between">
 						<Link
 							href={productUrl}
-							className="font-bold text-gray-900 hover:text-primary transition underline underline-offset-2"
+							className="text-sm text-gray-900 hover:text-primary transition"
 							onClick={hideCart}
 						>
 							{merchandise.product.title}
@@ -47,11 +48,11 @@ const CartOverviewItem = ({ item, hideCart }) => {
 							<XMarkIcon className="w-5 h-5 text-gray-500 hover:text-primary" aria-hidden="true" />
 						</button>
 					</div>
-					<div className="mt-1 text-xs text-gray-500">
-						{t('quantity')}: <span className="font-medium text-gray-700">{quantity}</span>
+					<div className="text-xs text-gray-500">
+						{t('quantity')}: <span>{quantity}</span>
 					</div>
-					<div className="mt-1 font-semibold text-sm text-primary">
-						{cost.totalAmount.amount} €
+					<div className="mt-1 text-xs text-primary">
+						{formattedPrice} €
 					</div>
 				</div>
 			</div>

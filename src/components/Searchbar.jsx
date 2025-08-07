@@ -59,7 +59,7 @@ const Searchbar = ({
 						<MagnifyingGlassIcon className="w-5 h-5" aria-hidden="true" />
 					</span>
 					<input
-						className="w-full pl-12 pr-10 py-3 text-lg md:text-xl font-semibold rounded-full bg-white shadow-xl border-0 focus:ring-2 focus:ring-primary-400 focus:outline-none placeholder-gray-400 transition-all duration-300 tracking-[.01em]"
+						className="w-full pl-12 pr-10 py-3 text-md md:text-sm font-semibold rounded-full bg-white shadow-xl border-0 focus:ring-2 focus:ring-primary-400 focus:outline-none placeholder-gray-400 transition-all duration-300 tracking-[.01em]"
 						type="search"
 						name="search"
 						id="search"
@@ -87,7 +87,7 @@ const Searchbar = ({
 									<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
 									<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
 								</svg>
-								<span className="text-primary-600 font-medium text-base">{t('searching')}</span>
+								<span className="text-primary-600 font-medium text-xs">{t('searching')}</span>
 							</div>
 						) : displayedResults.length ? (
 							<>
@@ -111,7 +111,7 @@ const Searchbar = ({
 												) : null}
 											</div>
 											<div className="flex-1 min-w-0">
-												<div className="font-semibold text-base text-gray-900 truncate group-hover:text-primary-700 transition">{name}</div>
+												<div className="font-semibold text-xs text-gray-900 truncate group-hover:text-primary-700 transition">{name}</div>
 												<div className="text-xs text-gray-500 truncate mt-1">{brand}</div>
 											</div>
 										</li>
@@ -121,7 +121,7 @@ const Searchbar = ({
 								{displayedResults.length > NB_PRODUCTS_RESULTS_MAX - 1 && (
 									<div className="w-full flex justify-center mt-4">
 										<button
-											className="pointer-events-auto block w-full max-w-md mx-auto py-2 md:py-2.5 rounded-full bg-white text-black font-semibold text-base md:text-lg shadow-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:ring-2 focus:ring-primary-400 transition-all duration-200"
+											className="pointer-events-auto block w-full max-w-md mx-auto py-2 md:py-2.5 rounded-full bg-white text-black font-semibold text-xs shadow-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:ring-2 focus:ring-primary-400 transition-all duration-200"
 											style={{ boxShadow: '0 4px 16px 0 rgba(0,0,0,0.08)' }}
 											onClick={handleSeeMore}
 											aria-label={t('see_more_results')}
@@ -138,7 +138,7 @@ const Searchbar = ({
 						) : searchTerm && !isLoading ? (
 							<div className="flex flex-col items-center justify-center py-8 bg-white rounded-2xl shadow-xl text-gray-400">
 								<MagnifyingGlassIcon className="w-8 h-8 mb-3" aria-hidden="true" />
-								<p className="text-base font-medium">{t('no_results_found')}</p>
+								<p className="text-xs font-medium">{t('no_results_found')}</p>
 							</div>
 						) : null}
 					</div>

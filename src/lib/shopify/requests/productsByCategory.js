@@ -9,8 +9,12 @@ import { fetchProducts } from './shared';
 export async function getProductsByCategory(category, first = 100) {
   try {
     // Fetch all products in the category collection
-    return await fetchProducts(`collection:${category}`, first);
-    
+    const allProducts = await fetchProducts(`collection:${category}`, first);
+
+    return allProducts.filter(product =>
+      Array.isArray(product.collections) &&
+      product.collections.some(col => col.handle === category)
+    );
   } catch (error) {
     console.error('Error fetching products by category:', error);
     return [];

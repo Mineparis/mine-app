@@ -47,7 +47,7 @@ const ProductTabs = ({ descriptionHtml, instructions, composition }) => {
               key={index}
               onClick={() => setActiveTab(index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`flex-1 px-5 py-4 text-base font-medium border-b-2 transition-all duration-200 text-center ${
+              className={`flex-1 px-5 py-4 text-sm font-medium border-b-2 transition-all duration-200 text-center ${
                 activeTab === index
                   ? 'border-black text-black bg-gray-50'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -69,7 +69,7 @@ const ProductTabs = ({ descriptionHtml, instructions, composition }) => {
               key={index}
               onClick={() => setActiveTab(index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`w-full px-6 py-4 text-base font-medium border-b transition-all duration-200 text-left ${
+              className={`w-full px-6 py-4 text-xs font-medium border-b transition-all duration-200 text-left ${
                 activeTab === index
                   ? 'border-black text-black bg-gray-50 font-semibold'
                   : 'border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50'

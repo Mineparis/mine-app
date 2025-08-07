@@ -50,6 +50,7 @@ const ProductGrid = ({ products = [] }) => {
 				const isAvailable = availableForSale || false;
 				
 				const formattedVariantId = variantId ? createShopifyGid(variantId) : null;
+				const formattedPrice = parseFloat(price).toFixed(2);
 
 				const handleAddToCart = async (e) => {
 					e.preventDefault();
@@ -133,16 +134,16 @@ const ProductGrid = ({ products = [] }) => {
 							{/* Product Info */}
 							<div className="pt-3 border-t-2 border-neutral-20">
 								{brand && (
-									<div className="text-sm font-medium tracking-widest text-neutral-400 mb-1 uppercase">
+									<div className="text-xs font-medium tracking-widest text-neutral-400 mb-1 uppercase">
 										{brand}
 									</div>
 								)}
-								<h3 className="text-base font-medium mb-2 text-neutral-900 line-clamp-2 leading-relaxed">
+								<h3 className="text-xs font-medium mb-2 text-neutral-900 line-clamp-2 leading-relaxed">
 									{name}
 								</h3>
 								<div className="flex items-center justify-between">
-									<span className="text-base text-neutral-900" aria-label={t('price_label', { price: price })}>
-										{price} €
+									<span className="text-xs text-neutral-900" aria-label={t('price_label', { price: formattedPrice })}>
+										{formattedPrice} €
 									</span>
 								</div>
 							</div>

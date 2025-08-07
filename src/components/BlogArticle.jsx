@@ -30,7 +30,7 @@ const BlogArticle = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
         <div className="absolute bottom-0 left-0 w-full px-4 pb-3">
-          <h5 className="text-white text-lg font-semibold drop-shadow-lg line-clamp-2">{title}</h5>
+          <h5 className="text-white text-sm font-semibold drop-shadow-lg line-clamp-2">{title}</h5>
         </div>
       </Link>
 

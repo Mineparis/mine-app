@@ -89,7 +89,7 @@ const SearchPage = ({
 		{t('skip_to_main_content')}
 	  </a>
 	  <main id="main-content">
-		<section className="w-full max-w-7xl mx-auto px-4 py-12" aria-labelledby="search-heading">
+		<section className="w-full max-w-7xl mx-auto px-4 py-8" aria-labelledby="search-heading">
 		  {/* Header */}
 		  <div className="text-center mb-12">
 			<h1 id="search-heading" className="text-xl font-light text-neutral-900 mb-4">

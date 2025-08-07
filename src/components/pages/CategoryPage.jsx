@@ -133,7 +133,7 @@ export default function CategoryPage({
 			</a>
 
 			<main id="main-content">
-				<section className="w-full max-w-7xl mx-auto px-4 py-12" aria-labelledby="category-heading">
+				<section className="w-full max-w-7xl mx-auto px-4 py-8" aria-labelledby="category-heading">
 					<ShopHeader
 						title={displayTitle}
 						categoryName={categoryName}

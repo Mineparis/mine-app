@@ -40,12 +40,12 @@ const ShopHeader = ({
 					</div>
 				)}
 				
-				<h1 className="text-xl font-bold italic capitalize tracking-tight mb-4 text-neutral-900 leading-tight">
+				<h1 className="text-2xl font-bold italic capitalize tracking-tight mb-4 text-neutral-900 leading-tight">
 					{title}
 				</h1>
 				
 				{isAllCategory && collectionInfo?.description && (
-					<div className="max-w-2xl">
+					<div className="max-w-2xl mb-6">
 						<p className="text-neutral-500 leading-relaxed">
 							{collectionInfo.description}
 						</p>
@@ -56,7 +56,7 @@ const ShopHeader = ({
 					<div className="flex flex-wrap gap-2 mt-2" role="group" aria-label={t('category_filters', 'Category filters')}>
 						{categoryName && !isAllCategory && (
 							<button
-								className="px-4 py-2 border border-neutral-100 text-sm font-medium transition-all duration-150 bg-white text-neutral-900 hover:shadow-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900"
+								className="px-4 py-2 border border-neutral-100 text-xs font-medium transition-all duration-150 bg-white text-neutral-900 hover:shadow-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900"
 								style={{ borderRadius: 0 }}
 								onClick={onAllCategoryClick}
 								aria-label={t('view_all_category_products', { category: t(categoryName) })}
@@ -73,7 +73,7 @@ const ShopHeader = ({
 							return (
 								<button
 									key={item.slug}
-									className={`px-4 py-2 border border-neutral-100 text-sm font-medium transition-all duration-150 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 ${isSelected ? 'bg-neutral-900 text-white' : 'bg-white text-neutral-900 hover:shadow-lg'}`}
+									className={`px-4 py-2 border border-neutral-100 text-xs font-medium transition-all duration-150 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 ${isSelected ? 'bg-neutral-900 text-white' : 'bg-white text-neutral-900 hover:shadow-lg'}`}
 									style={{ borderRadius: 0 }}
 									onClick={() => {
 										if (isPreoccupationPage) {
@@ -106,7 +106,7 @@ const ShopHeader = ({
 						id="sort"
 						value={selectedSort}
 						onChange={(e) => onSortChange?.(e.target.value)}
-						className="bg-white px-3 py-2 text-neutral-900 focus:outline-none shadow-sm border border-neutral-100"
+						className="bg-white px-3 py-2 text-xs text-neutral-900 focus:outline-none shadow-sm border border-neutral-100"
 						style={{ borderRadius: 0 }}
 					>
 						{sortOptions.map(opt => (

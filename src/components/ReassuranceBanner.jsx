@@ -33,11 +33,11 @@ const ReassuranceBanner = () => {
 						<div className="flex-shrink-0 flex items-center justify-center w-10 h-10 mx-auto md:mx-0 rounded-full shadow bg-white">
 								{item.icon}
 						</div>
-						<div className="flex flex-col justify-center w-full">
-							<div className="font-semibold text-gray-900 text-lg whitespace-normal break-words">
+						<div className="flex flex-col justify-left w-full">
+							<div className="font-semibold text-md">
 								{t(item.titleKey)}
 							</div>
-							<div className="text-gray-500 text-sm whitespace-normal break-words">
+							<div className="mt-1 text-gray-500 text-sm">
 								{t(item.descriptionKey)}
 							</div>
 						</div>

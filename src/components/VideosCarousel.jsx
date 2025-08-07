@@ -75,10 +75,9 @@ const VideosCarousel = () => {
   return (
     <>
       <div className="w-full p-2">
-        <Link href="/about-us" style={{ textDecoration: 'none' }}>
+        <Link href="/about-us">
           <h1
-            className="text-center text-xl text-gray-700 uppercase antialiased font-light font-stretch-condensed"
-            style={{ fontWeight: 'lighter' }}
+            className="my-2 text-center text-2xl text-gray-500 uppercase antialiased font-extralight font-stretch-semi-condensed"
           >
             {t('home_page_about_us')}
           </h1>
@@ -137,7 +136,7 @@ const VideosCarousel = () => {
         })}
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="py-4 flex items-center justify-center">
         <div className="flex gap-4">
           <button
             onClick={scrollPrev}

@@ -97,10 +97,10 @@ export default function BrandPage({
 			</a>
 
 			<main id="main-content">
-				<section className="w-full max-w-7xl mx-auto px-4 py-12" aria-labelledby="brand-heading">
+				<section className="w-full max-w-7xl mx-auto px-4 py-8" aria-labelledby="brand-heading">
 					{/* Brand Header */}
 					<div className="text-center mb-12">
-						<h1 id="brand-heading" className="text-xl font-light text-neutral-900 mb-4">
+						<h1 id="brand-heading" className="text-xl font-semibold text-neutral-900 mb-4">
 							{brandName}
 						</h1>
 						<p className="text-neutral-600 mb-8">

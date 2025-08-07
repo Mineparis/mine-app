@@ -24,7 +24,7 @@ const BigCards = () => {
             <div className="flex flex-col items-center justify-center z-10">
               <Link
                 href={`/${title}`}
-                className="text-2xl md:text-3xl font-bold mb-4 capitalize text-white"
+                className="text-xl md:text-2xl font-bold mb-4 capitalize text-white"
 							  style={{ textDecoration: 'none' }}
               >
                 <h3>{cardName}</h3>

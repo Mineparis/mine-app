@@ -89,7 +89,7 @@ const ShoppingCart = () => {
 			<main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<header className="text-center mb-8">
-					<h1 className="text-xl font-light text-neutral-900 tracking-wide">
+					<h1 className="mt-4 text-xl font-light text-neutral-900 tracking-wide">
 						{t('cart')}
 					</h1>
 					<div className="w-12 h-px bg-neutral-300 mx-auto mt-3" role="presentation"></div>
@@ -147,7 +147,7 @@ const ShoppingCart = () => {
 														{/* Product Info */}
 														<div className="flex-1 min-w-0">
 															<Link href={productUrl} className="block group outline-none rounded">
-																<h3 className="text-base font-medium text-neutral-900 group-hover:text-neutral-700 transition-colors line-clamp-2">
+																<h3 className="text-md font-medium text-neutral-900 group-hover:text-neutral-700 transition-colors line-clamp-2">
 																	{line.merchandise.product.title}
 																</h3>
 															</Link>
@@ -164,7 +164,7 @@ const ShoppingCart = () => {
 																		<MinusIcon className="w-3 h-3" />
 																	</button>
 																	<span 
-																		className="px-3 py-1.5 text-sm font-medium bg-neutral-50 border-x border-neutral-300 min-w-[50px] text-center"
+																		className="px-2 py-1 text-xs font-medium bg-neutral-50 border-x border-neutral-300 min-w-[50px] text-center"
 																		role="status"
 																		aria-label={t('quantity_value', { quantity: line.quantity })}
 																	>
@@ -189,7 +189,7 @@ const ShoppingCart = () => {
 																	{isLoading ? (
 																		<div className="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin" role="status" aria-label={t('loading')} />
 																	) : (
-																		<TrashIcon className="w-3 h-3" />
+																		<TrashIcon className="w-4 h-4" />
 																	)}
 																</button>
 															</div>
@@ -197,11 +197,11 @@ const ShoppingCart = () => {
 
 														{/* Price */}
 														<div className="text-right">
-															<div className="text-base font-medium text-neutral-900" aria-label={t('line_total', { total: (line.quantity * parseFloat(line.merchandise.price.amount)).toFixed(2) })}>
+															<div className="text-sm font-medium text-neutral-900" aria-label={t('line_total', { total: (line.quantity * parseFloat(line.merchandise.price.amount)).toFixed(2) })}>
 																{(line.quantity * parseFloat(line.merchandise.price.amount)).toFixed(2)} €
 															</div>
 															<div className="text-xs text-neutral-500">
-																{parseFloat(line.merchandise.price.amount).toFixed(2)} € {t('unit_price')}
+																{parseFloat(line.merchandise.price.amount).toFixed(2)} {t('unit_price')}
 															</div>
 														</div>
 													</div>
@@ -217,7 +217,7 @@ const ShoppingCart = () => {
 						<aside className="lg:col-span-4 mt-8 lg:mt-0" aria-labelledby="order-summary-heading">
 							<div className="bg-white shadow-sm sticky top-0 rounded-lg overflow-hidden">
 								<div className="p-5">
-									<h2 id="order-summary-heading" className="text-base font-medium text-neutral-900 mb-5">
+									<h2 id="order-summary-heading" className="text-md font-medium text-neutral-900 mb-5">
 										{t('order_summary')}
 									</h2>
 
@@ -233,8 +233,8 @@ const ShoppingCart = () => {
 
 										<div className="border-t border-neutral-200 pt-3">
 											<div className="flex justify-between">
-												<span className="text-base font-medium text-neutral-900">{t('total')}</span>
-												<span className="text-lg font-medium text-neutral-900" aria-label={t('total_amount', { amount: parseFloat(cost?.totalAmount?.amount ?? 0).toFixed(2) })}>
+												<span className="text-md font-medium text-neutral-900">{t('total')}</span>
+												<span className="text-md font-medium text-neutral-900" aria-label={t('total_amount', { amount: parseFloat(cost?.totalAmount?.amount ?? 0).toFixed(2) })}>
 													{parseFloat(cost?.totalAmount?.amount ?? 0).toFixed(2)} €
 												</span>
 											</div>

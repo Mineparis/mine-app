@@ -9,7 +9,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
         const shouldShowItem = !loggedUser || !item.hideToLoggedUser;
         if (!shouldShowItem) return null;
         const isDropdown = item.subCategories || item.preoccupations;
-        const baseLinkClass = `${textColor} px-3 py-2 font-semibold uppercase tracking-wider transition-colors duration-200 outline-none`;
+        const baseLinkClass = `${textColor} px-3 py-2 font-semibold uppercase transition-colors duration-200 outline-none`;
         if (!isDropdown) return null;
         const dropdownId = `dropdown-${item.title.replace(/\s+/g, '-').toLowerCase()}`;
         const isOpen = dropdownOpen[item.title] || false;
@@ -17,7 +17,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
           <div key={item.title} className="relative group">
             <button
               id={`${dropdownId}-trigger`}
-              className={`${baseLinkClass} flex items-center gap-1 hover:text-primary-700`}
+              className={`${baseLinkClass} flex items-center gap-1 hover:text-primary-300`}
               onClick={() => toggleDropdown(item.title)}
               onMouseEnter={() => handleDropdownEnter(item.title)}
               aria-haspopup="true"
@@ -25,7 +25,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
               aria-controls={isOpen ? dropdownId : undefined}
               type="button"
             >
-              <span itemProp="name">{t(item.title.toUpperCase())}</span>
+              <span itemProp="name">{t(item.title)}</span>
               <ChevronDownIcon className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             {isOpen && (
@@ -40,7 +40,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
                 <div className="flex flex-col md:flex-row gap-5 p-5">
                   {item.subCategories && (
                     <div>
-                      <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-500">
+                      <div className="mb-3 text-xs font-font-light uppercase text-gray-500">
                         {t('sub_categories')}
                       </div>
                       <ul className="flex flex-col gap-1" role="none">
@@ -50,7 +50,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
                             <li key={cat.title} role="none">
                               <Link
                                 role="menuitem"
-                                className="block px-3 py-2 rounded text-base text-primary-700 hover:bg-black hover:text-white transition-colors duration-150 outline-none"
+                                className="block px-3 py-2 rounded text-sm text-primary-700 hover:bg-black hover:text-white transition-colors duration-150 outline-none"
                                 href={catUrl}
                                 onClick={closeAllMenus}
                                 itemProp="url"
@@ -65,7 +65,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
                   )}
                   {item.preoccupations && (
                     <div>
-                      <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-500">
+                      <div className="mb-3 text-xs font-light uppercase text-gray-500">
                         {t('concerns')}
                       </div>
                       <ul className="flex flex-col gap-1" role="none">
@@ -75,7 +75,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
                             <li key={cat.title} role="none">
                               <Link
                                 role="menuitem"
-                                className="block px-3 py-2 rounded text-base text-primary-700 hover:bg-black hover:text-white transition-colors duration-150 outline-none"
+                                className="block px-3 py-2 rounded text-sm text-primary-700 hover:bg-black hover:text-white transition-colors duration-150 outline-none"
                                 href={catUrl}
                                 onClick={closeAllMenus}
                                 itemProp="url"

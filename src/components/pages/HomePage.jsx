@@ -51,13 +51,11 @@ const Home = ({
 
 			<Jumbotron slides={HOMEPAGE_JUMBOTRON} />
 
-			<section className="w-full lg:max-w-7xl lg:mx-auto p-8">
-				<div className="md:w-1/2 xl:w-1/2">
-					<p className="text-lg text-gray-700 font-light">
-						{t('home_page_description')}
-					</p>
-				</div>
-			</section>
+      <div className="w-full py-6 px-8 md:py-10 md:px-30 bg-secondary-50">
+				<h2 className="sm:w-130 mx-auto text-lg text-gray-700 uppercase antialiased font-semibold font-stretch-semi-condensed">
+					{t('home_page_banner')}
+				</h2>
+      </div>
 
 			<section className="w-full lg:max-w-7xl lg:mx-auto p-8">
 				<ProductsCarousel title={t('new_arrivals')} products={newProducts} />

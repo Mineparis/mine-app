@@ -10,7 +10,7 @@ export default function FaqPage() {
         {faq.sections.map((section, idx) => (
           <div key={section.title}>
             <button
-              className={`w-full text-left px-4 py-3 focus:outline-none flex justify-between items-center text-base ${open === idx ? 'bg-neutral-50' : ''}`}
+              className={`w-full text-left px-4 py-3 focus:outline-none flex justify-between items-center text-xs ${open === idx ? 'bg-neutral-50' : ''}`}
               onClick={() => setOpen(open === idx ? null : idx)}
               aria-expanded={open === idx}
             >

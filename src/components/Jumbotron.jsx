@@ -124,23 +124,23 @@ const Jumbotron = ({ data }) => {
                   </div>
                   <div className="absolute inset-0 bg-black/40 z-10 transition-all" aria-hidden="true" />
                   <div className="relative z-20 flex flex-col items-start justify-center h-full text-left pl-15 lg:pl-30 max-w-[90vw] md:max-w-2xl w-full">
-                    <h1 className="text-xl uppercase text-white mb-3 break-words max-w-full" style={{ textShadow: '0 2px 16px #000' }} id={`jumbotron-slide-title-${idx}`}>
+                    <h1 className="text-xl font-medium uppercase text-white mb-3 break-words max-w-full" style={{ textShadow: '0 2px 16px #000' }} id={`jumbotron-slide-title-${idx}`}>
                       {t(slide.title)}
                     </h1>
                     {slide.subtitle && (
-                      <p className="text-xs xs:text-sm md:text-lg text-white mb-4 max-w-full md:max-w-xl drop-shadow break-words" style={{ textShadow: '0 2px 16px #000' }}>
+                      <p className="text-md text-white font-light mb-4 max-w-full md:max-w-xl drop-shadow break-words" style={{ textShadow: '0 2px 16px #000' }}>
                         {t(slide.subtitle)}
                       </p>
                     )}
                     {slide.cta && (
                       <Link
                         href={slide.cta.href}
-                        className="flex items-center justify-center px-2 py-8 bg-white text-black font-semibold rounded-full shadow hover:bg-gray-100 transition text-xs md:text-base hover:scale-95"
+                        className="flex items-center justify-center px-2 py-8 bg-white text-black font-medium rounded-full shadow hover:bg-gray-100 transition text-xs md:text-xs hover:scale-95"
                         style={{ textDecoration: 'none' }}
                         tabIndex={isSelected ? 0 : -1}
                         aria-labelledby={`jumbotron-slide-title-${idx}`}
                       >
-                        <span className="px-2 text-center w-full">{t(slide.cta.label)}</span>
+                        <span className="px-2 text-sm text-center w-full">{t(slide.cta.label)}</span>
                       </Link>
                     )}
                   </div>

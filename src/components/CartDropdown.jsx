@@ -14,6 +14,8 @@ const CartDropdown = ({ textColorClassName }) => {
 	const { lines, totalQuantity, cost } = useCart();
 	const dropdownRef = useRef(null);
 
+	const formattedTotalPrice = parseFloat(cost?.totalAmount?.amount ?? 0).toFixed(2);
+
 	const handleToggleCart = () => toggleCart(!isCartOpen);
 
 	// Close dropdown on outside click
@@ -60,7 +62,7 @@ const CartDropdown = ({ textColorClassName }) => {
 					<div className="p-4">
 						{!lines?.length ? (
 							<div className="flex justify-center items-center py-8">
-								<p className="text-gray-400">{t('empty_cart')}</p>
+								<p className="text-sm text-gray-400">{t('empty_cart')}</p>
 							</div>
 						) : (
 							<>
@@ -75,21 +77,21 @@ const CartDropdown = ({ textColorClassName }) => {
 								</div>
 
 								<div className="flex items-center justify-between py-2 border-t border-gray-100 mb-4">
-									<span className="uppercase text-xs text-gray-500">{t('total')}</span>
-									<strong className="text-base text-primary">{`${cost.totalAmount.amount ?? 0} €`}</strong>
+									<span className="uppercase text-sm text-gray-500">{t('total')}</span>
+									<strong className="text-sm text-primary">{`${formattedTotalPrice ?? 0} €`}</strong>
 								</div>
 
 								<div className="flex gap-2">
 									<Link
 										href="/cart"
-										className="flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-800 hover:bg-gray-100 transition px-3 py-2 text-sm font-medium"
+										className="flex-1 inline-flex items-center justify-center rounded-lg border border-gray-300 bg-gray-50 text-gray-800 hover:bg-gray-100 transition p-2 text-sm"
 										onClick={handleToggleCart}
 									>
 										{t('view_cart')}
 										<span className="ml-2" aria-hidden="true">→</span>
 									</Link>
 									<CartCheckoutButton
-										className="flex-1 inline-flex items-center justify-center rounded-lg border border-primary bg-primary text-white hover:bg-primary-700 transition px-3 py-2 text-sm font-semibold"
+										className="flex-1 inline-flex items-center justify-center rounded-lg border border-primary bg-primary text-white hover:bg-primary-700 transition p-2 text-sm"
 										as="button"
 									>
 										{t('finalized_order')}

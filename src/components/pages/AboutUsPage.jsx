@@ -36,9 +36,9 @@ export default function AboutUsPage() {
         <div className="absolute inset-0 bg-black/40 z-10" />
         <div className="absolute inset-0 flex items-center justify-start z-20">
           <div className="w-full max-w-3xl ml-0 md:ml-12 py-16 md:py-24 text-white flex flex-col text-left pl-8 lg:pl-30">
-            <h6 className="text-sm md:text-base font-semibold uppercase tracking-[0.2em] mb-4 text-gray-200 letter-spacing-5">{aboutUs.jumbotron.subtitle}</h6>
+            <h6 className="text-sm md:text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-gray-200 letter-spacing-5">{aboutUs.jumbotron.subtitle}</h6>
             <h1 className="text-2xl sm:text-4xl font-light mb-4 tracking-tight drop-shadow-lg uppercase">{aboutUs.jumbotron.title}</h1>
-            <p className="text-base md:text-lg max-w-2xl drop-shadow-lg font-light">{aboutUs.jumbotron.description}</p>
+            <p className="text-xs md:text-lg max-w-2xl drop-shadow-lg font-light">{aboutUs.jumbotron.description}</p>
           </div>
         </div>
       </section>
@@ -57,18 +57,19 @@ export default function AboutUsPage() {
                 <div className="mb-6">
                   <h6 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{section.subtitle}</h6>
                   <h2 className="text-2xl md:text-3xl font-light text-black mb-4">{section.title}</h2>
-                  <p className="text-base md:text-lg text-gray-700">{section.description}</p>
+                  <p className="text-xs md:text-lg text-gray-700">{section.description}</p>
                 </div>
               </div>
               <div className="w-full lg:w-1/2 px-0 flex items-start">
-                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-md">
+                <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-md
+    max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full mx-auto">
                   <Image
                     src={section.image}
                     alt={section.title}
                     fill
                     className={`object-cover ${isTopAlignedImg ? 'object-top' : 'object-center'}`}
                     priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 50vw"
                   />
                 </div>
               </div>

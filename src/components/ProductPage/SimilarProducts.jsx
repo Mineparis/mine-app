@@ -62,10 +62,10 @@ const SimilarProducts = ({ products = [] }) => {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<div className="text-center mb-12">
-					<h2 className="text-3xl lg:text-4xl font-light text-black mb-4">
+					<h2 className="text-2xl font-medium text-black mb-4">
 						{t('similar_products_title')}
 					</h2>
-					<p className="text-gray-600 text-lg max-w-2xl mx-auto">
+					<p className="text-gray-600 text-md max-w-2xl mx-auto">
 						{t('similar_products_description')}
 					</p>
 				</div>

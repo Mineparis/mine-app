@@ -27,6 +27,7 @@ export function mapShopifyProductNode(node) {
 		images: node.images?.edges?.map(e => ({ src: e.node.src, altText: e.node.altText })) || [],
 		availableForSale: variant.availableForSale || false,
 		variantId: variant.id ? extractShopifyId(variant.id) : null,
+		collections: (node.collections?.edges || []).map(e => e.node),
 	};
 }
 

@@ -60,7 +60,7 @@ function BigCardsWithText({ title, description, cards, buttonLink, imageName, on
         data-single-card={isSingleCard}
       >
         <h2 id="big-cards-title" className="text-xl font-bold text-center mb-2">{title}</h2>
-        <p className="mb-4 text-base text-gray-700">{description}</p>
+        <p className="mb-4 text-xs text-gray-700">{description}</p>
         {!onClick && buttonLink ? (
           <Link
             href={buttonLink}

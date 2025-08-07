@@ -99,13 +99,13 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row w-full gap-8">
           {/* Newsletter */}
           <section className="flex-1 min-w-[220px] md:max-w-xs md:mr-8" aria-labelledby="newsletter-heading">
-            <h2 id="newsletter-heading" className="uppercase tracking-widest font-semibold mb-3 text-lg">
+            <h2 id="newsletter-heading" className="uppercase tracking-widest font-medium mb-3 text-sm">
               {t("newsletter_label")}
             </h2>
-            <p className="mb-4 text-gray-300">{t("newsletter_description")}</p>
+            <p className="text-sm mb-4 text-gray-300">{t("newsletter_description")}</p>
             <form
               onSubmit={handleSubmitNewsletterEmail}
-              className="flex flex-col sm:flex-row gap-2"
+              className="flex flex-col sm:flex-row gap-2 text-xs"
               aria-label={t("newsletter_form", "Newsletter signup form")}
               autoComplete="off"
             >
@@ -114,7 +114,7 @@ const Footer = () => {
               </label>
               <input
                 id="newsletter-email"
-                className="flex-1 rounded-lg border border-gray-400 bg-white/10 px-3 py-2 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 transition"
+                className="flex-1 rounded-lg border border-gray-400 bg-white/10 px-3 py-1 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-200 transition"
                 type="email"
                 placeholder={t("newsletter_placeholder")}
                 aria-label={t("newsletter_placeholder")}
@@ -130,7 +130,7 @@ const Footer = () => {
                 type="submit"
                 aria-label={t("submit_newsletter")}
                 disabled={isLoading}
-                className="rounded-lg bg-white text-black font-semibold px-4 py-2 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+                className="rounded-lg bg-white text-primary px-4 py-2 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 <span className="sr-only">{t("submit_newsletter")}</span>
                 <EnvelopeIcon className="w-5 h-5" aria-hidden="true" />
@@ -146,13 +146,13 @@ const Footer = () => {
                 aria-label={t("footer_navigation")}
                 className="flex-1 min-w-[140px]"
               >
-                <h2 className="uppercase tracking-widest font-semibold mb-3 text-lg">{sectionName}</h2>
+                <h2 className="uppercase tracking-widest font-medium mb-3 text-sm">{sectionName}</h2>
                 <ul className="space-y-2">
                   {links.map(({ href, label, icon: Icon }) => (
                     <li key={label}>
                       <Link
                         href={href}
-                        className="flex items-center gap-2 hover:text-white text-gray-100 no-underline"
+                        className="flex items-center gap-2 text-xs hover:text-white text-gray-100 no-underline"
                       >
                         {Icon && <Icon className="w-4 h-4" aria-hidden="true" />}
                         {label}
@@ -168,12 +168,12 @@ const Footer = () => {
               aria-label={t("footer_social")}
               className="flex-1 min-w-[140px]"
             >
-              <h2 className="uppercase tracking-widest font-semibold mb-3 text-lg">Social</h2>
+              <h2 className="uppercase tracking-widest font-medium mb-3 text-sm">Social</h2>
               <ul className="space-y-2">
                 {socialLinks.map(({ href, label, title, icon }) => (
                   <li key={label}>
                     <a
-                      className="flex items-center gap-2 hover:text-white text-gray-100"
+                      className="flex items-center gap-2 text-xs hover:text-white text-gray-100"
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -194,7 +194,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row md:justify-between items-center gap-4">
-          <p className="text-sm text-center md:text-left">
+          <p className="text-xs text-center md:text-left">
             © {new Date().getFullYear()} Mine. {t("all_rights_reserved")}.
           </p>
           <ul className="flex gap-4 items-center" aria-label={t("payment_methods", "Payment methods")}>
@@ -205,7 +205,7 @@ const Footer = () => {
                   height={35}
                   src={`/svg/${payment}.svg`}
                   alt={payment}
-                  className="w-9 h-9 object-contain"
+                  className="w-8 h-8 object-contain"
                 />
               </li>
             ))}

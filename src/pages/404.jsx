@@ -41,7 +41,7 @@ const PageNotFound = () => {
 						<h2 className="text-2xl lg:text-4xl font-bold text-white leading-tight mb-4">
 							{t('404_page_title')}
 						</h2>
-						<p className="text-base lg:text-lg text-white/90 max-w-md mx-auto leading-relaxed mb-8">
+						<p className="text-xs lg:text-lg text-white/90 max-w-md mx-auto leading-relaxed mb-8">
 							{t('404_page_description')}
 						</p>
 					</div>
