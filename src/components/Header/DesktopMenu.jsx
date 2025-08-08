@@ -9,7 +9,7 @@ export default function DesktopMenu({ MENU, t, textColor, dropdownOpen, toggleDr
         const shouldShowItem = !loggedUser || !item.hideToLoggedUser;
         if (!shouldShowItem) return null;
         const isDropdown = item.subCategories || item.preoccupations;
-        const baseLinkClass = `${textColor} px-3 py-2 font-semibold uppercase transition-colors duration-200 outline-none`;
+        const baseLinkClass = `${textColor} px-3 py-2 font-semibold capitalize transition-colors duration-200 outline-none`;
         if (!isDropdown) return null;
         const dropdownId = `dropdown-${item.title.replace(/\s+/g, '-').toLowerCase()}`;
         const isOpen = dropdownOpen[item.title] || false;
