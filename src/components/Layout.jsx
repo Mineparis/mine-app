@@ -69,35 +69,20 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 				</main>
 				<Footer />
 				<CookieConsent
-					containerClasses="fixed bottom-0 left-0 w-full z-50 flex justify-center px-2"
-					style={undefined}
-					buttonStyle={undefined}
-					buttonWrapperClasses="flex flex-col w-full mt-1"
-					declineButtonStyle={undefined}
-					declineButtonClasses="hidden"
-					buttonClasses="w-auto min-w-[140px] bg-primary text-white font-semibold py-2 px-5 mx-auto hover:bg-primary-700 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-primary-200 text-xs shadow-none mt-1"
+					containerClasses="py-5 px-2"
+					buttonWrapperClasses="flex items-center"
+					buttonClasses="!bg-secondary-100 text-xs font-semibold !py-3 !rounded-lg"
 					declineButtonText={t('cookie_consent_decline')}
+					declineButtonClasses="!bg-transparent !border-none text-xs text-gray-400"
 					buttonText={t('cookie_consent_agree')}
+					contentClasses="text-sm font-medium leading-relaxed"
 					location="bottom"
 					expires={180}
 					enableDeclineButton
 					onAccept={handleAgreeCookieConsent}
 					onDecline={handleDeclineCookieConsent}
 				>
-					<div className="w-full max-w-md mx-auto flex flex-col items-center px-3 py-2 sm:px-6">
-						<span className="block text-center text-white text-xs font-medium leading-relaxed mb-1">
 							{t('cookie_consent_text')}
-						</span>
-						<span
-							tabIndex={0}
-							role="button"
-							className="mb-1 text-sm text-gray-600 underline underline-offset-2 hover:text-primary transition cursor-pointer"
-							onClick={handleDeclineCookieConsent}
-							aria-label={t('cookie_consent_decline')}
-						>
-							{t('cookie_consent_decline')}
-						</span>
-					</div>
 				</CookieConsent>
 			</div>
 		</>
