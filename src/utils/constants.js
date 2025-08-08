@@ -1,8 +1,8 @@
 export const DEFAULT_LANG = 'fr';
 
-export const REVALIDATE_PAGE_SECONDS = 120;
+export const REVALIDATE_PAGE_SECONDS = 3600; // 1 hour
 
-export const PAGE_LIMIT = 12;
+export const PAGE_LIMIT = 20;
 
 export const sortQueryMapping = {
 	popularity: 'sold:desc',
@@ -10,3 +10,9 @@ export const sortQueryMapping = {
 	ascending_price: 'originalPrice:asc,salePricePercent:asc',
 	descending_price: 'originalPrice:desc,salePricePercent:desc',
 };
+
+export const SORT_OPTIONS = [
+	{ value: 'newest', label: 'newest' },
+	{ value: 'price-asc', label: 'price_asc' },
+	{ value: 'price-desc', label: 'price_desc' },
+];

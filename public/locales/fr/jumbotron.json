@@ -1,0 +1,19 @@
+{
+  "jumbotron": {
+    "slide1": {
+      "title": "Des soins qui respecte votre peau",
+      "subtitle": "Des soins clean et éthiques pour révéler l'éclat de votre peau.",
+      "cta": "Découvrir"
+    },
+    "slide2": {
+      "title": "Ce que vos cheveux méritent",
+      "subtitle": "Offrez à vos cheveux ce dont ils ont vraiment besoin.",
+      "cta": "Découvrir"
+    },
+    "slide3": {
+      "title": "Une barbe, un style, une personnalité",
+      "subtitle": "Accentuez votre style avec des soins adaptés à votre barbe.",
+      "cta": "Découvrir"
+    }
+  }
+}

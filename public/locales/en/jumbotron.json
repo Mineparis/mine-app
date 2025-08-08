@@ -1,0 +1,19 @@
+{
+  "jumbotron": {
+    "slide1": {
+      "title": "Care that respects your skin",
+      "subtitle": "Clean and ethical care to reveal your skin's radiance.",
+      "cta": "Discover"
+    },
+    "slide2": {
+      "title": "What your hair deserves",
+      "subtitle": "Give your hair what it truly needs.",
+      "cta": "Discover"
+    },
+    "slide3": {
+      "title": "A beard, a style, a personality",
+      "subtitle": "Enhance your style with care tailored to your beard.",
+      "cta": "Discover"
+    }
+  }
+}

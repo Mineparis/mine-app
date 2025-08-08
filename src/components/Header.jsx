@@ -1,399 +1,341 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-
 import Link from "next/link";
-import Router from "next/router";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
-import {
-	Collapse,
-	Navbar,
-	NavbarToggler,
-	Nav,
-	NavItem,
-	NavLink,
-	Dropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem,
-	Container,
-	Row,
-	Col,
-	Badge,
-} from "reactstrap";
-
 import useScrollPosition from "@react-hook/window-scroll";
 import useSize from "@react-hook/size";
+import { MagnifyingGlassIcon, UserIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-import UseWindowSize from "@hooks/UseWindowSize";
-import ActiveLink from "./ActiveLink";
+import { MENU } from "@data/menu";
+import { useIsMobile } from "@hooks/useIsMobile";
+import { useSearchbar } from "@hooks/useSearchbar";
+
 import Searchbar from "./Searchbar";
 import CartDropdown from "./CartDropdown";
+import DesktopMenu from "./Header/DesktopMenu";
+import MobileMenu from "./Header/MobileMenu";
 
 const PROMO_CODE = '';
+const MOBILE_BREAKPOINT = 500;
 
-const Header = ({ menu, shouldDisplayWhiteLogo, locale, ...props }) => {
+const Header = (props) => {
+  const { shouldDisplayWhiteLogo, headerAbsolute, hideTopbar, setPaddingTop } = props;
 	const { t } = useTranslation('common');
+
 	const [collapsed, setCollapsed] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState({});
+	const [dropdownTimeouts, setDropdownTimeouts] = useState({});
 	const [searchToggle, setSearchToggle] = useState(false);
-	const [parentName, setParentName] = useState(false);
 	const [additionalNavClasses, setAdditionalNavClasses] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const [searchTimeout, setSearchTimeout] = useState(null);
-	const [isSearchLoading, setIsSearchLoading] = useState(false);
+	const {
+		searchTerm,
+		setSearchTerm,
+		searchResults,
+		isSearchLoading
+	} = useSearchbar(searchToggle);
+	const [mobileDropdownOpen, setMobileDropdownOpen] = useState({});
 
-	const size = UseWindowSize();
+	const isSmallScreen = useIsMobile(MOBILE_BREAKPOINT);
 	const scrollY = useScrollPosition();
-
 	const navbarRef = useRef(null);
 	const topbarRef = useRef(null);
 	const [, topbarHeight] = useSize(topbarRef);
 	const [, navbarHeight] = useSize(navbarRef);
+	const textColor = shouldDisplayWhiteLogo || additionalNavClasses ? 'text-primary-900' : 'text-white';
 
-	const isSmallScreen = size.width < 500;
-	const hasDropdown = Object.values(dropdownOpen).some((dropdown) => dropdown);
+	const toggleDropdown = useCallback((name) => {
+		setDropdownOpen(prev => ({ ...prev, [name]: !prev[name] }));
+	}, []);
 
-	const toggleDropdown = (name) => {
-		setDropdownOpen({ ...dropdownOpen, [name]: !dropdownOpen[name] });
-	};
-
-	const onLinkClick = (parent) => {
-		if (isSmallScreen) setCollapsed(!collapsed);
-		if (parent) setParentName(parent);
-	};
-
-	const makeNavbarSticky = () => {
-		if (!props.nav.sticky) {
-			if (additionalNavClasses) {
-				setAdditionalNavClasses("");
-				props.setPaddingTop(0);
-			}
-			return;
-		}
-
-		if (scrollY > topbarHeight) {
-			setAdditionalNavClasses("fixed-top");
-			if (navbarHeight > 0 && !props.headerAbsolute) {
-				props.setPaddingTop(navbarHeight);
-			}
-		} else {
-			setAdditionalNavClasses("");
-			props.setPaddingTop(0);
-		}
-	};
-
-	const handleSearch = useCallback((term) => {
-		if (searchTimeout) clearTimeout(searchTimeout);
-
-		if (!term.trim()) {
-			setSearchResults([]);
-			setIsSearchLoading(false);
-			return;
-		}
-
-		setIsSearchLoading(true);
-
-		const timeout = setTimeout(async () => {
-			try {
-				const response = await fetch(
-					`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/products/search?keyword=${encodeURIComponent(term)}&_locale=${locale}`
-				);
-				const { data } = await response.json();
-				setSearchResults(data);
-			} catch (error) {
-				setSearchResults([]);
-				throw new Error('Search error:', error);
-			} finally {
-				setIsSearchLoading(false);
-			}
-		}, 500);
-
-		setSearchTimeout(timeout);
-	}, [searchTimeout]);
-
-	// highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
-	const highlightDropdownParent = () => {
-		menu.forEach((item) => {
-			item?.dropdown?.forEach((dropdownLink) => {
-				dropdownLink.link && dropdownLink.link === Router.route && setParentName(item.title);
-				dropdownLink?.links?.forEach((link) => link.link === Router.route && setParentName(item.title));
-			});
-			item?.megamenu?.forEach((megamenuColumn) =>
-				megamenuColumn.forEach((megamenuBlock) =>
-					megamenuBlock.links.forEach((dropdownLink) => {
-						if (dropdownLink.link === Router.route) {
-							dropdownLink.parent
-								? setParentName(dropdownLink.parent)
-								: setParentName(item.title);
-						}
-					})
-				)
-			);
-			item.link === Router.route && setParentName(item.title);
+	const closeAllMenus = useCallback(() => {
+		setDropdownOpen({});
+		setMobileDropdownOpen({});
+		// Clear all dropdown timeouts
+		Object.values(dropdownTimeouts).forEach(timeout => {
+			if (timeout) clearTimeout(timeout);
 		});
-	};
+		setDropdownTimeouts({});
+		if (isSmallScreen) setCollapsed(false);
+	}, [isSmallScreen, dropdownTimeouts]);
 
-	useEffect(highlightDropdownParent, []);
+	const handleMobileToggle = useCallback(() => {
+		setCollapsed(prev => !prev);
+	}, []);
 
-	const CartOverviewWithLogo = () => {
-		if (collapsed) return null;
-		const colSize = isSmallScreen ? 'col-1' : 'col-3';
-		const logoStyle = { filter: additionalNavClasses || shouldDisplayWhiteLogo ? undefined : 'invert(1)' };
+	const handleSearchToggle = useCallback(() => {
+		setSearchToggle(prev => !prev);
+	}, []);
 
-		return (
-			<>
-				<Link className="mx-auto" href="/" passHref>
-					<img src="/svg/logo.svg" alt="" style={logoStyle} />
-				</Link>
-				<div className={`d-flex justify-content-end ${colSize}`} >
-					<div
-						className="navbar-icon-link"
-						data-toggle="search"
-						onClick={() => setSearchToggle(!searchToggle)}
-					>
-						<i className="bi bi-search" />
-					</div>
-					{!isSmallScreen && (
-						<Link
-							className="navbar-icon-link flex items-center gap-2 hover:text-gray-800"
-							href={`https://${process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}/account`}
-						>
-							<i className="bi bi-person-circle" />
-						</Link>
-					)}
-					<CartDropdown />
-				</div>
-			</>
-		);
-	};
+const makeNavbarSticky = useCallback(() => {
+	const shouldBeSticky = scrollY > topbarHeight;
+	const newClasses = shouldBeSticky
+		? "fixed top-0 left-0 w-full z-50 shadow-lg bg-white"
+		: "";
 
-	useEffect(() => {
-		return () => {
-			if (searchTimeout) clearTimeout(searchTimeout);
-		};
-	}, [searchTimeout]);
+	setAdditionalNavClasses(newClasses);
+
+	if (shouldBeSticky && navbarHeight > 0 && !headerAbsolute) {
+		setPaddingTop?.(navbarHeight);
+	} else {
+		setPaddingTop?.(0);
+	}
+}, [scrollY, topbarHeight, navbarHeight, additionalNavClasses, headerAbsolute, setPaddingTop]);
 
 	useEffect(() => {
 		makeNavbarSticky();
-	}, [scrollY, topbarHeight]);
+	}, [makeNavbarSticky]);
 
-	useEffect(highlightDropdownParent, []);
+	// Accessibility focus management
+	useEffect(() => {
+		const handleKeyDown = (e) => {
+			if (e.key === 'Escape') {
+				setDropdownOpen({});
+				setMobileDropdownOpen({});
+				setSearchToggle(false);
+				if (collapsed) setCollapsed(false);
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	}, [collapsed]);
+
+	// Close menus when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (e) => {
+			if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+				setDropdownOpen({});
+				setMobileDropdownOpen({});
+				if (collapsed) setCollapsed(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => document.removeEventListener('mousedown', handleClickOutside);
+	}, [collapsed]);
+
+	const handleDropdownEnter = useCallback((itemTitle) => {
+		// Clear any existing timeout for this dropdown
+		if (dropdownTimeouts[itemTitle]) {
+			clearTimeout(dropdownTimeouts[itemTitle]);
+			setDropdownTimeouts(prev => ({ ...prev, [itemTitle]: null }));
+		}
+
+		// Close all other dropdowns and clear their timeouts
+		setDropdownOpen(prev => {
+			const newState = {};
+			Object.keys(prev).forEach(key => {
+				if (key !== itemTitle) {
+					newState[key] = false;
+					// Clear timeout for closing dropdown
+					if (dropdownTimeouts[key]) {
+						clearTimeout(dropdownTimeouts[key]);
+					}
+				}
+			});
+			newState[itemTitle] = true;
+			return newState;
+		});
+
+		// Clear timeouts for all other dropdowns
+		setDropdownTimeouts(prev => {
+			const newTimeouts = {};
+			Object.keys(prev).forEach(key => {
+				if (key !== itemTitle && prev[key]) {
+					clearTimeout(prev[key]);
+				}
+			});
+			return newTimeouts;
+		});
+	}, [dropdownTimeouts]);
+
+	const handleDropdownLeave = useCallback((itemTitle) => {
+		// Add a small delay to prevent dropdown from closing when moving between trigger and dropdown
+		const timeoutId = setTimeout(() => {
+			setDropdownOpen(prev => ({ ...prev, [itemTitle]: false }));
+		}, 150);
+
+		setDropdownTimeouts(prev => ({ ...prev, [itemTitle]: timeoutId }));
+	}, []);
+
 
 	return (
 		<header
-			className={`header ${props.headerClasses ? props.headerClasses : ""} ${props.headerAbsolute ? "header-absolute" : ""
-				}`}
+			className={`w-full ${props.headerClasses || ""} ${headerAbsolute ? "absolute top-0 left-0 w-full z-50" : ""}`}
+			itemScope
+			itemType="https://schema.org/SiteNavigationElement"
 		>
-			{!props.hideTopbar && (
-				<div className="top-bar" ref={topbarRef}>
-					<Container fluid>
-						<Row className="d-flex justify-content-center">
-							{t('topbar_label')}
-							<b className="ml-1">{PROMO_CODE}</b>
-						</Row>
-					</Container>
+			{/* Skip to main content */}
+			<a
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-primary-700 focus:text-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium outline-none"
+			>
+				{t('skip_to_main_content')}
+			</a>
+
+			{/* Topbar promo */}
+			{!hideTopbar && (
+				<div ref={topbarRef} className="w-full bg-primary-700 text-white text-center py-2 text-sm font-medium tracking-wide">
+					{t('topbar_label')}
+					{PROMO_CODE && <strong className="ml-2">{PROMO_CODE}</strong>}
 				</div>
 			)}
-			<div ref={navbarRef} className="d-flex flex-column justify-content-space-between">
-				<Navbar
-					color={
-						props.nav.color
-							? hasDropdown || collapsed
-								? "white"
-								: props.nav.color
-							: "white"
-					}
-					light={props.nav.light || hasDropdown || collapsed}
-					dark={props.nav.dark && !hasDropdown && !collapsed}
-					fixed={props.nav.fixed ? props.nav.fixed : ""}
-					expand="lg"
-					className={`${props.nav.classes ? props.nav.classes : "navbar-sticky bg-fixed-white"} ${additionalNavClasses || ""}`}
-				>
-					<Container fluid>
-						<NavbarToggler
-							onClick={() => setCollapsed(!collapsed)}
-							className="navbar-toggler-right"
+
+			{/* Main navigation bar */}
+			<nav
+				ref={navbarRef}
+				className={`px-4 lg:px-4 transition-all duration-300 ${additionalNavClasses}`}
+				role="navigation"
+				aria-label={t('main_navigation')}
+				itemScope
+				itemType="https://schema.org/SiteNavigationElement"
+			>
+				<div className="flex items-center h-20 min-w-0">
+					{/* Mobile burger menu */}
+					<button
+						className={`md:hidden p-2 rounded outline-none ${textColor} flex-shrink-0`}
+						onClick={handleMobileToggle}
+						aria-label={collapsed ? t('close_menu') : t('open_menu')}
+						aria-expanded={collapsed}
+						aria-controls="mobile-menu"
+					>
+						{collapsed ? (
+							<XMarkIcon className="w-6 h-6" />
+						) : (
+							<Bars3Icon className="w-6 h-6" />
+						)}
+					</button>
+
+					{/* Desktop layout: 3 balanced columns */}
+					<div className="hidden md:flex w-full items-center">
+						{/* Main desktop menu - left column */}
+						<DesktopMenu
+							MENU={MENU}
+							t={t}
+							textColor={textColor}
+							dropdownOpen={dropdownOpen}
+							toggleDropdown={toggleDropdown}
+							handleDropdownEnter={handleDropdownEnter}
+							handleDropdownLeave={handleDropdownLeave}
+							closeAllMenus={closeAllMenus}
+						/>
+
+						{/* Centered logo - middle column */}
+						<div className="flex-1 flex justify-center">
+							<Link
+								href="/"
+								className="outline-none rounded"
+								itemProp="url"
+								aria-label={t('home')}
+							>
+								<Image
+									src="/svg/logo.svg"
+									alt={t('logo_alt')}
+									style={shouldDisplayWhiteLogo || additionalNavClasses ? { filter: undefined } : { filter: 'brightness(0) invert(1)' }}
+									className="h-6 w-auto transition-all duration-300"
+									width={100}
+									height={100}
+									priority
+									itemProp="logo"
+								/>
+							</Link>
+						</div>
+
+						{/* Right icons - right column */}
+						<div className="flex-1 flex justify-end">
+							<div className="flex items-center gap-4 flex-shrink-0">
+								<button
+									className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+									onClick={handleSearchToggle}
+									aria-label={t('search')}
+									aria-expanded={searchToggle}
+									type="button"
+								>
+									<MagnifyingGlassIcon className="w-6 h-6" />
+								</button>
+
+								<Link
+									className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+									href={`https://${process.env.NEXT_PUBLIC_PUBLIC_STORE_DOMAIN}/account`}
+									aria-label={t('account')}
+									itemProp="url"
+								>
+									<UserIcon className="w-6 h-6" />
+								</Link>
+
+								<div className="flex-shrink-0">
+									<CartDropdown textColorClassName={textColor} />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Layout mobile: logo centré, icônes à droite */}
+					<div className="md:hidden flex-1 flex justify-center">
+						<Link
+							href="/"
+							className="outline-none rounded"
+							itemProp="url"
+							aria-label={t('home')}
 						>
-							<i className="fa fa-bars" />
-						</NavbarToggler>
-						{/* Navbar Collapse */}
-						<Collapse isOpen={collapsed} navbar>
-							<Nav navbar>
-								{menu?.map((item) =>
-									item.dropdown || item.megamenu ? (
-										// show entire menu to unlogged user or hide items that have hideToLoggedUser set to true
-										(!props.loggedUser ||
-											(props.loggedUser && !item.hideToLoggedUser) ? (<Dropdown
-												nav
-												inNavbar
-												key={item.title}
-												className={
-													item.position ? `position-${item.position}` : ``
-												}
-												isOpen={dropdownOpen[item.title]}
-												toggle={() => toggleDropdown(item.title)}
-											>
-												<DropdownToggle
-													nav
-													caret
-													className={
-														parentName === item.title ? "active" : ""
-													}
-												>
-													{t(item.title)}
-												</DropdownToggle>
-												<DropdownMenu
-													className={` ${item.megamenu ? "megamenu py-lg-0" : ""
-														}`}
-												>
-													{item?.dropdown?.map((dropdownItem) =>
-														dropdownItem.links ? (
-															<React.Fragment key={dropdownItem.title}>
-																{dropdownItem.divider && (
-																	<DropdownItem divider />
-																)}
-																<h6 className="dropdown-header font-weight-normal">
-																	{t(dropdownItem.title)}
-																</h6>
-																{dropdownItem.links.map((link) => (
-																	<ActiveLink
-																		key={link.title}
-																		activeClassName="active"
-																		href={link.link}
-																	>
-																		<DropdownItem onClick={() => onLinkClick(item.title)}>
-																			{t(link.title)}
-																			{link.new && (
-																				<Badge color="warning" className="ml-1 mt-n1">
-																					{t('new')}
-																				</Badge>
-																			)}
-																		</DropdownItem>
-																	</ActiveLink>
-																))}
-															</React.Fragment>
-														) : (
-															<ActiveLink
-																key={dropdownItem.title}
-																activeClassName="active"
-																href={dropdownItem.link}
-																passHref
-															>
-																<DropdownItem onClick={() => onLinkClick(item.title)}>
-																	{t(dropdownItem.title)}
-																	{dropdownItem.new && (
-																		<Badge color="warning" className="ml-1 mt-n1">
-																			{t('new')}
-																		</Badge>
-																	)}
-																</DropdownItem>
-															</ActiveLink>
-														)
-													)}
-													<Row>
-														<Col lg="9" md="4">
-															<Row className="pr-lg-0 pl-lg-5 pt-lg-5">
-																{item?.megamenu?.map((megamenuItem, index) => (
-																	<Col key={index} lg="3">
-																		{megamenuItem?.map(({ title, links, categoryTypeLink }, index) => (
-																			<React.Fragment key={index}>
-																				<h6 className="text-uppercase">
-																					<Link href={categoryTypeLink.link} onClick={() => onLinkClick()}>
+							<Image
+								src="/svg/logo.svg"
+								alt={t('logo_alt')}
+								style={shouldDisplayWhiteLogo || additionalNavClasses ? { filter: undefined } : { filter: 'brightness(0) invert(1)' }}
+								className="h-6 w-auto transition-all duration-300"
+								width={100}
+								height={100}
+								priority
+								itemProp="logo"
+							/>
+						</Link>
+					</div>
 
-																						{t(title)}
+					<div className="md:hidden flex items-center gap-3 flex-shrink-0">
+						<button
+							className={`text-xl ${textColor} flex-shrink-0 outline-none rounded`}
+							onClick={handleSearchToggle}
+							aria-label={t('search')}
+							aria-expanded={searchToggle}
+							type="button"
+						>
+							<MagnifyingGlassIcon className="w-6 h-6" />
+						</button>
 
-																					</Link>
-																				</h6>
-																				<ul className="megamenu-list list-unstyled">
-																					{links.map((link, index) => (
-																						<li key={index} className="megamenu-list-item">
-																							<ActiveLink
-																								activeClassName="active"
-																								href={link.link}
-																								as={link.as}
-																								passHref
-																							>
-																								<DropdownItem
-																									className="megamenu-list-link"
-																									onClick={() =>
-																										link.parent
-																											? onLinkClick(link.parent)
-																											: onLinkClick(item.title)
-																									}
-																								>
-																									{t(link.title)}
-																									{link.new && (
-																										<Badge color="warning" className="ml-1 mt-n1">
-																											{t('new')}
-																										</Badge>
-																									)}
-																								</DropdownItem>
-																							</ActiveLink>
-																						</li>
-																					)
-																					)}
-																				</ul>
-																			</React.Fragment>
-																		))}
-																	</Col>
-																)
-																)}
-															</Row>
-														</Col>
-														{item.image && (
-															<Col lg="3" className="d-none d-lg-block">
-																<Image layout="fill" src={item.image} alt="" className="bg-image" />
-															</Col>
-														)}
-													</Row>
-												</DropdownMenu>
-											</Dropdown>) : (""))
-									) : (props.loggedUser && !item.hideToLoggedUser) ||
-										!props.loggedUser ? (
-										<NavItem
-											key={item.title}
-											className={
-												item.button
-													? "mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block"
-													: ""
-											}
-										>
-											{item.button ? (
-												item.showToLoggedUser && (
-													<ActiveLink activeClassName="active" href={item.link}>
-														<a className="btn btn-primary" onClick={() => onLinkClick(item.title)}>
-															{t(item.title)}
-														</a>
-													</ActiveLink>
-												)
-											) : (
-												<ActiveLink
-													activeClassName="active"
-													href={item.link}
-													passHref
-												>
-													<NavLink onClick={() => onLinkClick(item.title)}>
-														{t(item.title)}
-													</NavLink>
-												</ActiveLink>
-											)}
-										</NavItem>
-									) : (
-										""
-									)
-								)}
-							</Nav>
-						</Collapse>
-						<CartOverviewWithLogo />
-					</Container>
-				</Navbar>
-			</div>
+						<div className="flex-shrink-0">
+							<CartDropdown textColorClassName={textColor} />
+						</div>
+					</div>
+				</div>
+
+				{/* Mobile menu (accordion) */}
+				{collapsed && (
+					<div
+						id="mobile-menu"
+						className="md:hidden bg-white border-t border-gray-100 shadow-lg absolute left-0 w-full z-40 animate-fade-in"
+						style={{ maxHeight: '80vh', top: '5rem', overflowY: 'auto' }}
+						role="menu"
+						aria-label={t('mobile_menu')}
+						itemScope
+						itemType="https://schema.org/SiteNavigationElement"
+					>
+						<MobileMenu
+							MENU={MENU}
+							t={t}
+							mobileDropdownOpen={mobileDropdownOpen}
+							setMobileDropdownOpen={setMobileDropdownOpen}
+							closeAllMenus={closeAllMenus}
+						/>
+					</div>
+				)}
+			</nav>
 
 			<Searchbar
 				searchToggle={searchToggle}
 				setSearchToggle={setSearchToggle}
+				searchTerm={searchTerm}
+				setSearchTerm={setSearchTerm}
 				searchResults={searchResults}
-				onSearch={handleSearch}
 				isLoading={isSearchLoading}
 			/>
 		</header>

@@ -1,35 +1,67 @@
-import AddToCart from "./AddToCart";
 import Stars from "./Stars";
 
-const ProductDetail = ({ shopifyProduct, averageRating, comments }) => {
-	const { brand, name, price, availableForSale, variantId } = shopifyProduct;
+const ProductDetail = ({ averageRating, comments }) => {
 	const nbComments = comments?.length ?? 0;
 
+	// Only show reviews section if there are reviews to display
+	if (!averageRating && (!comments || comments.length === 0)) {
+		return null;
+	}
+
 	return (
-		<>
-			<h1 className="h5 mb-4 text-uppercase font-weight-light">{brand}</h1>
-			<h1 className="h3 mb-4 font-weight-normal">{name}</h1>
-			{averageRating ? (
-				<div className="d-flex mb-4">
+		<div className="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200 mb-8">
+			<h3 className="text-xl font-semibold text-neutral-900 mb-4">
+				Avis clients
+			</h3>
+			
+			{/* Reviews */}
+			{averageRating && (
+				<div className="flex items-center gap-3 mb-4">
 					<Stars
 						stars={averageRating}
 						secondColor="gray-300"
-						starClass="mr-1"
-						className="mr-2"
+						starClass="text-amber-400"
+						className="flex"
 					/>
-					<p>({nbComments})</p>
+					<span className="text-sm text-neutral-600 font-medium">
+						{averageRating}/5 ({nbComments} {nbComments === 1 ? 'avis' : 'avis'})
+					</span>
 				</div>
-			) : null}
-			<div className="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between mb-4">
-				<ul className="list-inline mb-2 mb-sm-0">
-					<li className="list-inline-item h4 font-weight-light mb-0">
-						{price} €
-					</li>
-				</ul>
-			</div>
+			)}
 
-			<AddToCart shopifyVariantId={variantId} availableForSale={availableForSale} />
-		</>
+			{/* Comments preview */}
+			{comments && comments.length > 0 && (
+				<div className="space-y-3">
+					{comments.slice(0, 2).map((comment, index) => (
+						<div key={index} className="bg-neutral-50 rounded-lg p-4">
+							<div className="flex items-start justify-between mb-2">
+								<div className="font-medium text-neutral-900">
+									{comment.author || 'Client vérifié'}
+								</div>
+								{comment.rating && (
+									<Stars
+										stars={comment.rating}
+										secondColor="gray-300"
+										starClass="text-amber-400"
+										className="flex"
+										size="sm"
+									/>
+								)}
+							</div>
+							<p className="text-neutral-700 text-sm leading-relaxed">
+								{comment.text || comment.content}
+							</p>
+						</div>
+					))}
+					
+					{comments.length > 2 && (
+						<button className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors duration-200 font-medium">
+							Voir tous les avis ({comments.length})
+						</button>
+					)}
+				</div>
+			)}
+		</div>
 	);
 };
 

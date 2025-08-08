@@ -1,0 +1,238 @@
+/* Accessibility - Styles for visually hidden elements but accessible to screen readers */
+.a11y-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.a11y-sr-only:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* Improve visibility of elements on focus */
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Styles for skip links */
+.skip-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Improve focus indicators */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* Styles for ARIA elements */
+[aria-current="page"] {
+  position: relative;
+}
+
+[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  pointer-events: none;
+}
+
+/* Improve contrast for disabled states */
+button:disabled,
+input:disabled,
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Visual indicators for selected elements */
+[aria-pressed="true"] {
+  position: relative;
+}
+
+[aria-pressed="true"]::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid currentColor;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Improve lists and grids */
+[role="grid"] {
+  display: grid;
+}
+
+[role="gridcell"] {
+  display: block;
+}
+
+/* Styles for navigation elements */
+nav[aria-label] {
+  position: relative;
+}
+
+/* Improve forms */
+label[for] {
+  cursor: pointer;
+}
+
+/* Styles for notifications and alerts */
+[role="status"],
+[role="alert"] {
+  position: relative;
+}
+
+/* Improve modals and overlays */
+[aria-modal="true"] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+/* Styles for expandable elements */
+[aria-expanded="false"] + * {
+  display: none;
+}
+
+[aria-expanded="true"] + * {
+  display: block;
+}
+
+/* Improve tooltips */
+[aria-describedby] {
+  position: relative;
+}
+
+/* Styles for progress elements */
+[role="progressbar"] {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Improve tables */
+[role="table"] {
+  display: table;
+}
+
+[role="row"] {
+  display: table-row;
+}
+
+[role="cell"] {
+  display: table-cell;
+}
+
+/* Responsive design for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-high-contrast: high) {
+  button,
+  input,
+  select,
+  textarea {
+    border: 2px solid;
+  }
+}
+
+/* Improve contrast for links */
+a:not([class]) {
+  color: #007acc;
+  text-decoration: underline;
+}
+
+a:not([class]):hover {
+  color: #005a99;
+}
+
+/* Styles for interactive elements */
+[tabindex="0"]:focus,
+[tabindex="-1"]:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* Improve buttons */
+button[aria-pressed] {
+  position: relative;
+}
+
+/* Styles for sortable elements */
+[aria-sort] {
+  position: relative;
+  cursor: pointer;
+}
+
+[aria-sort="ascending"]::after {
+  content: "↑";
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+[aria-sort="descending"]::after {
+  content: "↓";
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}

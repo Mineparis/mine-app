@@ -1,34 +1,20 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import CookieConsent, { Cookies, getCookieConsentValue } from "react-cookie-consent";
 import { useTranslation } from 'next-i18next';
-import useSWRImmutable from 'swr/immutable';
 
-import NextNProgress from '@components/NextNProgress';
-import { formatMenu } from '../utils/menu';
+import ProgressBar from '@components/ProgressBar';
 import { DEFAULT_LANG } from '../utils/constants';
-import { fetchAPI } from '../lib/api';
-
+import { MENU } from '../data/menu';
 import Header from './Header';
 import Footer from './Footer';
 
 const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 	const { t } = useTranslation('common');
 	const { locale, asPath } = useRouter();
-
 	const lang = locale || DEFAULT_LANG;
-	const { data: menuByGender } = useSWRImmutable(`/categories/menu?_locale=${lang}`, fetchAPI);
-
 	const isConsent = getCookieConsentValue();
-
-	const menu = useMemo(() => formatMenu(menuByGender), [menuByGender]);
-
-	const loggedUser = false;
-	const hideTopbar = true;
-	const hideFooter = false;
-	const className = null;
-	const hideHeader = false;
 	const [paddingTop, setPaddingTop] = useState(0);
 
 	const handleAgreeCookieConsent = () => {
@@ -45,78 +31,61 @@ const Layout = ({ children, setHasSetConsent, hasSetConsent }) => {
 		if (!hasSetConsent && isConsent === "true") {
 			handleAgreeCookieConsent();
 		}
-	}, [isConsent]);
+	}, [hasSetConsent, isConsent]);
 
 	useEffect(() => {
 		window.__localeId__ = lang;
-	}, []);
+	}, [lang]);
 
 	const whitePages = [
-		'/category',
-		'/product',
-		'/login',
-		'/customer',
-		'/legal-notice',
-		'/delivery-policy',
-		'/faq',
-		'/contact',
-		'/terms-of-use',
-		'/magazine',
-		'/brand',
-		'/box',
-		'/routine',
-		'/search',
-		'/cart'
+		...MENU.map(({ title }) => `/${title}`),
+		'/category', '/product', '/login', '/customer', '/legal-notice',
+		'/delivery-policy', '/faq', '/contact', '/terms-of-use', '/magazine',
+		'/brand', '/box', '/routine', '/search', '/cart'
 	];
 	const isWhitePage = whitePages.some(whitePage => asPath.startsWith(whitePage));
 
-	const title = 'Mine';
-	const headerProps = {
-		nav: {
-			classes: "bg-hover-white bg-fixed-white navbar-hover-light navbar-fixed-light",
-			color: "transparent",
-			dark: !isWhitePage,
-			fixed: false,
-			light: false,
-			sticky: true,
-		},
-		menu,
-		shouldDisplayWhiteLogo: isWhitePage,
-		loggedUser,
-		headerAbsolute: !isWhitePage,
-		hideTopbar,
-		setPaddingTop: (event) => setPaddingTop(event),
-		locale: lang,
-	};
-
 	return (
-		<div style={{ paddingTop }} className={className}>
+		<>
 			<Head>
-				<title>{title}</title>
+				<title key="title">Mine Paris</title>
+				<meta key="charset" charSet="utf-8" />
+				<meta key="viewport" name="viewport" content="width=device-width,initial-scale=1" />
+				<meta key="theme-color" name="theme-color" content="#fff" />
+				<meta key="description" name="description" content={t('seo_description', 'Boutique beauté Mine Paris : soins, routines, box et conseils experts.')} />
+				<link rel="canonical" href={`https://mineparis.com${asPath}`} />
+				<html lang={lang} />
 			</Head>
-			<NextNProgress options={{ showSpinner: false }} />
-
-			{!hideHeader && <Header {...headerProps} />}
-
-			<main>{children}</main>
-
-			{!hideFooter && <Footer />}
-			<CookieConsent
-				style={{ background: '#343a40', display: 'flex', alignItems: 'center' }}
-				buttonStyle={{ background: '#fff', color: '#343a40' }}
-				buttonWrapperClasses="d-flex flex-row"
-				declineButtonStyle={{ background: 'transparent' }}
-				declineButtonText={t('cookie_consent_decline')}
-				buttonText={t('cookie_consent_agree')}
-				location="bottom"
-				expires={365}
-				enableDeclineButton
-				onAccept={handleAgreeCookieConsent}
-				onDecline={handleDeclineCookieConsent}
-			>
-				{t('cookie_consent_text')}
-			</CookieConsent>
-		</div >
+			<div style={{ paddingTop }} className="min-h-screen flex flex-col">
+				<ProgressBar />
+				<Header
+					shouldDisplayWhiteLogo={isWhitePage}
+					headerAbsolute={!isWhitePage}
+					hideTopbar={true}
+					setPaddingTop={setPaddingTop}
+				/>
+				<main id="main-content" tabIndex={-1} role="main">
+					{children}
+				</main>
+				<Footer />
+				<CookieConsent
+					containerClasses="py-5 px-2"
+					buttonWrapperClasses="flex items-center"
+					buttonClasses="!bg-secondary-100 text-xs font-semibold !py-3 !rounded-lg"
+					declineButtonText={t('cookie_consent_decline')}
+					declineButtonClasses="!bg-transparent !border-none text-xs text-gray-400"
+					buttonText={t('cookie_consent_agree')}
+					contentClasses="text-sm font-medium leading-relaxed"
+					location="bottom"
+					expires={180}
+					enableDeclineButton
+					onAccept={handleAgreeCookieConsent}
+					onDecline={handleDeclineCookieConsent}
+				>
+							{t('cookie_consent_text')}
+				</CookieConsent>
+			</div>
+		</>
 	);
 };
 

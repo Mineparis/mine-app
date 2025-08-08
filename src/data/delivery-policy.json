@@ -5,7 +5,7 @@
 			"questions": [
 				{
 					"title": "Pays de livraison",
-					"content": "Nous livrons en France métropolitaine, les DOM-TOM, La Réunion, la Belgique, ainsi que le reste de l’Europe."
+					"content": "Nous livrons en France métropolitaine, les DOM-TOM, La Réunion, la Belgique, ainsi que le reste de l'Europe."
 				},
 				{
 					"title": "Options de livraison",
@@ -20,7 +20,7 @@
 						}
 					],
 					"info1": "*En jours ouvrés",
-					"info2": "**A noter que des frais de douanes peuvent s’appliquer par le transporteur, en cas de livraison en dehors de livraison hors France métropolitaine. Et que ces délais de livraison s'appliquent uniquement en France."
+					"info2": "**A noter que des frais de douanes peuvent s'appliquer par le transporteur, en cas de livraison en dehors de livraison hors France métropolitaine. Et que ces délais de livraison s'appliquent uniquement en France."
 				}
 			]
 		},
@@ -29,11 +29,11 @@
 			"questions": [
 				{
 					"title": "Politique de rétractation",
-					"content": "Vous disposez d’un délai de 14 jours après réception de votre commande pour nous retourner les produits qui ne vous conviennent pas, contre remboursement ou avoir. A noter que seuls les produits non ouverts et dans leur état d’origine peuvent faire l’objet d’un retour."
+					"content": "Vous disposez d'un délai de 14 jours après réception de votre commande pour nous retourner les produits qui ne vous conviennent pas, contre remboursement ou avoir. A noter que seuls les produits non ouverts et dans leur état d'origine peuvent faire l'objet d'un retour."
 				},
 				{
 					"title": "Effectuer un retour",
-					"content": "Veuillez contacter notre service client à l’adresse minepariscontact@gmail.com, si vous souhaitez effectuer un retour. Dès réception de votre mail, nous vous enverrons les étapes à suivre, ainsi que votre étiquette de retour."
+					"content": "Veuillez contacter notre service client à l'adresse minepariscontact@gmail.com, si vous souhaitez effectuer un retour. Dès réception de votre mail, nous vous enverrons les étapes à suivre, ainsi que votre étiquette de retour."
 				},
 				{
 					"title": "Délai de remboursement",
