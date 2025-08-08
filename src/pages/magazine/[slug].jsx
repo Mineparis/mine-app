@@ -1,5 +1,5 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { getShopifyBlogArticleByHandle, getAllBlogArticleHandles } from '@lib/shopify/requests/blogs';
+import { getAllBlogArticleHandles, getShopifyBlogArticles } from '@lib/shopify/requests/blogs';
 import { DEFAULT_LANG, REVALIDATE_PAGE_SECONDS } from '@utils/constants';
 import BlogArticlePage from '@components/pages/BlogArticlePage';
 
@@ -21,7 +21,7 @@ export async function getStaticProps({ params, locale }) {
   const slug = params?.slug;
 
   const [blogArticle, translations] = await Promise.all([
-    getShopifyBlogArticleByHandle(slug),
+    getShopifyBlogArticles(50, slug),
     serverSideTranslations(lang, ['common']),
   ]);
 

@@ -14,33 +14,8 @@ const GRAPHQL_GET_BLOG_ARTICLES = `
                 title
                 handle
                 publishedAt
-                excerpt
-                image {
-                  src
-                  altText
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const GRAPHQL_GET_BLOG_ARTICLE_BY_HANDLE = `
-  query getBlogArticleByHandle($handle: String!) {
-    blogs(first: 1) {
-      edges {
-        node {
-          articles(first: 1, query: $handle) {
-            edges {
-              node {
-                id
-                title
-                handle
-                publishedAt
                 contentHtml
+                excerpt
                 image {
                   src
                   altText
@@ -76,39 +51,25 @@ const GRAPHQL_GET_ALL_ARTICLE_HANDLES = `
   }
 `;
 
-export const getShopifyBlogArticles = async (limit = 100) => {
+export const getShopifyBlogArticles = async (limit = 100, handle) => {
   try {
     const body = await shopifyRequest({
       query: GRAPHQL_GET_BLOG_ARTICLES,
       variables: { first: limit },
     });
 
-    const blogNode = body?.data?.blogs?.edges?.[0]?.node;
-    if (!blogNode) return [];
+    const articlesNode = body?.data?.blogs?.edges?.[0]?.node.articles.edges;
+    if (!articlesNode) return [];
 
-    return blogNode.articles.edges
-      .map(({ node }) => parseShopifyArticle(node))
-    } catch (error) {
+    if (handle) {
+      const articleNode = articlesNode.find(({ node }) => node.handle === handle)?.node;
+      return parseShopifyArticle(articleNode);
+    }
+
+    return articlesNode.map(({ node }) => parseShopifyArticle(node));
+  } catch (error) {
     console.error("Shopify blog fetch error:", error);
     return [];
-  }
-};
-
-// Fetch a single blog article by its handle (slug)
-export const getShopifyBlogArticleByHandle = async (handle) => {
-  try {
-    const body = await shopifyRequest({
-      query: GRAPHQL_GET_BLOG_ARTICLE_BY_HANDLE,
-      variables: { handle },
-    });
-
-    const articleNode =
-      body?.data?.blogs?.edges?.[0]?.node?.articles?.edges?.[0]?.node;
-
-    return parseShopifyArticle(articleNode);
-  } catch (error) {
-    console.error("Shopify blog article fetch error:", error);
-    return null;
   }
 };
 
