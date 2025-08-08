@@ -38,10 +38,10 @@ const PageNotFound = () => {
 						<h1 className="text-[6rem] lg:text-[10rem] font-bold text-white/20 leading-none select-none mb-6">
 							404
 						</h1>
-						<h2 className="text-2xl lg:text-4xl font-bold text-white leading-tight mb-4">
+						<h2 className="text-xl lg:text-2xl font-bold text-white leading-tight mb-4">
 							{t('404_page_title')}
 						</h2>
-						<p className="text-xs lg:text-lg text-white/90 max-w-md mx-auto leading-relaxed mb-8">
+						<p className="text-xs lg:text-md text-white/90 max-w-md mx-auto leading-relaxed mb-8">
 							{t('404_page_description')}
 						</p>
 					</div>
@@ -50,7 +50,7 @@ const PageNotFound = () => {
 					<div>
 						<Link
 							href="/"
-							className="inline-flex items-center justify-center bg-white text-neutral-900 font-semibold py-3 px-8 rounded-full hover:bg-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30"
+							className="bg-secondary text-sm text-neutral-900 py-2 px-4 rounded-full hover:bg-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30"
 						>
 							{t('go_back_home')}
 						</Link>
